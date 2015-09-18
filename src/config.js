@@ -15,4 +15,4 @@ module.exports = {
       name: 'React Redux Example Production'
     }
   }
-}[process.env.NODE_ENV || 'development'];
+}[process.env.NODE_ENV || 'development']

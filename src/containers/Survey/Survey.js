@@ -1,33 +1,33 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import DocumentMeta from 'react-document-meta';
-import {initialize} from 'redux-form';
-import {SurveyForm} from 'components';
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import DocumentMeta from 'react-document-meta'
+import { initialize } from 'redux-form'
+import { SurveyForm } from 'components'
 
 @connect(
   () => ({}),
-  dispatch => bindActionCreators({initialize}, dispatch)
+  dispatch => bindActionCreators({ initialize }, dispatch)
 )
 export default class Survey extends Component {
   static propTypes = {
     initialize: PropTypes.func.isRequired
   }
 
-  handleSubmit(data) {
-    window.alert('Data submitted! ' + JSON.stringify(data));
-    this.props.initialize('survey', {});
+  handleSubmit (data) {
+    // window.alert('Data submitted! ' + JSON.stringify(data))
+    this.props.initialize('survey', {})
   }
 
-  handleInitialize() {
+  handleInitialize () {
     this.props.initialize('survey', {
       name: 'Little Bobby Tables',
       email: 'bobby@gmail.com',
       occupation: 'Redux Wizard'
-    });
+    })
   }
 
-  render() {
+  render () {
     return (
       <div className="container">
         <h1>Survey</h1>
@@ -59,7 +59,7 @@ export default class Survey extends Component {
           Pardon the use of <code>window.alert()</code>, but I wanted to keep this component stateless.
         </p>
 
-        <div style={{textAlign: 'center', margin: 15}}>
+        <div style={{ textAlign: 'center', margin: 15 }}>
           <button className="btn btn-primary" onClick={::this.handleInitialize}>
             <i className="fa fa-pencil"/> Initialize Form
           </button>
@@ -70,6 +70,6 @@ export default class Survey extends Component {
 
         <SurveyForm onSubmit={::this.handleSubmit}/>
       </div>
-    );
+    )
   }
 }

@@ -7,4 +7,4 @@ module.exports = {
     isProduction: true,
     apiPort: process.env.APIPORT,
   }
-}[process.env.NODE_ENV || 'development'];
+}[process.env.NODE_ENV || 'development']

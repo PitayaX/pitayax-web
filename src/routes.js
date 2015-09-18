@@ -1,5 +1,5 @@
-import React from 'react';
-import {Route} from 'react-router';
+import React from 'react'
+import { Route } from 'react-router'
 import {
     App,
     Home,
@@ -10,9 +10,9 @@ import {
     LoginSuccess,
     Survey,
     NotFound,
-  } from 'containers';
+  } from 'containers'
 
-export default function(store) {
+export default function (store) {
   return (
     <Route component={App}>
       <Route path="/" component={Home}/>
@@ -25,5 +25,5 @@ export default function(store) {
       <Route path="/survey" component={Survey}/>
       <Route path="*" component={NotFound}/>
     </Route>
-  );
+  )
 }

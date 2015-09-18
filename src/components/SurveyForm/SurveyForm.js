@@ -1,30 +1,30 @@
-import React, {Component, PropTypes} from 'react';
-import {connectReduxForm} from 'redux-form';
-import surveyValidation from './surveyValidation';
+import React, { Component, PropTypes } from 'react'
+import { connectReduxForm } from 'redux-form'
+import surveyValidation from './surveyValidation'
 
-function asyncValidate(data) {
+function asyncValidate (data) {
   // TODO: figure out a way to move this to the server. need an instance of ApiClient
   if (!data.email) {
-    return Promise.resolve({valid: true});
+    return Promise.resolve({ valid: true })
   }
   return new Promise((resolve) => {
     setTimeout(() => {
-      const errors = {valid: true};
-      if (~['bobby@gmail.com', 'timmy@microsoft.com'].indexOf(data.email)) {
-        errors.email = 'Email address already used';
-        errors.valid = false;
+      const errors = { valid: true }
+      if (~[ 'bobby@gmail.com', 'timmy@microsoft.com' ].indexOf(data.email)) {
+        errors.email = 'Email address already used'
+        errors.valid = false
       }
-      resolve(errors);
-    }, 1000);
-  });
+      resolve(errors)
+    }, 1000)
+  })
 }
 
 @connectReduxForm({
   form: 'survey',
-  fields: ['name', 'email', 'occupation'],
+  fields: [ 'name', 'email', 'occupation' ],
   validate: surveyValidation,
   asyncValidate,
-  asyncBlurFields: ['email']
+  asyncBlurFields: [ 'email' ]
 })
 export default
 class SurveyForm extends Component {
@@ -42,19 +42,19 @@ class SurveyForm extends Component {
     valid: PropTypes.bool.isRequired
   }
 
-  render() {
+  render () {
     const {
       asyncValidating,
       dirty,
-      fields: {name, email, occupation},
+      fields: { name, email, occupation },
       active,
       handleSubmit,
       invalid,
       resetForm,
       pristine,
       valid
-      } = this.props;
-    const styles = require('./SurveyForm.scss');
+      } = this.props
+    const styles = require('./SurveyForm.scss')
     const renderInput = (field, label, showAsyncValidating) =>
       <div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
         <label htmlFor={field.name} className="col-sm-2">{label}</label>
@@ -69,7 +69,7 @@ class SurveyForm extends Component {
             {field.touched && <span className={styles.touched} title="Touched">T</span>}
           </div>
         </div>
-      </div>;
+      </div>
 
     return (
       <div>
@@ -82,7 +82,7 @@ class SurveyForm extends Component {
               <button className="btn btn-success" onClick={handleSubmit}>
                 <i className="fa fa-paper-plane"/> Submit
               </button>
-              <button className="btn btn-warning" onClick={resetForm} style={{marginLeft: 15}}>
+              <button className="btn btn-warning" onClick={resetForm} style={{ marginLeft: 15 }}>
                 <i className="fa fa-undo"/> Reset
               </button>
             </div>
@@ -116,7 +116,6 @@ class SurveyForm extends Component {
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 }
-

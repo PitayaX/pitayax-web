@@ -1,12 +1,12 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import DocumentMeta from 'react-document-meta';
-import * as authActions from 'redux/modules/auth';
-import {isLoaded as isAuthLoaded, load as loadAuth} from 'redux/modules/auth';
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import DocumentMeta from 'react-document-meta'
+import * as authActions from 'redux/modules/auth'
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth'
 
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({ user: state.auth.user }),
   dispatch => bindActionCreators(authActions, dispatch)
 )
 export default class Login extends Component {
@@ -16,22 +16,22 @@ export default class Login extends Component {
     logout: PropTypes.func
   }
 
-  static fetchData(store) {
+  static fetchData (store) {
     if (!isAuthLoaded(store.getState())) {
-      return store.dispatch(loadAuth());
+      return store.dispatch(loadAuth())
     }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const input = this.refs.username.getDOMNode();  // need for getDOMNode() call going away in React 0.14
-    this.props.login(input.value);
-    input.value = '';
+  handleSubmit (event) {
+    event.preventDefault()
+    const input = this.refs.username.getDOMNode()  // need for getDOMNode() call going away in React 0.14
+    this.props.login(input.value)
+    input.value = ''
   }
 
-  render() {
-    const {user, logout} = this.props;
-    const styles = require('./Login.scss');
+  render () {
+    const { user, logout } = this.props
+    const styles = require('./Login.scss')
     return (
       <div className={styles.loginPage + ' container'}>
         <DocumentMeta title="React Redux Example: Login"/>
@@ -56,6 +56,6 @@ export default class Login extends Component {
         </div>
         }
       </div>
-    );
+    )
   }
 }

@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
-import auth from './auth';
-import counter from './counter';
-import {reducer as form} from 'redux-form';
-import info from './info';
-import widgets from './widgets';
+import auth from './auth'
+import counter from './counter'
+import { reducer as form } from 'redux-form'
+import info from './info'
+import widgets from './widgets'
 
 export default combineReducers({
   auth,
@@ -12,4 +12,4 @@ export default combineReducers({
   form,
   info,
   widgets
-});
+})

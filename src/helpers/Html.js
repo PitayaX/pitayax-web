@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import serialize from 'serialize-javascript';
-import DocumentMeta from 'react-document-meta';
-const cdn = '//cdnjs.cloudflare.com/ajax/libs/';
+import React, { Component, PropTypes } from 'react'
+import serialize from 'serialize-javascript'
+import DocumentMeta from 'react-document-meta'
+const cdn = '//cdnjs.cloudflare.com/ajax/libs/'
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -19,9 +19,9 @@ export default class Html extends Component {
     store: PropTypes.object
   }
 
-  render() {
-    const {assets, component, store} = this.props;
-    const content = React.renderToString(component);
+  render () {
+    const { assets, component, store } = this.props
+    const content = React.renderToString(component)
 
     return (
       <html lang="en-us">
@@ -42,11 +42,11 @@ export default class Html extends Component {
           )}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} />
+          <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
+          <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())}` }} />
           <script src={assets.javascript.main}/>
         </body>
       </html>
-    );
+    )
   }
 }

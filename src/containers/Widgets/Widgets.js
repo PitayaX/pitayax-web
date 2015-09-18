@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import DocumentMeta from 'react-document-meta';
-import {connect} from 'react-redux';
-import * as widgetActions from 'redux/modules/widgets';
-import {isLoaded, load as loadWidgets} from 'redux/modules/widgets';
-import {initializeWithKey} from 'redux-form';
-import { WidgetForm } from 'components';
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import DocumentMeta from 'react-document-meta'
+import { connect } from 'react-redux'
+import * as widgetActions from 'redux/modules/widgets'
+import { isLoaded, load as loadWidgets } from 'redux/modules/widgets'
+import { initializeWithKey } from 'redux-form'
+import { WidgetForm } from 'components'
 
 @connect(
   state => ({
@@ -33,26 +33,26 @@ class Widgets extends Component {
     editStart: PropTypes.func.isRequired
   }
 
-  static fetchData(store) {
+  static fetchData (store) {
     if (!isLoaded(store.getState())) {
-      return store.dispatch(loadWidgets());
+      return store.dispatch(loadWidgets())
     }
   }
 
-  handleEdit(widget) {
-    const {editStart} = this.props; // eslint-disable-line no-shadow
+  handleEdit (widget) {
+    const { editStart } = this.props // eslint-disable-line no-shadow
     return () => {
-      editStart(String(widget.id));
-    };
+      editStart(String(widget.id))
+    }
   }
 
-  render() {
-    const {widgets, error, editing, loading, load} = this.props;
-    let refreshClassName = 'fa fa-refresh';
+  render () {
+    const { widgets, error, editing, loading, load } = this.props
+    let refreshClassName = 'fa fa-refresh'
     if (loading) {
-      refreshClassName += ' fa-spin';
+      refreshClassName += ' fa-spin'
     }
-    const styles = require('./Widgets.scss');
+    const styles = require('./Widgets.scss')
     return (
       <div className={styles.widgets + ' container'}>
         <h1>
@@ -106,7 +106,6 @@ class Widgets extends Component {
           </tbody>
         </table>}
       </div>
-    );
+    )
   }
 }
-

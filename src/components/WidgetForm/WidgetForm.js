@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {connectReduxForm} from 'redux-form';
-import widgetValidation, {colors} from './widgetValidation';
-import * as widgetActions from 'redux/modules/widgets';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connectReduxForm } from 'redux-form'
+import widgetValidation, { colors } from './widgetValidation'
+import * as widgetActions from 'redux/modules/widgets'
 
 @connect(
   state => ({
@@ -13,7 +13,7 @@ import * as widgetActions from 'redux/modules/widgets';
 )
 @connectReduxForm({
   form: 'widget',
-  fields: ['id', 'color', 'sprocketCount', 'owner'],
+  fields: [ 'id', 'color', 'sprocketCount', 'owner' ],
   validate: widgetValidation
 })
 export default class WidgetForm extends Component {
@@ -30,12 +30,12 @@ export default class WidgetForm extends Component {
     saveError: PropTypes.object,
     formKey: PropTypes.string.isRequired,
     values: PropTypes.object.isRequired
-  };
+  }
 
-  render() {
-    const { editStop, fields: {id, color, sprocketCount, owner}, formKey, handleBlur, handleChange, handleSubmit, invalid,
-      pristine, save, submitting, saveError: { [formKey]: saveError }, values } = this.props;
-    const styles = require('containers/Widgets/Widgets.scss');
+  render () {
+    const { editStop, fields: { id, color, sprocketCount, owner }, formKey, handleBlur, handleChange, handleSubmit, invalid,
+      pristine, save, submitting, saveError: { [formKey]: saveError }, values } = this.props
+    const styles = require('containers/Widgets/Widgets.scss')
     return (
       <tr className={submitting ? styles.saving : ''}>
         <td className={styles.idCol}>{id.value}</td>
@@ -75,7 +75,7 @@ export default class WidgetForm extends Component {
                   onClick={handleSubmit(() => save(values)
                     .then(x => {
                       if (x && typeof x.error === 'object') {
-                        return Promise.reject(x.error);
+                        return Promise.reject(x.error)
                       }
                     })
                   )}
@@ -85,6 +85,6 @@ export default class WidgetForm extends Component {
           {saveError && <div className="text-danger">{saveError}</div>}
         </td>
       </tr>
-    );
+    )
   }
 }

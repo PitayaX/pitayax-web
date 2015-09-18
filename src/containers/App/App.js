@@ -1,16 +1,16 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import DocumentMeta from 'react-document-meta';
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
-import { InfoBar } from 'components';
-import { createTransitionHook } from 'helpers/universalRouter';
+import React, { Component, PropTypes } from 'react'
+import { Link } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import DocumentMeta from 'react-document-meta'
+import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info'
+import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth'
+import { InfoBar } from 'components'
+import { createTransitionHook } from 'helpers/universalRouter'
 
-const title = 'React Redux Example';
-const description = 'All the modern best practices in one example.';
-const image = 'https://react-redux.herokuapp.com/logo.jpg';
+const title = 'React Redux Example'
+const description = 'All the modern best practices in one example.'
+const image = 'https://react-redux.herokuapp.com/logo.jpg'
 
 const meta = {
   title,
@@ -33,11 +33,11 @@ const meta = {
       'twitter:image:height': '200'
     }
   }
-};
+}
 
 @connect(
-    state => ({user: state.auth.user}),
-    dispatch => bindActionCreators({logout}, dispatch))
+    state => ({ user: state.auth.user }),
+    dispatch => bindActionCreators({ logout }, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -48,48 +48,48 @@ export default class App extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
-  };
-
-  componentWillMount() {
-    const {router, store} = this.context;
-    this.transitionHook = createTransitionHook(store);
-    router.addTransitionHook(this.transitionHook);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillMount () {
+    const { router, store } = this.context
+    this.transitionHook = createTransitionHook(store)
+    router.addTransitionHook(this.transitionHook)
+  }
+
+  componentWillReceiveProps (nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.context.router.transitionTo('/loginSuccess');
+      this.context.router.transitionTo('/loginSuccess')
     } else if (this.props.user && !nextProps.user) {
       // logout
-      this.context.router.transitionTo('/');
+      this.context.router.transitionTo('/')
     }
   }
 
-  componentWillUnmount() {
-    const {router} = this.context;
-    router.removeTransitionHook(this.transitionHook);
+  componentWillUnmount () {
+    const { router } = this.context
+    router.removeTransitionHook(this.transitionHook)
   }
 
-  static fetchData(store) {
-    const promises = [];
+  static fetchData (store) {
+    const promises = []
     if (!isInfoLoaded(store.getState())) {
-      promises.push(store.dispatch(loadInfo()));
+      promises.push(store.dispatch(loadInfo()))
     }
     if (!isAuthLoaded(store.getState())) {
-      promises.push(store.dispatch(loadAuth()));
+      promises.push(store.dispatch(loadAuth()))
     }
-    return Promise.all(promises);
+    return Promise.all(promises)
   }
 
-  handleLogout(event) {
-    event.preventDefault();
-    this.props.logout();
+  handleLogout (event) {
+    event.preventDefault()
+    this.props.logout()
   }
 
-  render() {
-    const {user} = this.props;
-    const styles = require('./App.scss');
+  render () {
+    const { user } = this.props
+    const styles = require('./App.scss')
     return (
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
@@ -129,6 +129,6 @@ export default class App extends Component {
           href="http://www.reactiflux.com/" target="_blank">#react-redux-universal</a> Slack channel.
         </div>
       </div>
-    );
+    )
   }
 }
