@@ -1,5 +1,8 @@
+@import 'bootstrap';
+
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 .app {
   :global(.navbar-brand) {
@@ -19,11 +22,40 @@ body {
     margin: 0 10px 0 0;
     border-radius: $size / 2;
   }
-  nav :global(.fa) {
-    font-size: 2em;
-    line-height: 20px;
-  }
 }
+
+$navbarWidth: 45px;
+$navbarBkg: #188EBD;
+
 .appContent {
-  margin: 50px 0; // for fixed navbar
+  margin-left: $navbarWidth;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $navbarWidth;
+  background-color: $navbarBkg;
+  font-size: 1em;
+
+  &>a {
+    display: inline-block;
+    width: $navbarWidth;
+    height: $navbarWidth;
+    line-height: $navbarWidth;
+    text-align: center;
+    font-size: 1.25em;
+    color: #fff;
+
+    &:global(.active) {
+      background-color: #FF8A21;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #DE7518;
+    }
+  }
 }

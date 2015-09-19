@@ -89,6 +89,7 @@
     "http-proxy": "^1.11.1",
     "lru-memoize": "1.0.0",
     "map-props": "^1.0.0",
+    "normalize.css": "^3.0.3",
     "piping": "0.2.0",
     "pretty-error": "^1.1.2",
     "query-string": "^2.4.0",
