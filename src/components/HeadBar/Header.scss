@@ -1,0 +1,39 @@
+.headBar{
+  border-bottom: 0.25em solid #F2C8A4;
+  //padding-left: 1em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  padding-bottom: 0.5em;
+  width: 100%;
+
+  .headTitle{
+    color: #005584;
+    font-weight: bold;
+  }
+
+  .headLeft{
+    font-size: 1.5em;
+    float: left;
+    //width: 50%;
+    margin-left: 0.5em;
+  }
+
+  .headRight{
+    float: right;
+    & > input
+    {
+      padding-right: 1em;
+      padding-left: 1em;
+      margin-bottom: 0;
+      -webkit-border-radius: 1em;
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      font-size: 1em;
+    }
+    .headButton{
+      margin-left: 0.8em;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  }
+}
