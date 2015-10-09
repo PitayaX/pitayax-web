@@ -1,0 +1,119 @@
+@import 'bootstrap';
+.authorInfo{
+  line-height: 0.5;
+  padding-top:1em;
+}
+.post{
+  width:43.75em !important;
+}
+.avatar{
+  margin:0.8em 0.8em 0 0;
+  width: 3.875em;
+  height: 3.875em;
+  border-radius: 3em;
+  float:left;
+}
+.bottom{
+  width:100%;
+  font-size:0.75em;
+  padding:2em 0 1.3em 0;
+  text-align:center;
+}
+.articleAuthorBox{
+  width:100%;
+  padding:3.125em 0 0 0em;
+  height:7.5em;
+}
+.articleAuthorKey{
+  padding:0.1em;
+  border:0.1em solid #E78273;
+  border-radius: 0.3em;
+}
+.articAuthorValue{
+  color:#4296C6;
+}
+.articAuthorNumber{
+  font-family: 'Georgia';
+  color:#9C9A9C;
+}
+.myArticle{
+ width:100%;
+ margin: 0 0 0 0;
+}
+.articleBody{
+  background-color:#FFFFFF;
+  float:none;
+  clear:both;
+  border:none;
+}
+.articleTitleHeader{
+  font-weight:bold;
+  margin:2em 0 1.5em 0.1em;
+}
+.articleTitleTags{
+  height:1em;
+  & ul{
+    padding:0;
+    position:absolute;
+    list-style-type:none;
+    font-size:0.9em;
+    color:#9C9A9C;
+  }
+  & ul li{
+    float:left;
+  }
+}
+
+.articleTitleAuthor{
+  margin:2em 0 2em 0;
+  clear:both;
+}
+.bottomHr{
+  margin:0 0 0 1em;
+  border:none;
+  border-top:0.1em solid #C0C0C0;
+}
+.bottom{
+  width:100%;
+  font-size:0.75em;
+  padding:2em 0 1.3em 0;
+  text-align:center;
+}
+.clear{
+  clear:both;
+}
+.content{
+  padding: 0 0 0 0em;
+}
+.fixed{
+  position:fixed;
+}
+.left{
+  float:left;
+}
+.fixedBtn {
+  position: fixed;
+  right: 2%;
+  bottom: 15%;
+  width: 1.5em;
+  border: 1px solid #eeeeee;
+  background-color: white;
+  font-size: 2em;
+  z-index: 1000;
+  -webkit-backface-visibility: hidden;
+  & a{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #555555;
+    text-decoration: none;
+  }
+  .goTop{
+    border-bottom: 1px solid #eeeeee;
+  }
+  .writer{
+    background-color: #49be38;
+    color: white;
+  }
+}

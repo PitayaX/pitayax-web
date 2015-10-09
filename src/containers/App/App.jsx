@@ -74,13 +74,14 @@ export default class App extends Component {
   render () {
     const { user } = this.props
     const styles = require('./App.scss')
+    const newArticle='/p/'+Math.random().toString().substr(2)
     return (
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
         <nav className={styles.navbar}>
           <a><i className='fa fa-home'></i></a>
           <a><i className="fa fa-th"></i></a>
-          <a><i className="fa fa-edit"></i></a>
+          <Link to={newArticle}><i className="fa fa-edit"></i></Link>
         </nav>
         <div className={styles.appContent}>
           {this.props.children}
