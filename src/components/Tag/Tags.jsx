@@ -11,7 +11,7 @@ const Tags = React.createClass({
   render () {
     const { data, onClick, ...others } = this.props
     const styles = require('./tag.scss')
-    const tags = data.map( (item) => {
+    const tags = data&&data.map( (item) => {
       return (
         ( <span><a className={styles.tag +" "+ (this.state.activeId === item._id? styles.active : "")}
         onClick={this.onClickHandler(item)}>{item.text}</a></span> )
@@ -21,7 +21,7 @@ const Tags = React.createClass({
   },
 
   onClickHandler (tagData) {
-    return (e) => {      
+    return (e) => {
       this.setState({ activeId: tagData._id })
 
       this.props.onClick && this.props.onClick(tagData, e)

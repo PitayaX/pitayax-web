@@ -34,7 +34,7 @@ export const sortData = [
   { name: "关注度排名", _id: 2, code: "FOLLOW" }
 ]
 
-export const tagsData = [ { _id: 0, text: "最热" }, { _id: 1, text: "reactjs" }, { _id: 2, text: "reactjs" }, { _id: 3, text: "reactjs" } ]
+export const tagsData = [ { _id: 0, text: "最热" }, { _id: 1, text: "React" }, { _id: 2, text: "Redux" }, { _id: 3, text: "Javascript" } ]
 
 export const hotPosts = [
   {  _id: 1, title: "这个是标题1哦", url: "http://www.baidu.com" },

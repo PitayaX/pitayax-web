@@ -21,8 +21,7 @@ import { WidgetForm } from 'components'
     }, dispatch)
   })
 )
-export default
-class Widgets extends Component {
+export default class Widgets extends Component {
   static propTypes = {
     widgets: PropTypes.array,
     error: PropTypes.string,
@@ -34,6 +33,7 @@ class Widgets extends Component {
   }
 
   static fetchData (store) {
+    debugger
     if (!isLoaded(store.getState())) {
       return store.dispatch(loadWidgets())
     }
