@@ -7,20 +7,22 @@ import Articales from '../Articale/Articales'
 
 export default class Content extends Component {
   static propTypes = {
-    onTagClick: T.func,
+    tagHandler: T.func,
     tagsData: T.array.required,
     sortsData: T.array,
+    sortHanlder: T.func,
     articalesData: T.array.required,
     children: T.node
   }
 
   render () {
-    const { tagsData, articalesData, sortsData, onTagClick, ...others } = this.props
+    console.log(this.props)
+    const { tagsData, articalesData, sortsData, tagHandler, sortHanlder, ...others } = this.props
     return (
       <RightPanel>
         <HeadBar/>
-        <Tags data={tagsData} onClick={onTagClick} />
-        <SortBar data={sortsData} />
+        <Tags data={tagsData} onClick={tagHandler} />
+        <SortBar data={sortsData} onClick={sortHanlder}/>
         <Articales data={articalesData} />
       </RightPanel>
     )

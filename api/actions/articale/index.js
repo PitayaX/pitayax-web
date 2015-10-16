@@ -1,1 +1,1 @@
-export query from './load'
+export { query, queryByTag } from './load'

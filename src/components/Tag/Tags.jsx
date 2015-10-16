@@ -14,17 +14,17 @@ const Tags = React.createClass({
     const tags = data&&data.map( (item) => {
       return (
         ( <span><a className={styles.tag +" "+ (this.state.activeId === item._id? styles.active : "")}
-        onClick={this.onClickHandler(item)}>{item.text}</a></span> )
+        onClick={this.onClickHandler(item, onClick)}>{item.text}</a></span> )
       )
     })
     return ( <div>{tags}</div> )
   },
 
-  onClickHandler (tagData) {
+  onClickHandler (tagData, eventHandler) {
     return (e) => {
       this.setState({ activeId: tagData._id })
 
-      this.props.onClick && this.props.onClick(tagData, e)
+      eventHandler && eventHandler(tagData, e)
     }
   }
 })

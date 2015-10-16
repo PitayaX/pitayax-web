@@ -11,7 +11,9 @@ export default function reducer (state = initialState, action = {}) {
   case LIST:
     return {
       ...state,
-      loading: true
+      loading: true,
+      tag: action.tag,
+      sort: action.sort
     }
   case LIST_SUCCESS:
     return {
@@ -19,7 +21,9 @@ export default function reducer (state = initialState, action = {}) {
       loading: false,
       loaded: true,
       data: action.result,
-      error: null
+      error: null,
+      tag: action.tag,
+      sort: action.sort
     }
   case LIST_FAIL:
     return {
@@ -27,9 +31,10 @@ export default function reducer (state = initialState, action = {}) {
       loading: false,
       loaded: false,
       data: null,
-      error: action.error
+      error: action.error,
+      tag: action.tag,
+      sort: action.sort
     }
-    break
   default:
     return state
     break
@@ -40,9 +45,18 @@ export function isArticalesLoaded (globalState) {
   return globalState.articales && globalState.articales.loaded
 }
 
-export function list () {
+export function list (tag, sort) {
   return {
     types: [ LIST, LIST_SUCCESS, LIST_FAIL ],
-    promise: (client) => client.get('/articale/query') // params not used, just shown as demonstration
+    promise: (client) => client.get('/articale/query')
+    // client.post('/articale/query', '{tag:' + tag + ', sort:'+sort+'}') // params not used, just shown as demonstration
+  }
+}
+
+export function listByTag (tag, sort) {
+  return {
+    types: [ LIST, LIST_SUCCESS, LIST_FAIL ],
+    promise: (client) => client.get('/articale/queryByTag/'),
+    tag, sort
   }
 }

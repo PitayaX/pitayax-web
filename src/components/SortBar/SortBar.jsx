@@ -3,7 +3,7 @@ import React, { PropTypes as T } from 'react'
 const SortBar = React.createClass({
   propTypes: {
     data: T.array.isRequired,
-    onActiveChange: T.func // example: onActiveChange(e, sortData)
+    onClick: T.func // example: onActiveChange(e, sortData)
   },
 
   getInitialState () {
@@ -14,18 +14,18 @@ const SortBar = React.createClass({
 
   render () {
     const styles = require('./SortBar.scss')
-    const  { data, ...others } = this.props
+    const  { data, onClick, ...others } = this.props
     const sorts = data.map( sort => <span
       className={styles.item +" "+ (this.state.activedId === sort._id? styles.actived:styles.unactived)} /* value={sort.value} */
-      onClick={this.clickEvent( sort )}>{sort.name}</span> )
+      onClick={this.clickEvent( sort, onClick )}>{sort.name}</span> )
 
     return (<div className={styles.sort} {...others}>{sorts}</div>)
   },
 
-  clickEvent ( sortData ) {
+  clickEvent ( sortData, handler ) {
     return (e) => {
       this.setState({ activedId: sortData._id })
-      this.props.onActiveChange && this.props.onActiveChange(sortData, e)
+      handler && handler(sortData, e)
     }
   }
 })

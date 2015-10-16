@@ -36,14 +36,20 @@ export function getArticales (req, pi, ps) {
   return articales
 }
 
-export default function query (req, params) {
-  const pi = params.pi? params.pi:1
-  const ps = params.ps? params.ps:10
-
+export function query (req, params) {
   return new Promise((resolve, reject) => {
     // make async call to database
     setTimeout(() => {
-      resolve(getArticales(req, pi, ps))
+      resolve(getArticales(req))
+    }, 1000) // simulate async load
+  })
+}
+
+export function queryByTag (req, params) {
+  return new Promise((resolve, reject) => {
+    // make async call to database
+    setTimeout(() => {
+      resolve(getArticales(req).slice((new Date().getSeconds())%10))
     }, 1000) // simulate async load
   })
 }
