@@ -1,4 +1,17 @@
 @import 'bootstrap';
+.mySpinnerParent{
+  position: fixed;
+  left: 3.214258em;
+  width: 100%;
+  height: 100%;
+  background-color: #EFEFEF
+}
+.mySpinner{
+  position: relative;
+  left: 45%;
+  top: 42%;
+  font-size:6em;
+}
 .authorInfo{
   line-height: 0.5;
   padding-top:1em;

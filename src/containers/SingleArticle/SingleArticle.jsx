@@ -40,7 +40,11 @@ class SingleArticle extends Component {
     const styles = require('./SingleArticle.scss')
     // debugger
     let myArticle=(
-      <div>Waiting</div>
+      <div className={styles.mySpinnerParent}>
+        <div className={styles.mySpinner}>
+          <i className="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
     )
     if (!this.props.loading) {
       myArticle = (

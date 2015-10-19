@@ -92,11 +92,12 @@ export default function load (req, params) {
   return new Promise((resolve, reject) => {
     // make async call to database
     setTimeout(() => {
-      if (Math.floor(Math.random() * 5)===0) {
-        reject('article load fails 20% of the time. You were unlucky.')
-      } else {
-        resolve(getSingleArticle(req))
-      }
-    }, 1000) // simulate async load
+      // if (Math.floor(Math.random() * 5)===0) {
+      //   reject('article load fails 20% of the time. You were unlucky.')
+      // } else {
+      //   resolve(getSingleArticle(req))
+      // }
+      resolve(getSingleArticle(req))
+    }, 3000) // simulate async load
   })
 }
