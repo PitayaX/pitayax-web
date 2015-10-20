@@ -75,11 +75,12 @@ export default class App extends Component {
     const { user } = this.props
     const styles = require('./App.scss')
     const newArticle='/p/'+Math.random().toString().substr(2)
+    const home='/'
     return (
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
         <nav className={styles.navbar}>
-          <a><i className='fa fa-home'></i></a>
+          <Link to={home}><i className='fa fa-home'></i></Link>
           <a><i className="fa fa-th"></i></a>
           <Link to={newArticle}><i className="fa fa-edit"></i></Link>
         </nav>

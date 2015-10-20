@@ -15,7 +15,7 @@ export default combineReducers({
   form,
   info,
   widgets,
-  singleArticle
+  singleArticle,
   tags,
   sorts,
   articales
