@@ -6,6 +6,9 @@ import { reducer as form } from 'redux-form'
 import info from './info'
 import widgets from './widgets'
 import singleArticle from './singleArticle'
+import tags from './tag'
+import sorts from './sorts'
+import articales from './articales'
 export default combineReducers({
   auth,
   counter,
@@ -13,4 +16,7 @@ export default combineReducers({
   info,
   widgets,
   singleArticle
+  tags,
+  sorts,
+  articales
 })
