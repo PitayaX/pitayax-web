@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux'
+import multireducer from 'multireducer'
+import { routerStateReducer } from 'redux-router'
 
 import auth from './auth'
 import counter from './counter'
@@ -9,10 +11,16 @@ import singleArticle from './singleArticle'
 import tags from './tag'
 import sorts from './sorts'
 import articales from './articales'
+
 export default combineReducers({
+  router: routerStateReducer,
   auth,
-  counter,
   form,
+  multireducer: multireducer({
+    counter1: counter,
+    counter2: counter,
+    counter3: counter
+  }),
   info,
   widgets,
   singleArticle,

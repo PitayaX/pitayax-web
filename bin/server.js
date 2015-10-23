@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-require('../server.babel'); // babel registration (runtime transpilation for node)
-var path = require('path');
-var rootDir = path.resolve(__dirname, '..');
+require('../server.babel') // babel registration (runtime transpilation for node)
+var path = require('path')
+var rootDir = path.resolve(__dirname, '..')
 /**
  * Define isomorphic constants.
  */
@@ -25,4 +25,4 @@ global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/w
   .development(__DEVELOPMENT__)
   .server(rootDir, function() {
     require('../src/server');
-  });
+  })

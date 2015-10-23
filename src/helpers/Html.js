@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom/server'
 import serialize from 'serialize-javascript'
 import DocumentMeta from 'react-document-meta'
-const cdn = '//cdnjs.cloudflare.com/ajax/libs/'
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -15,27 +15,24 @@ const cdn = '//cdnjs.cloudflare.com/ajax/libs/'
 export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
-    component: PropTypes.object,
+    component: PropTypes.node,
     store: PropTypes.object
   }
 
   render () {
     const { assets, component, store } = this.props
-    const content = React.renderToString(component)
+    const content = component ? ReactDOM.renderToString(component) : ''
 
     return (
       <html lang="en-us">
         <head>
-          <meta charSet="utf-8"/>
           {DocumentMeta.renderAsReact()}
 
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link href={cdn + 'font-awesome/4.3.0/css/font-awesome.min.css'}
-                media="screen, projection" rel="stylesheet" type="text/css" />
 
           {/* styles (will be present only in production with webpack extract text plugin) */}
-          {Object.keys(assets.styles).map((style, i) =>
-            <link href={assets.styles[style]} key={i} media="screen, projection"
+          {Object.keys(assets.styles).map((style, key) =>
+            <link href={assets.styles[style]} key={key} media="screen, projection"
                   rel="stylesheet" type="text/css"/>
           )}
         </head>

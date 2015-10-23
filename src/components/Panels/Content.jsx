@@ -8,10 +8,10 @@ import Articales from '../Articale/Articales'
 export default class Content extends Component {
   static propTypes = {
     tagHandler: T.func,
-    tagsData: T.array.required,
+    tagsData: T.array.isRequired,
     sortsData: T.array,
     sortHanlder: T.func,
-    articalesData: T.array.required,
+    articalesData: T.array,
     children: T.node
   }
 

@@ -7,7 +7,6 @@ import DocumentMeta from 'react-document-meta'
 import { connect } from 'react-redux'
 import * as singleArticleActions from 'redux/modules/singleArticle'
 import { isLoaded, load as loadArticle } from 'redux/modules/singleArticle'
-import { initializeWithKey } from 'redux-form'
 
 @connect(
   state => ({
@@ -17,8 +16,7 @@ import { initializeWithKey } from 'redux-form'
   }),
   dispatch => ({
     ...bindActionCreators({
-      ...singleArticleActions,
-      initializeWithKey
+      ...singleArticleActions
     }, dispatch)
   })
 )
@@ -30,8 +28,7 @@ class SingleArticle extends Component {
     data: PropTypes.object,
     error: PropTypes.string,
     loading: PropTypes.bool,
-    load: PropTypes.func.isRequired,
-    initializeWithKey: PropTypes.func.isRequired
+    load: PropTypes.func.isRequired
   }
   componentDidMount () {
     this.props.load(this.props.params.id)
@@ -40,8 +37,8 @@ class SingleArticle extends Component {
     const styles = require('./SingleArticle.scss')
     // debugger
     let myArticle=(
-      <div className={styles.mySpinnerParent}>
-        <div className={styles.mySpinner}>
+      <div >
+        <div>
           <i className="fa fa-spinner fa-spin"></i>
         </div>
       </div>
@@ -49,15 +46,15 @@ class SingleArticle extends Component {
     if (!this.props.loading) {
       myArticle = (
       <div>
-          <Article model={this.props.data} />
-          <hr className={styles.bottomHr}/>
-          <Bottom />
-          <div className={styles.fixedBtn}>
-            <a className={styles.goTop} href="#"> <i className="fa fa-angle-up"></i></a>
-            <a className={styles.goTop} href="#"><i className="fa fa-qrcode"></i></a>
-            <a className={styles.writer} href="#"><i className="fa fa-pencil"></i></a>
-          </div>
+        <Article model={this.props.data} />
+        <hr className={styles.bottomHr}/>
+        <Bottom />
+        <div className={styles.fixedBtn}>
+          <a className={styles.goTop} href="#"> <i className="fa fa-angle-up"></i></a>
+          <a className={styles.goTop} href="#"><i className="fa fa-qrcode"></i></a>
+          <a className={styles.writer} href="#"><i className="fa fa-pencil"></i></a>
         </div>
+      </div>
       )
     }
     return myArticle

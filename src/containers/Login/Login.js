@@ -1,14 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import DocumentMeta from 'react-document-meta'
 import * as authActions from 'redux/modules/auth'
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth'
 
 @connect(
   state => ({ user: state.auth.user }),
-  dispatch => bindActionCreators(authActions, dispatch)
-)
+  authActions)
 export default class Login extends Component {
   static propTypes = {
     user: PropTypes.object,
@@ -16,15 +13,9 @@ export default class Login extends Component {
     logout: PropTypes.func
   }
 
-  static fetchData (store) {
-    if (!isAuthLoaded(store.getState())) {
-      return store.dispatch(loadAuth())
-    }
-  }
-
   handleSubmit (event) {
     event.preventDefault()
-    const input = this.refs.username.getDOMNode()  // need for getDOMNode() call going away in React 0.14
+    const input = this.refs.username
     this.props.login(input.value)
     input.value = ''
   }

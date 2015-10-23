@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
-import { bindActionCreators } from 'redux'
+import { IndexLink, Link } from 'react-router'
 import { connect } from 'react-redux'
 import DocumentMeta from 'react-document-meta'
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info'
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth'
 import { InfoBar } from 'components'
-import { createTransitionHook } from 'helpers/universalRouter'
+import { pushState } from 'redux-router'
+import config from '../../config'
 
 const title = 'PitayaX Web'
 const description = ''
@@ -19,49 +19,50 @@ const meta = {
   }
 }
 
+const NavbarLink = ({ to, className, component, children }) => {
+  const Comp = component || Link
+
+  return (
+    <Comp to={to} className={className} activeStyle={{
+      color: '#33e0ff'
+    }}>
+      {children}
+    </Comp>
+  )
+}
+
 @connect(
     state => ({ user: state.auth.user }),
-    dispatch => bindActionCreators({ logout }, dispatch))
+    { logout, pushState })
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    pushState: PropTypes.func.isRequired
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
-  }
-
-  componentWillMount () {
-    const { router, store } = this.context
-    this.transitionHook = createTransitionHook(store)
-    router.addTransitionHook(this.transitionHook)
   }
 
   componentWillReceiveProps (nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.context.router.transitionTo('/loginSuccess')
+      this.props.pushState(null, '/loginSuccess')
     } else if (this.props.user && !nextProps.user) {
       // logout
-      this.context.router.transitionTo('/')
+      this.props.pushState(null, '/')
     }
   }
 
-  componentWillUnmount () {
-    const { router } = this.context
-    router.removeTransitionHook(this.transitionHook)
-  }
-
-  static fetchData (store) {
+  static fetchData (getState, dispatch) {
     const promises = []
-    if (!isInfoLoaded(store.getState())) {
-      promises.push(store.dispatch(loadInfo()))
+    if (!isInfoLoaded(getState())) {
+      promises.push(dispatch(loadInfo()))
     }
-    if (!isAuthLoaded(store.getState())) {
-      promises.push(store.dispatch(loadAuth()))
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()))
     }
     return Promise.all(promises)
   }
@@ -74,7 +75,7 @@ export default class App extends Component {
   render () {
     const { user } = this.props
     const styles = require('./App.scss')
-    const newArticle='/p/'+Math.random().toString().substr(2)
+    const newArticle='/p/123'
     const home='/'
     return (
       <div className={styles.app}>

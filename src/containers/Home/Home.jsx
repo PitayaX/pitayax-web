@@ -41,16 +41,16 @@ export default class Home extends Component {
     currentSort: PropTypes.object
   }
 
-  static fetchData (store) {
-    if (!isLoaded(store.getState())) {
-      return store.dispatch(loadTag())
+  static fetchDataDeferred (getState, dispatch) {
+    if (!isLoaded(getState())) {
+      return dispatch(loadTag())
     }
 
-    if (!isArticalesLoaded(store.getState())) {
-      return store.dispatch(queryArticales())
+    if (!isArticalesLoaded(getState())) {
+      return dispatch(queryArticales())
     }
 
-    return store.dispatch(loadSorts())
+    return dispatch(loadSorts())
   }
 
   render () {

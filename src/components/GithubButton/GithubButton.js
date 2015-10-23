@@ -27,7 +27,7 @@ export default class GithubButton extends Component {
               scrolling="0"
               width={width}
               height={height}
-              style={{ border: 'none', width, height }} />
+              style={{ border: 'none', width, height }}></iframe>
     )
   }
 }

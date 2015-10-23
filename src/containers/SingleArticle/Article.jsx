@@ -3,6 +3,7 @@ import ArticleTitle from './articleTitle.jsx'
 import ArticleBody from './articleBody.jsx'
 import ArticleAuthorInfo from './articleAuthorInfo.jsx'
 import DuoShuo from './duoshuo.jsx'
+import classNames from 'classNames'
 const Article = React.createClass({
   propTypes: {
     model: React.PropTypes.shape({
@@ -20,8 +21,9 @@ const Article = React.createClass({
   },
   render () {
     const styles=require('./SingleArticle.scss')
+    const containerPost=classNames(styles.container, styles.post)
     return(
-      <div className={styles.container+' '+styles.post}>
+      <div className={containerPost}>
         <ArticleAuthorInfo author={this.props.model.author} publishDate={this.props.model.publishDate} words={this.props.model.authorWords} follows={this.props.model.authorFollows} likes={this.props.model.authorLikes} />
         <div className={styles.myArticle}>
           <ArticleTitle author={this.props.model.author} words={this.props.model.articleWords} readers={this.props.model.articleReaders} comments={this.props.model.articleComments} likes={this.props.model.articleLikes} />

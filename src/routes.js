@@ -1,31 +1,29 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { IndexRoute, Route } from 'react-router'
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth'
 import {
     App,
+    Chat,
     Home,
     Widgets,
     About,
     Login,
-    RequireLogin,
     LoginSuccess,
     Survey,
     NotFound,
     SingleArticle
   } from 'containers'
 
-export default function (store) {
+export default (store) => {
   return (
     <Route component={App}>
       <Route path="/" component={Home}/>
-      <Route path="/p/:id" component={SingleArticle}/>
-      <Route path="/widgets" component={Widgets}/>
-      <Route path="/about" component={About}/>
-      <Route path="/login" component={Login}/>
-      <Route component={RequireLogin} onEnter={RequireLogin.onEnter(store)}>
-        <Route path="/loginSuccess" component={LoginSuccess}/>
-      </Route>
-      <Route path="/survey" component={Survey}/>
-      <Route path="*" component={NotFound}/>
+      <Route path="/p/:id" component={SingleArticle} />
+      <Route path="about" component={About}/>
+      <Route path="login" component={Login}/>
+      <Route path="survey" component={Survey}/>
+      <Route path="widgets" component={Widgets}/>
+      <Route path="*" component={NotFound} status={404} />
     </Route>
   )
 }

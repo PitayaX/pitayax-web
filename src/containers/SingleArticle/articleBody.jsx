@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classNames'
 
 const ArticleBody = React.createClass({
   propTypes: {
@@ -7,9 +8,9 @@ const ArticleBody = React.createClass({
   },
   render () {
     const styles=require('./SingleArticle.scss')
-    this.props.className = this.props.className || styles.articleBody
+    const articleBody = classNames(styles.articleBody, this.props.className)
     return (
-      <div className={this.props.className}>
+      <div className={articleBody}>
         <pre>
           {this.props.text}
         </pre>

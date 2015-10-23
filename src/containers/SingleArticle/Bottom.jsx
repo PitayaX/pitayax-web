@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 const Bottom=React.createClass({
   propTypes: {
@@ -6,9 +7,9 @@ const Bottom=React.createClass({
   },
   render () {
     const styles = require('./SingleArticle.scss')
-    this.props.className= this.props.className || styles.bottom
+    const bottom = classNames(styles.bottom, this.props.className)
     return(
-      <div className={this.props.className}>
+      <div className={bottom}>
           <p>
             Design & Supported by PitayaX Open Source Team
           </p>
