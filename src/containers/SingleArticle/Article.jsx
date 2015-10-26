@@ -3,7 +3,7 @@ import ArticleTitle from './articleTitle.jsx'
 import ArticleBody from './articleBody.jsx'
 import ArticleAuthorInfo from './articleAuthorInfo.jsx'
 import DuoShuo from './duoshuo.jsx'
-import classNames from 'classNames'
+import classNames from 'classnames'
 const Article = React.createClass({
   propTypes: {
     model: React.PropTypes.shape({
