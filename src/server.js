@@ -20,7 +20,7 @@ import { Provider } from 'react-redux'
 import qs from 'query-string'
 import getRoutes from './routes'
 import getStatusFromRoutes from './helpers/getStatusFromRoutes'
-
+import callback from './callbacks'
 const pretty = new PrettyError()
 const app = new Express()
 const server = new http.Server(app)
@@ -39,6 +39,10 @@ app.use('/api', (req, res) => {
   proxy.web(req, res)
 })
 
+app.use('/cb', require('body-parser').json(), (req, res, next) => {
+  callback(req, res)
+})
+
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
   let json
@@ -54,11 +58,13 @@ proxy.on('error', (error, req, res) => {
 })
 
 app.use((req, res) => {
+
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh()
   }
+
   const client = new ApiClient(req)
 
   const store = createStore(reduxReactRouter, getRoutes, createHistory, client)

@@ -12,6 +12,7 @@ import tags from './tag'
 import sorts from './sorts'
 import articales from './articales'
 
+
 export default combineReducers({
   router: routerStateReducer,
   auth,
@@ -26,5 +27,5 @@ export default combineReducers({
   singleArticle,
   tags,
   sorts,
-  articales
+  articales,
 })

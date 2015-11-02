@@ -3,7 +3,6 @@ import Bottom from './Bottom.jsx'
 import Article from './Article.jsx'
 
 import { bindActionCreators } from 'redux'
-import DocumentMeta from 'react-document-meta'
 import { connect } from 'react-redux'
 import * as singleArticleActions from 'redux/modules/singleArticle'
 import { isLoaded, load as loadArticle } from 'redux/modules/singleArticle'
