@@ -1,0 +1,51 @@
+
+$authorInfoBgColor: #FFFFFF;
+
+.profile-container{
+  width: 270px;
+  background-color:$authorInfoBgColor;
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.profile-container .profile-row-avatar
+{
+  text-align: center;
+}
+.profile-container .avatar-row
+{
+  text-align: center;
+  margin: 5px auto;
+  overflow: hidden;
+}
+.avatar-row .avatar-row-a
+{
+ display: block;
+ width: 40%;
+ margin: 5px auto;
+}
+
+.profile-container .avatar-row img
+{
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.profile-row-name
+{
+  overflow: hidden;
+}
+.profile-row-name .name-row
+{
+  font-size: 2em;
+}
+.profile-row-edit
+{
+  margin:20px;
+}
+.profile-row-edit .edit-row-a
+{
+  text-decoration: none;
+}

@@ -1,0 +1,22 @@
+
+#backtop
+{
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 50px;
+  z-index: 9000;
+  display: block;
+}
+#backtop a
+{
+  width: 50px;
+  display: block;
+  height: 50px;
+  background: url(/src/components/Images/fixed_1.gif) no-repeat 0 0;
+}
+#backtop a.back-top
+{
+    margin-bottom: 8px;
+    background-position: 0 0;
+}
