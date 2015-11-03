@@ -11,7 +11,8 @@ import {
     LoginSuccess,
     Survey,
     NotFound,
-    SingleArticle
+    SingleArticle,
+    User
   } from 'containers'
 
 export default (store) => {
@@ -21,6 +22,7 @@ export default (store) => {
       <Route path="/p/:id" component={SingleArticle} />
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
+      <Route path="user" component={User}/>
       <Route path="survey" component={Survey}/>
       <Route path="widgets" component={Widgets}/>
       <Route path="*" component={NotFound} status={404} />

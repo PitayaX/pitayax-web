@@ -9,23 +9,22 @@ import info from './info'
 import widgets from './widgets'
 import singleArticle from './singleArticle'
 import tags from './tag'
+import tag from './tag2'
 import sorts from './sorts'
 import articales from './articales'
+import post from './post'
 
 
 export default combineReducers({
   router: routerStateReducer,
   auth,
   form,
-  multireducer: multireducer({
-    counter1: counter,
-    counter2: counter,
-    counter3: counter
-  }),
   info,
   widgets,
   singleArticle,
   tags,
   sorts,
   articales,
+  tag,
+  post
 })
