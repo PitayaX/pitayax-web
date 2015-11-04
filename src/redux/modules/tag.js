@@ -41,7 +41,6 @@ export function isLoaded (globalState) {
 }
 
 export function load () {
-  debugger
   return {
     types: [ LOAD, LOAD_SUCCESS, LOAD_FAIL ],
     promise: (client) => client.get('/tag/query/param1') // params not used, just shown as demonstration

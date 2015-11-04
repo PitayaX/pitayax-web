@@ -1,6 +1,6 @@
-const LOAD = 'LOAD'
-const LOAD_SUCCESS = 'LOAD_SUCCESS'
-const LOAD_FAIL = 'LOAD_FAIL'
+const LOAD = 'singleArticle/LOAD'
+const LOAD_SUCCESS = 'singleArticle/LOAD_SUCCESS'
+const LOAD_FAIL = 'singleArticle/LOAD_FAIL'
 
 
 const initialState = {
