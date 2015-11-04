@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as singleArticleActions from 'redux/modules/singleArticle'
 import { isLoaded, load as loadArticle } from 'redux/modules/singleArticle'
-
+import classNames from 'classnames'
 @connect(
   state => ({
     data: state.singleArticle.data,
@@ -34,11 +34,12 @@ class SingleArticle extends Component {
   }
   render () {
     const styles = require('./SingleArticle.scss')
+    const containerPost=classNames("fa", "fa-spinner", styles.myFaSpin)
     // debugger
     let myArticle=(
-      <div >
-        <div>
-          <i className="fa fa-spinner fa-spin"></i>
+      <div className={styles.mySpinnerParent}>
+        <div className={styles.mySpinner}>
+          <i className={containerPost}></i>
         </div>
       </div>
     )

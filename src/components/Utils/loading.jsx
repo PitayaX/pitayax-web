@@ -1,5 +1,4 @@
 import React, { propTypes } from 'react'
-import Spinner from 'react-spinkit'
 import ReactLoading from 'react-loading'
 
 const Loading= React.createClass({
