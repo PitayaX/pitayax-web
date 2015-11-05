@@ -64,9 +64,8 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh()
   }
-
-  const client = new ApiClient(req)
-
+  
+  const client = ApiClient(req)
   const store = createStore(reduxReactRouter, getRoutes, createHistory, client)
 
   function hydrateOnClient () {
