@@ -75,7 +75,7 @@ export default class App extends Component {
   render () {
     const { user } = this.props
     const styles = require('./App.scss')
-    const newArticle='/p/123'
+    const newArticle='/newp'
     const home='/'
     return (
       <div className={styles.app}>

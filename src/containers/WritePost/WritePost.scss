@@ -1,0 +1,67 @@
+.writePost {
+  .title {
+    h3 {
+      float: left;
+      color: #124062;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft Yahei", "微软雅黑", Tahoma, Arial, STHeiti, sans-serif;
+      cursor: default;
+    }
+  }
+  .editorTitle {
+    margin: 5px;
+    font-size: 1pc;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    .input {
+      width: 100%;
+      outline: 0;
+      border-style:none;
+      padding: 5px;
+      font-size: 1.6em;
+    }
+    .strip {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      transition: all .3s;
+    }
+  }
+  .editorTag {
+    margin: 5px;
+    font-size: 0.5pc;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    .input {
+      width: 100%;
+      outline: 0;
+      border-style:none;
+      padding: 5px;
+      font-size: 1.6em;
+    }
+    .strip {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      transition: all .3s;
+    }
+  }
+  .editorButton {
+    clear: left;
+    float: right;
+  }
+  .editing {
+
+  }
+  .submitted {
+
+  }
+  .error {
+
+  }
+}
