@@ -9,6 +9,7 @@ import { load as loadSorts } from 'redux/modules/sorts'
 import { list, listByTag } from 'redux/modules/articales'
 import { isArticalesLoaded, list as queryArticales } from 'redux/modules/articales'
 
+// TODO: Change to post reducer
 @connect(state => ({
   sorts: state.sorts.data,
   tags: state.tags.data,
@@ -26,7 +27,6 @@ dispatch => {
       ...tagActions
     }, dispatch)
   , dispatch })})
-
 export default class Home extends Component {
   static propTypes = {
     tags: PropTypes.array,
@@ -40,18 +40,19 @@ export default class Home extends Component {
     currentTag: PropTypes.object,
     currentSort: PropTypes.object
   }
-
-  static fetchDataDeferred (getState, dispatch) {
-    if (!isLoaded(getState())) {
-      return dispatch(loadTag())
-    }
-
-    if (!isArticalesLoaded(getState())) {
-      return dispatch(queryArticales())
-    }
-
-    return dispatch(loadSorts())
-  }
+  // TODO: Move logic to componentDidMount
+  // 
+  // static fetchDataDeferred (getState, dispatch) {
+  //   if (!isLoaded(getState())) {
+  //     return dispatch(loadTag())
+  //   }
+  //
+  //   if (!isArticalesLoaded(getState())) {
+  //     return dispatch(queryArticales())
+  //   }
+  //
+  //   return dispatch(loadSorts())
+  // }
 
   render () {
 
@@ -66,7 +67,6 @@ export default class Home extends Component {
         <Content tagsData={tags} sortsData={sorts} articalesData={articales} tagHandler={tag => {
           return dispatch(listByTag(tag, currentSort))
         }} sortHanlder={(sort, e) => {
-          debugger
           return dispatch(listByTag(currentTag, sort))
         }} />
         {articaleError && <div> Sorry, occur error when load articales. Error: {articaleError} </div>}

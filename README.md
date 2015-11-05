@@ -9,11 +9,11 @@
 - redux `>=2.0.0`
 - react-router `>=1.0.0`
 
-#### 如何使用
+## 如何使用
 
 请按照git flow的流程进行开发，模板会在`starter`分支供随时参考
 
-#### 目录结构
+## 目录结构
 
 本项目目录结构的基本说明：
 
@@ -52,3 +52,11 @@
   server.babel.js
   tests.webpack.js // 测试用
 ```
+
+## 约定
+
+#### Redux
+
+*actionName*: `${reducerName}/${actionType}`
+
+  reducerName小写，actionType大写
