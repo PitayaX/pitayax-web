@@ -1,32 +1,36 @@
-import React, { PropTypes as T } from 'react'
+import React, { propTypes } from 'react'
+import TagItem from './tagitem'
 
-const Tags = React.createClass({
+const Tags= React.createClass({
   propTypes: {
-    data: T.array.isRequired,
-    onClick: T.func
+    tags: React.PropTypes.array.isRequired,
+    selectedTags: React.PropTypes.array.isRequired,
+    onClick: React.PropTypes.func.isRequired
   },
-  getInitialState () {
-    return { activeId: null }
+
+  handleClick (tag) {
+    this.props.onClick(tag)
   },
   render () {
-    const { data, onClick, ...others } = this.props
     const styles = require('./tag.scss')
-    const tags = data&&data.map( (item) => {
+    const { tags, selectedTags }=this.props
+
+    const  TagList = tags.map(function (value) {
+      const  currentTag = selectedTags.find((t) =>  t.name === value.name )
+       // if have no selected yet, it will be added to selected bucket
+      const tagItemClass= currentTag === undefined ? '':styles['active']
       return (
-        ( <span><a className={styles.tag +" "+ (this.state.activeId === item._id? styles.active : "")}
-        onClick={this.onClickHandler(item, onClick)}>{item.text}</a></span> )
-      )
-    })
-    return ( <div>{tags}</div> )
-  },
+          <TagItem className={tagItemClass} tag={value} onClick={this.handleClick} />
+        )
+    }, this)
 
-  onClickHandler (tagData, eventHandler) {
-    return (e) => {
-      this.setState({ activeId: tagData._id })
-
-      eventHandler && eventHandler(tagData, e)
-    }
+    return (
+      <div className={styles['tag-list']}>
+        <ul>
+          {TagList}
+        </ul>
+      </div>
+    )
   }
 })
-
 export default Tags
