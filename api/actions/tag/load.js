@@ -14,7 +14,7 @@ export function getTags (req) {
   return tags
 }
 
-export default function query (req, params) {
+export default function load (req, params) {
   return new Promise((resolve, reject) => {
     // make async call to database
     setTimeout(() => {
