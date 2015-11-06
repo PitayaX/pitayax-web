@@ -1,3 +1,4 @@
+@import 'bootstrap';
 .headBar{
   border-bottom: 0.25em solid #F2C8A4;
   //padding-left: 1em;
@@ -50,10 +51,10 @@
   transition: all .3s;
 }
 :global(.modal-dialog) {
-  width: 50%;
+  width: initial;
   margin: auto;
   position: absolute;
-  top: 50%; left: 50%;
+  top: 45%; left: 50%;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);

@@ -12,6 +12,7 @@ export default class HeadBar extends Component {
 
   render () {
     const styles = require('./Header.scss')
+    const oAuthSrc = 'http://10.10.73.28:8001/auth?response_type=code&client_id=Blog&state=xyz%20&redirect_uri=http://localhost:3000/cb/login'
     let loginShow = (
       <div className={styles.headRight}>
         <input type="text" placeholder="搜索"/>
@@ -32,9 +33,17 @@ export default class HeadBar extends Component {
               {loginShow}
               <div style={{ clear: "both" }}></div>
               <Modal isShowed={this.state.loginModalShow} dimmerClassName='modal-dimmer' modalClassName='modal-dialog'>
-                <div className="modal-content">
-                  <div onClick={::this.loginClose_Onclick} style={{ float: 'right' }}><i className = "fa fa-times fa-2x"></i></div>
-                  <iframe onLoad={::this.loginModal_Onload} style={{ width: '100%' }} ref='oAuth' src="http://10.10.73.28:8001/auth?response_type=code&client_id=Blog&state=xyz%20&redirect_uri=http://localhost:3000/cb/login"></iframe>
+                <div className='modal-content'>
+                  <div onClick={::this.loginClose_Onclick} style={{color: 'white', position:'relative', top:'-1em', right:'1em', float: 'right', height: '0', width: '0' }}>
+                    <div style={{ backgroundColor:'black', width:'1em', height: '1em',position:'absolute', top: '0.5em', left:'0.35em' }}>
+                    </div>
+                    <div style={{position:'absolute'}}>
+                    <i className = "fa fa-times-circle fa-2x"></i>
+                    </div>
+                  </div>
+                  <div style={{ width: '100%', height:'100%' }}>
+                    <iframe style = {{margin: '0', padding: '0', border: '0'}} onLoad={::this.loginModal_Onload}  ref='oAuth' src={oAuthSrc}></iframe>
+                  </div>
                 </div>
              </Modal>
             </div> )
