@@ -8,7 +8,7 @@ class Bottom extends Component {
 
   render () {
 
-    const styles = require('./SingleArticle.scss')
+    const styles = require('./PostDetail.scss')
 
     return (
       <div>

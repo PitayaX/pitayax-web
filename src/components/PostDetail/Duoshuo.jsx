@@ -20,7 +20,7 @@ class DuoShuo extends Component {
     </div>
   )
   }
-  
+
   componentDidMount () {
     const currentGlobal=(window||global)
     currentGlobal.duoshuoQuery={ short_name: this.props.shortName }

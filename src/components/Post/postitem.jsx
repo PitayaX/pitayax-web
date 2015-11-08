@@ -1,11 +1,10 @@
 import React, { propTypes } from 'react'
 import { Link } from 'react-router'
 
-
 const PostItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
-    brief: React.PropTypes.string,
+    abstract: React.PropTypes.string,
     id: React.PropTypes.number
   },
   render () {
@@ -21,7 +20,7 @@ const PostItem = React.createClass({
           <h5>
             <Link to={`/p/${this.props.id}`}>{this.props.title}</Link>
           </h5>
-            <p className={styles['post-content']}>{this.props.brief}...</p>
+            <p className={styles['post-content']}>{this.props.abstract}...</p>
             <p className={styles['post-link']}>
               <a className={styles['post-link-a']} href="/collection/bDHhpK">13913篇文章</a>
              · 30.0K人关注

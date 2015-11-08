@@ -1,14 +1,13 @@
 import React, { Component, PropTypes as T } from 'react'
 import DuoShuo from './Duoshuo.jsx'
 import Author from './Author.jsx'
-import Article from './Article.jsx'
+import Content from './Content.jsx'
 import Bottom from './Bottom.jsx'
 import GoToTop from './GoToTop.jsx'
 import classNames from 'classnames'
 
 
-export default
-class SingleArticle extends Component {
+export default class PostDetail extends Component {
 
   constructor (props, context) {
     super(props, context)
@@ -17,21 +16,20 @@ class SingleArticle extends Component {
   }
 
   static propTypes ={
-    states: T.object.isRequired,
-    actions: T.object.isRequired
+    post: T.object.isRequired,
+    loadPost: T.func.isRequired
   }
 
   componentDidMount () {
-    this.props.actions.load(this.props.params.id)
+    this.props.loadPost(this.props.params.id)
   }
 
   render () {
 
-    const styles = require('./SingleArticle.scss')
+    const styles = require('./PostDetail.scss')
     const containerPost=classNames(styles.container, styles.post)
     const mySpinner=classNames("fa", "fa-spinner", styles.myFaSpin)
-    const { states } = this.props
-    const { author, article } = states.data
+    const { post } = this.props
 
     // debugger
     let myArticle=(
@@ -41,12 +39,13 @@ class SingleArticle extends Component {
         </div>
       </div>
     )
-    if (!states.loading) {
+    if (post.isLoaded) {
+      const { author, article } = post.post
       myArticle = (
       <div>
         <div className={containerPost}>
           <Author author={author} />
-          <Article article={article} />
+          <Content post={article} />
           <DuoShuo {...article.comments} />
         </div>
         <Bottom />

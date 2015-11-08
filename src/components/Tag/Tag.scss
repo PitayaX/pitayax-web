@@ -1,5 +1,7 @@
 $tagContainerBgColor: #FFFFFF;
-$tagItemHoverBgColor:#ff8a21;
+$tagItemHoverBgColor:#FF8A21;
+$tagItemActiveBgColor:#DE7518;
+
 .tag-container
 {
  background-color: $tagContainerBgColor;
@@ -16,10 +18,9 @@ $tagItemHoverBgColor:#ff8a21;
 }
 .tag-list ul
 {
-  padding-left: 32px;
-  margin-top: 50px;
   margin-left: 0;
   list-style: none;
+  float: left;
 }
 .tag-list ul a:hover
 {
@@ -27,7 +28,7 @@ $tagItemHoverBgColor:#ff8a21;
 }
 .tag-list .tag-item a.active
 {
-  background-color:$tagItemHoverBgColor;
+  background-color:$tagItemActiveBgColor;
 }
 .tag-list ul a
 {

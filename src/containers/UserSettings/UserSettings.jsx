@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 
 export default class UserSettings extends Component {
   render () {
+    const styles = require('./UserSettings.scss')
     return (
-      <div className="settings-main">
-        <div className="settings-title">
-           <p><i className="fa fa-cogs fa-3x"></i>设置</p>
+      <div className={styles['settings-main']}>
+        <div className={styles['settings-title']}>
+           <h2><i className="fa fa-cogs"></i>设置</h2>
         </div>
-        <div className="settings-body">
-          <p><i className="icon-cogs icon-large"></i> <h1>设置</h1></p>
+        <div className={styles['settings-body']}>
+          <p><i className="icon-cogs icon-large"></i></p>
         </div>
       </div>
     )

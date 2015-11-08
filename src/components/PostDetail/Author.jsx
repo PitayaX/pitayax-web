@@ -1,8 +1,7 @@
 import React, { Component, PropTypes as T } from 'react'
 
 
-export default
-class Author extends Component {
+export default class Author extends Component {
 
   constructor (props, context) {
     super(props, context)
@@ -14,7 +13,7 @@ class Author extends Component {
 
   render () {
 
-    const styles = require('./SingleArticle.scss')
+    const styles = require('./PostDetail.scss')
     const author = this.props.author
     const avatar = require('./avatar.png')
 

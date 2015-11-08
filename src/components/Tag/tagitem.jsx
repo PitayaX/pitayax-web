@@ -3,7 +3,7 @@ import React, { propTypes } from 'react'
 const TagItem= React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired,
-    onClick: React.PropTypes.func,
+    onSelect: React.PropTypes.func,
     className: React.PropTypes.string
   },
   getInitialState () {
@@ -11,14 +11,15 @@ const TagItem= React.createClass({
       className: ''
     }
   },
-  handleClick () {
-    this.props.onClick(this.props.tag)
+
+  handleSelect () {
+    this.props.onSelect(this.props.tag.name)
   },
   render () {
     const styles = require('./tag.scss')
     return (
       <li className={styles['tag-item']}>
-        <a className={this.props.className} ref="thisTagItem"  href="javascript:void(null);" onClick={this.handleClick}>
+        <a className={this.props.className} ref="thisTagItem"  href="javascript:void(null);" onClick={this.handleSelect}>
           {this.props.tag.name}
         </a>
       </li>

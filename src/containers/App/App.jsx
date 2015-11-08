@@ -81,9 +81,9 @@ export default class App extends Component {
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
         <nav className={styles.navbar}>
-          <Link to={home}><i className='fa fa-home'></i></Link>
+          <Link to={home} className="active"><i className='fa fa-home'></i></Link>
           <a><i className="fa fa-th"></i></a>
-          <Link to={newArticle}><i className="fa fa-edit"></i></Link>
+          <Link to={newArticle} className="active"><i className="fa fa-edit"></i></Link>
         </nav>
         <div className={styles.appContent}>
           {this.props.children}

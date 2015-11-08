@@ -64,7 +64,7 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh()
   }
-  
+
   const client = ApiClient(req)
   const store = createStore(reduxReactRouter, getRoutes, createHistory, client)
 
@@ -127,7 +127,7 @@ if (config.port) {
     if (err) {
       console.error(err)
     }
-    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort)
+    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.name, config.apiPort)
     console.info('==> 💻  Open http://localhost:%s in a browser to view the app.', config.port)
   })
 } else {

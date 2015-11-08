@@ -1,20 +1,16 @@
 import React, { propTypes } from 'react'
 import Loading from '../Utils/loading'
-import TagList from './taglist'
+import TagList from './TagList'
 
 const TagContainer= React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired,
-    onClick: React.PropTypes.func.isRequired
-  },
-
-  handleClick (tagId) {
-    this.props.onClick(tagId)
+    onSelectTag: React.PropTypes.func.isRequired
   },
 
   render () {
     const styles = require('./tag.scss')
-    const { tag, onClick }=this.props
+    const { tag, onSelectTag }=this.props
     let loading=null
     if (tag.isLoading) {
       // loading= <Loading className="spinner" />
@@ -22,7 +18,7 @@ const TagContainer= React.createClass({
       loading =<Loading type="spokes" />
     }
     else {
-      loading=  <TagList tags={tag.tags} selectedTags={tag.selectedTags} onClick={onClick} />
+      loading=  <TagList tags={tag.tags} selectedTags={tag.selectedTags} onSelectTag={onSelectTag} />
     }
     return (
       <div className={styles['tag-container']}>

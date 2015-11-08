@@ -22,6 +22,7 @@ const POSTSORTBY={ NEW: 'NEW', HOT: 'HOT', LIKE: 'LIKE' }
 const initialState = {
   isLoading: false,
   isLoaded: false,
+  posts: [],
   sortTypes: POSTSORTBY,
   error: null
 }
@@ -31,14 +32,12 @@ export default function reducer (state = initialState, action = {}) {
   switch (action.type) {
 /* load posts action  */
   case LOAD_POSTS_REQUEST:
-    console.log( new Date() )
     return {
       ...state,
       isLoading: true,
       isLoaded: false
     }
   case LOAD_POSTS_SUCCESS: /* load all tag success */
-    console.log( new Date() )
     return {
       ...state,
       isLoading: false,
@@ -137,10 +136,10 @@ export function loadPosts () {
   }
 }
 // get post detail with post id
-export function loadPost () {
+export function loadPost (id) {
   return {
     types: [ LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE ],
-    promise: (client) => client.get('/post/load')
+    promise: (client) => client.get(`/singleArticle/load/${id}`)
   }
 }
 
@@ -157,9 +156,9 @@ export function isLoaded (postState) {
   return postState && postState.isLoaded
 }
 
-export function postSort (sortBy) {
+export function sortPost (sortBy) {
   return{
     type: POSTS_SORT,
-    sortBy: sortBy.code
+    sortBy
   }
 }

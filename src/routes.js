@@ -5,7 +5,7 @@ import {
     App,
     Home,
     NotFound,
-    SingleArticle,
+    Detail,
     User,
     UserSettings,
     WritePost
@@ -16,7 +16,7 @@ export default (store) => {
     <Route component={App}>
       <Route path="/" component={Home}/>
       <Route path="/newp" component={WritePost} />
-      <Route path="/p/:id" component={SingleArticle} />
+      <Route path="/p/:id" component={Detail} />
       <Route path="/user" component={User} />
       <Route path="/user/settings" component={UserSettings} />
       <Route path="*" component={NotFound} status={404} />

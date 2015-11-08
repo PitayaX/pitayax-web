@@ -1,48 +1,77 @@
-const LOAD = "tag/load"
-const LOAD_SUCCESS = "tag/load_success"
-const LOAD_FAIL = "tag/load_fail"
+/* action type for tag section */
+const LOAD_TAGS_REQUEST = 'tag/LOAD_TAGS_REQUEST'
+const LOAD_TAGS_SUCCESS = 'tag/LOAD_TAGS_SUCCESS'
+const LOAD_TAGS_FAILURE = 'tag/LOAD_TAGS_FAILURE'
 
+/* select tag  action */
+const SELECT_TAGS = 'tag/SELECT_TAGS'
+
+ /* initial state */
 const initialState = {
-  loaded: false
+  isLoading: false,
+  isLoaded: false,
+  tags: [],
+  selectedTags: [],
+  error: null
 }
 
+/* define reducer */
 export default function reducer (state = initialState, action = {}) {
   switch (action.type) {
-  case LOAD:
+  case LOAD_TAGS_REQUEST:
     return {
       ...state,
-      loading: true
+      isLoading: true,
+      isLoaded: false
     }
-  case LOAD_SUCCESS:
+  case LOAD_TAGS_SUCCESS: /* load all tag success */
     return {
       ...state,
-      loading: false,
-      loaded: true,
-      data: action.result,
-      error: null
+      isLoading: false,
+      isLoaded: true,
+      tags: action.result
     }
-  case LOAD_FAIL:
+  case LOAD_TAGS_FAILURE:
     return {
       ...state,
-      loading: false,
-      loaded: false,
-      data: null,
+      isLoading: false,
+      isLoaded: false,
       error: action.error
     }
-    break
+  case SELECT_TAGS:
+    return {
+      ...state,
+      selectedTags: getSelectedTags(state.selectedTags, action.tag) /* add selected tag to container*/
+    }
   default:
     return state
-    break
   }
 }
 
-export function isLoaded (globalState) {
-  return globalState.tags && globalState.tags.loaded
+/* get selected tag collection after a tag be clicked */
+function getSelectedTags (selectedTags, newTag) {
+  if (selectedTags.length ===0) {
+    return  [ ...selectedTags, newTag ]
+  }
+  const currentTag=selectedTags.find((t) => t===newTag)
+  return currentTag !== undefined ? selectedTags.filter(t => t !== currentTag): [ ...selectedTags, newTag ]
 }
 
-export function load () {
+/* action creator */
+
+export function loadTags () {
   return {
-    types: [ LOAD, LOAD_SUCCESS, LOAD_FAIL ],
-    promise: (client) => client.get('/tag/query/param1') // params not used, just shown as demonstration
+    types: [ LOAD_TAGS_REQUEST, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAILURE ],
+    promise: (client) => client.get('/tag/load')
+  }
+}
+export function isLoaded (tagState) {
+  return tagState && tagState.isLoaded
+}
+
+export function selectTag (tag) {
+  return {
+    type: SELECT_TAGS,
+    tag
   }
 }

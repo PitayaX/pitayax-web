@@ -2,11 +2,12 @@ import React, { propTypes } from 'react'
 
 const PostSort = React.createClass({
   propTypes: {
-    onSortPosts: React.PropTypes.func.isRequired,
+    onSort: React.PropTypes.func.isRequired,
     sortTypes: React.PropTypes.object.isRequired
   },
-  handleSortPosts (by) {
-    this.props.onSortPosts(by)
+
+  handleSort (by) {
+    this.props.onSort(by)
   },
 
   render () {
@@ -17,17 +18,17 @@ const PostSort = React.createClass({
         <div className={styles['post-sort-row']}>
           <ul>
             <li>
-              <a href="javascript:void(null);" onClick={() => this.handleSortPosts(sortTypes.NEW)} >
+              <a href="javascript:void(null);" onClick={() => this.handleSort(sortTypes.NEW)} >
                 <span>最新更新</span>
               </a>
             </li>
             <li>
-              <a href="javascript:void(null);" onClick={() => this.handleSortPosts(sortTypes.HOT)}>
+              <a href="javascript:void(null);" onClick={() => this.handleSort(sortTypes.HOT)}>
                 <span>热门排序</span>
               </a>
             </li>
             <li>
-              <a href="javascript:void(null);" onClick={() => this.handleSortPosts(sortTypes.WATCH)}>
+              <a href="javascript:void(null);" onClick={() => this.handleSort(sortTypes.WATCH)}>
                 <span>关注度排序</span>
               </a>
             </li>

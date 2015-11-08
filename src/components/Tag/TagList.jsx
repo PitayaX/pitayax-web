@@ -1,28 +1,25 @@
-import React, { propTypes } from 'react'
-import TagItem from './tagitem'
+import React, { PropTypes } from 'react'
+import TagItem  from './TagItem'
 
 const TagList= React.createClass({
   propTypes: {
     tags: React.PropTypes.array.isRequired,
     selectedTags: React.PropTypes.array.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    onSelectTag: React.PropTypes.func.isRequired
   },
 
-  handleClick (tagId, index) {
-    this.props.onClick(tagId)
-  },
   render () {
     const styles = require('./tag.scss')
-    const { tags, selectedTags }=this.props
+    const { tags, selectedTags, onSelectTag }=this.props
 
-    const  TagList = tags.map(function (value, index) {
-      const  currentTag = selectedTags.find((t) =>  t === value.id )
+    const  TagList = tags.map(function (tag, index) {
+      const  currentTag = selectedTags.find((t) =>  t=== tag.name )
        // if have no selected yet, it will be added to selected bucket
       const tagItemClass= currentTag === undefined ? '':styles['active']
       return (
-          <TagItem tagIndex={index} className={tagItemClass} tagId={value.id} tagName={value.tagName} onClick={this.handleClick} />
-        )
-    }, this)
+        <TagItem className={tagItemClass} onSelect={onSelectTag} tag={tag} />
+      )},
+      this)
 
     return (
       <div className={styles['tag-list']}>

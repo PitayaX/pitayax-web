@@ -6,7 +6,7 @@ class GoToTop extends Component {
     super(props, context)
   }
   render () {
-    const styles = require('./SingleArticle.scss')
+    const styles = require('./PostDetail.scss')
     return (
       <div className={styles.fixedBtn}>
         <a className={styles.goTop} href="#"> <i className="fa fa-angle-up"></i></a>

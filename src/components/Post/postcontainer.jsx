@@ -1,29 +1,28 @@
 import React, { propTypes } from 'react'
-import Loading from '../Utils/loading2'
-import { Dimmer } from 'pitaya-components'
-import PostSort from './postsort'
-import PostList from './postList'
+import Loading from '../Utils/loading'
+import PostList from './PostList'
+import PostSort from './PostSort'
 
 const PostContainer = React.createClass({
   propTypes: {
     post: React.PropTypes.object.isRequired,
-    onSortPosts: React.PropTypes.func.isRequired
+    onSortPost: React.PropTypes.func.isRequired
   },
 
   render () {
     const styles = require('./post.scss')
-    const { post, onSortPosts }=this.props
+    const { post, onSortPost }=this.props
     let loading=null
     if (post.isLoading) {
     /* loading= <Loading className="spinner" /> */
-      loading =<Loading />
+      loading =<Loading type="spokes" />
     }
     else {
-      loading=  <PostList data={post.posts} />
+      loading=  <PostList posts={post.posts} />
     }
     return (
       <div className={styles['post-container']}>
-        <PostSort  onSortPosts={onSortPosts} sortTypes={post.sortTypes} />
+        <PostSort  onSort={onSortPost} sortTypes={post.sortTypes} />
         {loading}
       </div>
     )

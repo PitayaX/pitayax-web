@@ -1,18 +1,18 @@
 import React, { propTypes } from 'react'
-import PostItem from './postitem'
+import PostItem from './PostItem'
 
 const PostList = React.createClass({
   propTypes: {
-    data: React.PropTypes.array
+    posts: React.PropTypes.array.isRequired
   },
 
   render () {
     const styles = require('./post.scss')
 
-    const dataList=this.props.data
-    const  postList = dataList.map(function (post, index) {
+    const dataList=this.props.posts
+    const  postList = dataList.map(function (p, i) {
       return (
-        <PostItem title={post.title} brief={post.brief} id={post.id} />
+        <PostItem title={p.title} abstract={p.abstract} id={p._id} />
       )
     })
     return (
