@@ -12,7 +12,7 @@ const Loading= React.createClass({
     }
   },
   render () {
-    const styles = require('./loading.scss')
+    const styles = require('./Loading.scss')
     return (
       <div className={styles['loading-container']}>
          <ReactLoading type={this.props.type} color="#e3e3e3"/>

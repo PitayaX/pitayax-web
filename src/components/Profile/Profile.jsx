@@ -1,13 +1,13 @@
 import React, { propTypes } from 'react'
-import Avatar from './avatar'
-import AuthorName from './name'
-import EditProfile from './editprofile'
-import AuthorStatistic from './statistic'
-import AuthorLink from './link'
+import Avatar from './Avatar'
+import AuthorName from './Name'
+import EditProfile from './EditProfile'
+import AuthorStatistic from './Statistic'
+import AuthorLink from './Link'
 
 const Profile =React.createClass({
   render () {
-    const styles=require('./avatar.scss')
+    const styles=require('./Avatar.scss')
     const avatarUrl = require('../Images/yemol.png')
     return (
       <div className={styles['profile-container']}>

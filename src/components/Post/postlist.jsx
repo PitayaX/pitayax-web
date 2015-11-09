@@ -7,7 +7,7 @@ const PostList = React.createClass({
   },
 
   render () {
-    const styles = require('./post.scss')
+    const styles = require('./Post.scss')
 
     const dataList=this.props.posts
     const  postList = dataList.map(function (p, i) {

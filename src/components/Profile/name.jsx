@@ -10,8 +10,9 @@ const AuthorName =React.createClass({
     authorName: React.PropTypes.string
   },
   render () {
+    const styles=require('./Avatar.scss')
     return (
-        <div className="name-row">
+        <div className={styles['name-row']}>
            <span>{this.props.authorName}</span>
         </div>
     )

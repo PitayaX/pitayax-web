@@ -8,7 +8,7 @@ const PostItem = React.createClass({
     id: React.PropTypes.number
   },
   render () {
-    const styles = require('./post.scss')
+    const styles = require('./Post.scss')
     return (
       <li className={styles['post-item-row']}>
         <div className={styles['post-item-avatar']}>

@@ -7,9 +7,10 @@ const EditProfile = React.createClass({
   },
 
   render () {
+    const styles=require('./Avatar.scss')
     return (
-      <div className="edit-row">
-        <Link to="/user/settings"  className="edit-row-a">
+      <div className={styles['edit-row']}>
+        <Link to="/user/settings"  className={styles['edit-row-a']}>
            <span>编辑个人介绍</span>
         </Link>
       </div>

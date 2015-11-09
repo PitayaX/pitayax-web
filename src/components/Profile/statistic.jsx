@@ -5,7 +5,7 @@ const AuthorStatistic =React.createClass({
     userId: React.PropTypes.string
   },
   render () {
-    const styles=require('./statistic.scss')
+    const styles=require('./Statistic.scss')
     return (
         <div className={styles['statistic-row']}>
           <ul>

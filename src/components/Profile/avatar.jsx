@@ -13,9 +13,10 @@ const Avatar =React.createClass({
     }
   },
   render () {
+    const styles=require('./Avatar.scss')
     return (
-      <div className="avatar-row">
-        <a className="avatar-row-a">
+      <div className={styles['avatar-row']}>
+        <a className={styles['avatar-row-a']}>
             <img src={this.props.imgUrl} title={this.props.authorName} />
         </a>
       </div>

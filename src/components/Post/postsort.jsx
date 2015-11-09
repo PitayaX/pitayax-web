@@ -11,7 +11,7 @@ const PostSort = React.createClass({
   },
 
   render () {
-    const styles = require('./post.scss')
+    const styles = require('./Post.scss')
     const { sortTypes } =this.props
     return (
       <div className={styles['post-sort-container']}>

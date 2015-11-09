@@ -5,9 +5,10 @@ const AuthorLink =React.createClass({
     userId: React.PropTypes.string
   },
   render () {
+    const styles=require('./Avatar.scss')
     const LinkImage = require('../Images/weixin.png')
     return (
-        <div className="link-row">
+        <div className={styles['ink-row']}>
           <img src={LinkImage} alt="weixin" />
         </div>
     )

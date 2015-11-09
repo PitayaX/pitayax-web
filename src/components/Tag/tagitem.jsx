@@ -16,7 +16,7 @@ const TagItem= React.createClass({
     this.props.onSelect(this.props.tag.name)
   },
   render () {
-    const styles = require('./tag.scss')
+    const styles = require('./Tag.scss')
     return (
       <li className={styles['tag-item']}>
         <a className={this.props.className} ref="thisTagItem"  href="javascript:void(null);" onClick={this.handleSelect}>

@@ -1,5 +1,5 @@
 import React, { propTypes } from 'react'
-import Loading from '../Utils/loading'
+import Loading from '../Utils/Loading'
 import PostList from './PostList'
 import PostSort from './PostSort'
 
@@ -10,7 +10,7 @@ const PostContainer = React.createClass({
   },
 
   render () {
-    const styles = require('./post.scss')
+    const styles = require('./Post.scss')
     const { post, onSortPost }=this.props
     let loading=null
     if (post.isLoading) {

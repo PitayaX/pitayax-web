@@ -12,7 +12,7 @@ const Loading= React.createClass({
     }
   },
   render () {
-    const styles = require('./loading.scss')
+    const styles = require('./Loading.scss')
     return (
       <div className={styles['loading-container']}>
          <Dimmer>

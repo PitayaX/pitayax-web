@@ -1,5 +1,5 @@
 import React, { propTypes } from 'react'
-import Loading from '../Utils/loading'
+import Loading from '../Utils/Loading'
 import TagList from './TagList'
 
 const TagContainer= React.createClass({
@@ -9,7 +9,7 @@ const TagContainer= React.createClass({
   },
 
   render () {
-    const styles = require('./tag.scss')
+    const styles = require('./Tag.scss')
     const { tag, onSelectTag }=this.props
     let loading=null
     if (tag.isLoading) {

@@ -9,7 +9,7 @@ const TagList= React.createClass({
   },
 
   render () {
-    const styles = require('./tag.scss')
+    const styles = require('./Tag.scss')
     const { tags, selectedTags, onSelectTag }=this.props
 
     const  TagList = tags.map(function (tag, index) {

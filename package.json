@@ -110,6 +110,7 @@
     "react-loading": "0.0.7",
     "react-redux": "^4.0.0",
     "react-router": "1.0.0-rc3",
+    "react-tabs": "^0.5.1",
     "redux": "3.0.3",
     "redux-form": "^2.2.6",
     "serialize-javascript": "1.1.2",

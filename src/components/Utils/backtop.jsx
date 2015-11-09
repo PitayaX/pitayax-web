@@ -23,7 +23,7 @@ const Backtop= React.createClass({
   },
 
   render () {
-    const styles = require('./backtop.scss')
+    const styles = require('./Backtop.scss')
     return (
       <div ref="backtotop" id="backtop">
         <a rel="nofollow" href="javascript:;" title="返回顶部" className={styles['back-top']}></a>
