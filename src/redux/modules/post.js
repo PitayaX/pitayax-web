@@ -15,8 +15,8 @@ const SAVE_POST_FAILURE = 'post/SAVE_POST_FAILURE'
 
 /* sort  post action */
 const POSTS_SORT = 'post/POSTS_SORT'
-
-const POSTSORTBY={ NEW: 'NEW', HOT: 'HOT', LIKE: 'LIKE' }
+const SORTKEYS = { NEW: "NEW", HOT: "HOT", LIKE: "LIKE" }
+const POSTSORTBY=[ { type: SORTKEYS.NEW, name: "最新更新" }, { type: SORTKEYS.HOT, name: "热门排序" }, { type: SORTKEYS.LIKE, name: "关注度排序" } ]
 
  /* initial state */
 const initialState = {
@@ -109,15 +109,15 @@ export default function reducer (state = initialState, action = {}) {
 function getSortedPost (posts, sortby) {
   const  newPosts=[ ...posts ]
   switch (sortby) {
-  case POSTSORTBY.NEW:// 最新更新排序
+  case SORTKEYS.NEW:// 最新更新排序
     newPosts.sort((a, b) => {
       return Date.parse(a.date) - Date.parse(b.date)
     })
-  case POSTSORTBY.HOT:// 最热门排序
+  case SORTKEYS.HOT:// 最热门排序
     newPosts.sort((a, b) => {
       return a.hotcount>b.hotcount
     })
-  case POSTSORTBY.LIKE:// 根据关注度排序
+  case SORTKEYS.LIKE:// 根据关注度排序
     newPosts.sort((a, b) => {
       return a.watchcount>b.watchcount
     })

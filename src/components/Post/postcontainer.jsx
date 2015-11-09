@@ -22,7 +22,7 @@ const PostContainer = React.createClass({
     }
     return (
       <div className={styles['post-container']}>
-        <PostSort  onSort={onSortPost} sortTypes={post.sortTypes} />
+        <PostSort  onSort={onSortPost} sortTypes={post.sortTypes} selectedSort={post.sortBy} />
         {loading}
       </div>
     )

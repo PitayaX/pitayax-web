@@ -3,7 +3,6 @@ import React, { Component, PropTypes as T } from 'react'
 export default class GroupLeft extends Component {
   static propTypes = {
     children: T.node
-
   }
 
   render () {

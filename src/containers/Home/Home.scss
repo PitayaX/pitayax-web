@@ -10,16 +10,16 @@ $navitemHoverBgColor:#ff8a21;
 .main{
   background-color: $mainBgColor;
   padding: 0;
-  margin: 2px auto auto 1px;
-}
-.main .middle{
- width: 300px;
- background-color: $middleBgColor;
- margin: 10px 5px;
- float: left;
-}
-.main .right{
- background-color: $middleBgColor;
- float: left;
- width: 75%;
+
+  .middle{
+     width: 20%;
+     background-color: $middleBgColor;
+     position: fixed;
+     height: 100%;
+  }
+
+  .right{
+     width: 75%;
+     margin-left: 20%;
+  }
 }
