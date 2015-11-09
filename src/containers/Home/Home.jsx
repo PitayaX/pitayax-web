@@ -61,7 +61,7 @@ const Home = React.createClass({
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <GroupLeft>
-             Left
+             <img src="http://upload.jianshu.io/daily_images/images/JF4BVe82TTNqzRvsZeuF.jpg" alt="Left" />
            </GroupLeft>
         </div>
         <div className={styles.right} id="colright">

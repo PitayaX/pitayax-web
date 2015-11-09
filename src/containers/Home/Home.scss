@@ -12,25 +12,14 @@ $navitemHoverBgColor:#ff8a21;
   padding: 0;
   margin: 2px auto auto 1px;
 }
-.main .left{
- width: 50px;
- background-color:$leftBgColor;
- float: left;
- position: fixed;
- z-index: 9999;
-}
 .main .middle{
  width: 300px;
  background-color: $middleBgColor;
  margin: 10px 5px;
- position: fixed;
- z-index: 10000;
+ float: left;
 }
 .main .right{
  background-color: $middleBgColor;
- position: relative;
- left: 310px;
- overflow: hidden;
- z-index: 1;
- max-width: 990px;
+ float: left;
+ width: 75%;
 }

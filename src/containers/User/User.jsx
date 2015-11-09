@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
 import { loadTags, isLoaded as isTagsLoaded, selectTag }  from 'redux/modules/tag'
 import { loadPosts, isLoaded as isPostsLoaded, sortPost }  from 'redux/modules/post'
@@ -53,6 +54,16 @@ const User = React.createClass({
     this.props.sortPost(sortBy)
   },
 
+  handleScrollBottom () {
+    console.log("scroll here")
+
+    // this.props.loadPosts()
+  },
+  handleScrollTop () {
+    console.log("scroll here")
+
+  },
+
   render () {
 
     const styles = require('./User.scss')
@@ -67,7 +78,9 @@ const User = React.createClass({
            </UserLeft>
         </div>
         <div className={styles.right} id="colright">
-          <Right tag={tag} post={post} onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
+          <ScrollPanel onScrollBottom={this.handleScrollBottom} onScrollTop={this.handleScrollTop}>
+            <Right tag={tag} post={post} onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
+          </ScrollPanel>
         </div>
       </div>
     )
