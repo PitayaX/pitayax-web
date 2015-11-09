@@ -61,7 +61,7 @@ const Home = React.createClass({
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <GroupLeft>
-             Left
+            &nbsp
            </GroupLeft>
         </div>
         <div className={styles.right} id="colright">
