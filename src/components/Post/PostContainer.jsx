@@ -12,18 +12,23 @@ const PostContainer = React.createClass({
   render () {
     const styles = require('./Post.scss')
     const { post, onSortPost }=this.props
-    let loading=null
-    if (post.isLoading) {
-    /* loading= <Loading className="spinner" /> */
-      loading =<Loading type="spokes" />
-    }
-    else {
-      loading=  <PostList posts={post.posts} />
-    }
+    // let newPostSection=null
+    // let oldPostSection=null
+    // if (post && post.posts.length>0) {
+    //   oldPostSection=<PostList posts={post.posts} ref="oldPostSection" />
+    // }
+    // if (post.isLoading) {
+    // /* loading= <Loading className="spinner" /> */
+    //   newPostSection =<Loading type="spokes" />
+    // }
+    // else {
+    //   newPostSection=  <PostList posts={post.posts} ref="newPostSection"  />
+    // }
     return (
       <div className={styles['post-container']}>
         <PostSort  onSort={onSortPost} sortTypes={post.sortTypes} selectedSort={post.sortBy} />
-        {loading}
+        <PostList posts={post.posts} />
+        {post.isLoading && <Loading type="spokes" />}
       </div>
     )
   }

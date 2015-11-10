@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
 import { loadTags, isLoaded as isTagsLoaded, selectTag }  from 'redux/modules/tag'
-import { loadPosts, isLoaded as isPostsLoaded, sortPost }  from 'redux/modules/post'
+import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost }  from 'redux/modules/post'
 
 const User = React.createClass({
   propTypes: {
@@ -15,7 +15,8 @@ const User = React.createClass({
     loadTags: React.PropTypes.func.isRequired,
     loadPosts: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
-    isPostsLoaded: React.PropTypes.func.isRequired
+    isPostsLoaded: React.PropTypes.func.isRequired,
+    isPostsLoading: React.PropTypes.func.isRequired
   },
 
   getDefaultProps () {
@@ -55,12 +56,17 @@ const User = React.createClass({
   },
 
   handleScrollBottom () {
-    console.log("scroll here")
+    /* quary pattern*/
+    const query = ""
 
-    // this.props.loadPosts()
+    /* if post is loding data from api when scroll to bottom, it will stop to send data request again*/
+    if (!this.props.isPostsLoading(this.props.post)) {
+      this.props.loadPosts(query)
+    }
   },
+
   handleScrollTop () {
-    console.log("scroll here")
+    console.log("scroll top")
 
   },
 
@@ -78,7 +84,7 @@ const User = React.createClass({
            </UserLeft>
         </div>
         <div className={styles.right} id="colright">
-          <ScrollPanel onScrollBottom={this.handleScrollBottom} onScrollTop={this.handleScrollTop}>
+          <ScrollPanel className={styles.scrollpanel} scrollTopAfterUpdate={false} onScrollBottom={this.handleScrollBottom} onScrollTop={this.handleScrollTop}>
             <Right tag={tag} post={post} onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
           </ScrollPanel>
         </div>
@@ -95,7 +101,7 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, selectTag, sortPost }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

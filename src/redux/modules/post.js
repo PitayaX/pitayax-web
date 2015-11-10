@@ -42,7 +42,7 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
-      posts: action.result
+      posts: getLoadedPosts(state.posts, action.result)
     }
   case LOAD_POSTS_FAILURE:
     return {
@@ -99,14 +99,22 @@ export default function reducer (state = initialState, action = {}) {
       isLoading: false,
       isLoaded: false,
       sortBy: action.sortBy,
-      posts: getSortedPost(state.posts, action.sortBy)
+      posts: getSortedPosts(state.posts, action.sortBy)
     }
   default:
     return state
   }
 }
 
-function getSortedPost (posts, sortby) {
+
+function getLoadedPosts (oldPosts, newPosts) {
+
+  const  posts=[ ...oldPosts, ...newPosts ]
+  return posts
+}
+
+
+function getSortedPosts (posts, sortby) {
   const  newPosts=[ ...posts ]
   switch (sortby) {
   case SORTKEYS.NEW:// 最新更新排序
@@ -154,6 +162,10 @@ export function savePost (post) {
 
 export function isLoaded (postState) {
   return postState && postState.isLoaded
+}
+
+export function isLoading (postState) {
+  return postState && postState.isLoading
 }
 
 export function sortPost (sortBy) {

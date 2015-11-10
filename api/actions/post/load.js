@@ -236,6 +236,6 @@ export default function load (req, params) {
   return new Promise((resolve, reject) => {
     // make async call to database
     setTimeout(() => {resolve(getPosts(req))
-    }, 3000) // simulate async load
+    }, 6000) // simulate async load
   })
 }
