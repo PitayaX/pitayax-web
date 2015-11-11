@@ -12,7 +12,7 @@ const PostList = React.createClass({
     const dataList=this.props.posts
     const  postList = dataList.map(function (p, i) {
       return (
-        <PostItem title={p.title} abstract={p.abstract} id={p._id} />
+        <PostItem post={p} />
       )
     })
     return (

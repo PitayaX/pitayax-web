@@ -3,12 +3,15 @@ import { Link } from 'react-router'
 
 const PostItem = React.createClass({
   propTypes: {
-    title: React.PropTypes.string,
-    abstract: React.PropTypes.string,
-    id: React.PropTypes.number
+    post: React.PropTypes.array.isRequired
   },
+
   render () {
     const styles = require('./Post.scss')
+    const { post } = this.props
+    const tags = post.tags.map((tag) => {
+      return (<span><Link to={`/tags/${tag}`}>{tag}</Link> &nbsp; </span>)
+    })
     return (
       <li className={styles['post-item-row']}>
         <div className={styles['post-item-avatar']}>
@@ -18,16 +21,15 @@ const PostItem = React.createClass({
         </div>
         <div className={styles['post-item-body']}>
           <h5>
-            <Link to={`/p/${this.props.id}`}>{this.props.title}</Link>
+            <Link to={`/p/${post._id}`}>{post.title}</Link>
           </h5>
-            <p className={styles['post-content']}>{this.props.abstract}...</p>
+            <p className={styles['post-content']}>{post.abstract}...</p>
             <p className={styles['post-link']}>
               <a className={styles['post-link-a']} href="/collection/bDHhpK">13913篇文章</a>
              · 30.0K人关注
               <span className={styles['post-tag']}>
                 <i className="fa fa-tags"></i>&nbsp;
-                  <a className="" href="/tags/1951/collections">连载</a>、
-                  <a className="" href="/tags/17/collections">故事</a>
+                {tags}
               </span>
             </p>
         </div>

@@ -137,17 +137,37 @@ function getSortedPosts (posts, sortby) {
 /* action creator */
 
 // get many posts with  query conditions
-export function loadPosts () {
+export function loadPosts (selectedTags, sortBy) {
+  let query = {}
+
+  if (selectedTags.length > 0) {
+    const tagArray = [ ]
+    selectedTags.map((tag) => {
+      tagArray.push(tag)
+    })
+
+    if (tagArray.length > 0) {
+      query = { "tags": { "$in": tagArray } }
+    }
+  }
+
+  let sort = {}
+
+  if (sortBy) {
+    sort = { "sort": { sortBy: 1 } }
+  }
+
   return {
     types: [ LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE ],
-    promise: (client) => client.get('/posts/load')
+    promise: (client) => client.post('/api/post/query', { data: { query, sort } })
   }
 }
+
 // get post detail with post id
 export function loadPost (id) {
   return {
     types: [ LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE ],
-    promise: (client) => client.get(`/singleArticle/load/${id}`)
+    promise: (client) => client.get(`/api/post/${id}`)
   }
 }
 

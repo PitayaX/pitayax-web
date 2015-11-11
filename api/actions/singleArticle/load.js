@@ -1,4 +1,4 @@
-const mock ={
+const mock ={     
   author: {
     name: '清梨浅茶',
     words: 16875,
