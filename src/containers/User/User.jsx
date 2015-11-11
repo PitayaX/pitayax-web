@@ -32,14 +32,14 @@ const User = React.createClass({
       this.props.loadTags()
     }
     if (!this.props.isPostsLoaded(this.props.post)) {
-      this.props.loadPosts()
+      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
   },
 
   componentWillReceiveProps (nextProps) {
     const { tag, post } = nextProps
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
-      this.props.loadPosts()
+      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
     if (post.sortBy !== this.props.post.sortBy) {
       this.props.post
@@ -57,11 +57,10 @@ const User = React.createClass({
 
   handleScrollBottom () {
     /* quary pattern*/
-    const query = ""
 
     /* if post is loding data from api when scroll to bottom, it will stop to send data request again*/
     if (!this.props.isPostsLoading(this.props.post)) {
-      this.props.loadPosts(query)
+      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
   },
 

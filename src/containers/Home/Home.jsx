@@ -30,14 +30,14 @@ const Home = React.createClass({
       this.props.loadTags()
     }
     if (!this.props.isPostsLoaded(this.props.post)) {
-      this.props.loadPosts()
+      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
   },
 
   componentWillReceiveProps (nextProps) {
     const { tag, post } = nextProps
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
-      this.props.loadPosts()
+      this.props.loadPosts(tag.selectedTags, post.sortBy)
     }
     if (post.sortBy !== this.props.post.sortBy) {
       this.props.post

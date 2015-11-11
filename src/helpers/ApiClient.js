@@ -7,10 +7,10 @@ function formatUrl (path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path
   if (__SERVER__) {
     // Prepend host and port of the API server to the path.
-    return 'http://localhost:' + config.apiPort + adjustedPath
+    return 'http://10.10.73.207:8088' + adjustedPath
   }
   // Prepend `/api` to relative URL, to proxy to API server.
-  return '/api' + adjustedPath
+  return 'http://10.10.73.207:8088' + adjustedPath
 }
 
 const ApiClient = (req) => {

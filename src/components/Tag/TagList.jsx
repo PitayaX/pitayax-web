@@ -4,7 +4,7 @@ import TagItem  from './TagItem'
 const TagList= React.createClass({
   propTypes: {
     tags: React.PropTypes.array.isRequired,
-    selectedTags: React.PropTypes.array.isRequired,
+    selectedTags: React.PropTypes.array,
     onSelectTag: React.PropTypes.func.isRequired
   },
 
