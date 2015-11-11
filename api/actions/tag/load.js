@@ -1,8 +1,8 @@
 const initialTags = [
-  { _id: 0, text: "最热" },
-  { _id: 1, text: "React" },
-  { _id: 2, text: "Redux" },
-  { _id: 3, text: "Javascript" }
+  { name: "最热" },
+  { name: "React" },
+  { name: "Redux" },
+  { name: "Javascript" }
 ]
 
 export function getTags (req) {
@@ -14,7 +14,7 @@ export function getTags (req) {
   return tags
 }
 
-export default function query (req, params) {
+export default function load (req, params) {
   return new Promise((resolve, reject) => {
     // make async call to database
     setTimeout(() => {

@@ -9,8 +9,7 @@ const LayoutRight= React.createClass({
     onClick: React.PropTypes.func.isRequired,
     onSortPosts: React.PropTypes.func.isRequired
   },
-
-
+  
   render () {
     const { tag, post, onClick, onSortPosts }=this.props
     return (

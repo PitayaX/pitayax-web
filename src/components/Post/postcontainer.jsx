@@ -1,5 +1,6 @@
 import React, { propTypes } from 'react'
-import Loading from '../Utils/loading'
+import Loading from '../Utils/loading2'
+import { Dimmer } from 'pitaya-components'
 import PostSort from './postsort'
 import PostList from './postList'
 
@@ -13,9 +14,9 @@ const PostContainer = React.createClass({
     const styles = require('./post.scss')
     const { post, onSortPosts }=this.props
     let loading=null
-    if (post.isPostFetching) {
+    if (post.isLoading) {
     /* loading= <Loading className="spinner" /> */
-      loading =<Loading type="spokes" />
+      loading =<Loading />
     }
     else {
       loading=  <PostList data={post.posts} />
