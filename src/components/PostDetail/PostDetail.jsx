@@ -29,7 +29,7 @@ export default class PostDetail extends Component {
     const styles = require('./PostDetail.scss')
     const containerPost=classNames(styles.container, styles.post)
     const mySpinner=classNames("fa", "fa-spinner", styles.myFaSpin)
-    const { post } = this.props
+    const post = this.props.post
 
     // debugger
     let myArticle=(
@@ -40,13 +40,13 @@ export default class PostDetail extends Component {
       </div>
     )
     if (post.isLoaded) {
-      const { author, article } = post.post
+      const currentPost = post.post
       myArticle = (
       <div>
         <div className={containerPost}>
-          <Author author={author} />
-          <Content post={article} />
-          <DuoShuo {...article.comments} />
+          {currentPost.author&&<Author author={currentPost.author} />}
+          <Content post={currentPost} />
+          {currentPost.comments&&<DuoShuo {...currentPost.comments} />}
         </div>
         <Bottom />
         <GoToTop />

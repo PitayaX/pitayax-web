@@ -1,4 +1,24 @@
-const mock ={     
+/** post:{
+ "author":{},
+ "_id":"",
+ "title": "",
+ "abstract": "",
+ "content": "",
+ 'viewCount': 10,
+ "tags": [],
+ "publishOn": "",
+ "viewCount": "",
+ "cancomment": true,
+ "likeCount" 100,
+ "comments":  {
+   shortName: 'localtest998',
+   thread: '201508270001',
+   title: '你瞧不起她是因为你羡慕她',
+   url: 'http://localhost:8080'
+ }
+} **/
+
+const mock ={
   author: {
     name: '清梨浅茶',
     words: 16875,
