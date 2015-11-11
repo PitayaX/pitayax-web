@@ -5,6 +5,12 @@ $rightBgColor: #2ecc71;
 $navitemBgColor:#de7518;
 $navitemHoverBgColor:#ff8a21;
 
+html,body{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 .main{
   background-color: $mainBgColor;
   padding: 0;

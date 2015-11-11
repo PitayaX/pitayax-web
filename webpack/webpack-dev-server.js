@@ -5,7 +5,7 @@ var config = require('../src/config')
 var webpackConfig = require('./dev.config')
 var compiler = webpack(webpackConfig)
 
-var host = process.env.HOST || 'localhost'
+var host = process.env.HOST || '10.10.71.15'
 var port = parseInt(config.port, 10) + 1 || 3001
 var serverOptions = {
   contentBase: 'http://' + host + ':' + port,
