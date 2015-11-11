@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const EditProfile = React.createClass({
   propTypes: {
@@ -8,9 +9,9 @@ const EditProfile = React.createClass({
   render () {
     return (
       <div className="edit-row">
-        <a href="#" className="edit-row-a">
+        <Link to="/user/settings"  className="edit-row-a">
            <span>编辑个人介绍</span>
-        </a>
+        </Link>
       </div>
     )
   }

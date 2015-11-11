@@ -1,1 +1,1 @@
-export query from './load'
+export load from './load'

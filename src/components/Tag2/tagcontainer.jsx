@@ -16,7 +16,7 @@ const TagContainer= React.createClass({
     const styles = require('./tag.scss')
     const { tag, onClick }=this.props
     let loading=null
-    if (tag.isTagFetching) {
+    if (tag.isLoading) {
       // loading= <Loading className="spinner" />
       // loading= "loading......"
       loading =<Loading type="spokes" />
