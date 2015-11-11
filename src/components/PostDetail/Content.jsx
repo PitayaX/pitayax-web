@@ -23,9 +23,9 @@ export  default class Content extends Component {
          </div>
          <div className={styles.articleTitleTags}>
              <ul>
-               <li>数字{post.words}&nbsp;&nbsp;</li>
-               <li>阅读{post.readers}&nbsp;&nbsp;</li>
-               <li>喜欢{post.likes}&nbsp;&nbsp;</li>
+               {post.words&&<li>数字{post.words}&nbsp;&nbsp;</li>}
+               <li>阅读{post.viewCount}&nbsp;&nbsp;</li>
+               <li>喜欢{post.likeCount}&nbsp;&nbsp;</li>
              </ul>
          </div>
          <div className={styles.articleTitleAuthor}>
