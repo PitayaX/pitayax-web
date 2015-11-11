@@ -4,7 +4,7 @@ const PostSort = React.createClass({
   propTypes: {
     onSort: React.PropTypes.func.isRequired,
     sortTypes: React.PropTypes.array.isRequired,
-    selectedSort: React.PropTypes.string.isRequired
+    selectedSort: React.PropTypes.string
   },
 
   handleSort (by) {

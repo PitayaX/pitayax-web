@@ -3,7 +3,8 @@ import Profile from '../Profile/Profile'
 
 const UserLeft= React.createClass({
   propTypes: {
-    children: React.PropTypes.instanceOf(Profile)
+    /*  children: React.PropTypes.instanceOf(Profile) */
+    children: React.PropTypes.any
   },
   render () {
     return (
