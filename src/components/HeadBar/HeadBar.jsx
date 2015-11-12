@@ -1,8 +1,9 @@
 import React, { Component, PropTypes as T } from 'react'
 import { Modal } from 'common'
+import { json as request } from 'lgutil/common/ajax'
 export default class HeadBar extends Component {
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       loginModalShow: false,
       loginedUser: ""
@@ -12,6 +13,7 @@ export default class HeadBar extends Component {
 
   render () {
     const styles = require('./Header.scss')
+    const oAuthSrc = 'http://120.24.58.42:2001/auth?response_type=code&client_id=pitayax-web&state=xyz%20&redirect_uri=http://10.10.73.3:3000/cb/login'
     let loginShow = (
       <div className={styles.headRight}>
         <input type="text" placeholder="搜索"/>
@@ -23,7 +25,8 @@ export default class HeadBar extends Component {
       loginShow = (
         <div className={styles.headRight}>
           <input type="text" placeholder="搜索"/>
-          <span className={styles.headButton}><i className="fa fa-user"></i>{this.state.loginedUser}</span>
+          <span className={styles.headButton}><i style = {{ margin: '0 0.3em 0 0.5em' }} className="fa fa-user"></i>{this.state.loginedUser}</span>
+          <span onClick={::this.logout_Onclick} className={styles.headButton}><i className="fa fa-sign-out"></i>登出</span>
         </div>)
     }
     return (
@@ -32,36 +35,64 @@ export default class HeadBar extends Component {
               {loginShow}
               <div style={{ clear: "both" }}></div>
               <Modal isShowed={this.state.loginModalShow} dimmerClassName='modal-dimmer' modalClassName='modal-dialog'>
-                <div className="modal-content">
-                  <div onClick={::this.loginClose_Onclick} style={{ float: 'right' }}><i className = "fa fa-times fa-2x"></i></div>
-                  <iframe onLoad={::this.loginModal_Onload} style={{ width: '100%' }} ref='oAuth' src="http://10.10.73.28:8001/auth?response_type=code&client_id=Blog&state=xyz%20&redirect_uri=http://localhost:3000/cb/login"></iframe>
+                <div style={{ height: '13em' }} className='modal-content'>
+                  <div onClick={::this.loginClose_Onclick} style={{ color: 'white', position: 'relative', top: '-0.7em', right: '1.3em', float: 'right', height: '0', width: '0' }}>
+                    <div style={{ backgroundColor: 'black', width: '1em', height: '1em', position: 'absolute', top: '0.5em', left: '0.35em' }}>
+                    </div>
+                    <div style={{ position: 'absolute' }}>
+                    <i className = "fa fa-times-circle fa-2x"></i>
+                    </div>
+                  </div>
+                  <div style = {{ width: '100%', height: '100%' }}>
+                    <iframe style = {{ borderRadius: '0.5em', width: '100%', height: '100%', margin: '0', padding: '0', border: '0' }} onLoad={::this.loginModal_Onload}  ref='oAuth' src={oAuthSrc}></iframe>
+                  </div>
                 </div>
              </Modal>
             </div> )
 
   }
 
+  componentDidMount () {
+    this.setState({ ...this.state, loginedUser: localStorage.getItem("loginedUser") || "" })
+  }
+
   loginModal_Onload () {
-    if (!this.refs.oAuth) {
+    let isdiffDomain = false
+    try {
+      this.refs.oAuth.contentDocument
+    } catch (e) {
+      isdiffDomain = true
+    }
+    if (!this.refs.oAuth||isdiffDomain) {
       return
     }
-
-    const oAuth = this.refs.oAuth.getDOMNode().contentDocument
+    const oAuth = this.refs.oAuth.contentDocument
     const oAuthUrl = oAuth.URL || oAuth.baseURI || oAuth.documentURI
     if (oAuthUrl && oAuthUrl.indexOf('code') >= 0 && oAuthUrl.indexOf('state') >= 0) {
-      const userName = this.getUrlValueByKey(oAuthUrl, 'user')
+      const userName = this.getUrlValueByKey(oAuthUrl, 'email')
       this.setState({ loginModalShow: false, loginedUser: userName })
+      localStorage.setItem("loginedUser", userName)
       process.nextTick(() => global.alert("欢迎您， " +userName ))
 
     }
   }
 
+
+
+  logout_Onclick () {
+    localStorage.setItem("loginedUser", "")
+    this.setState({ loginModalShow: false, loginedUser: "" })
+
+  }
+
   login_Onclick () {
     this.setState({ loginModalShow: true, loginedUser: "" })
   }
+
   loginClose_Onclick () {
     this.setState({ loginModalShow: false, loginedUser: "" })
   }
+
   getUrlValueByKey (url, key) {
     const keyIndex=url.indexOf(key)
     if (keyIndex < 0) {
@@ -77,4 +108,19 @@ export default class HeadBar extends Component {
     return url.substr(startPosition, valueLength)
   }
 
+}
+
+global.refreshToken = function (_interval) {
+  setTimeout(
+    function () {
+      request.post("/cb/refresh", {}, {}, {
+        timeout: 20000
+      })
+      .then(function (data) {
+        eval(data.body)
+      })
+      .catch(function (e) {
+        console.log(e)
+      })
+    }, _interval)
 }
