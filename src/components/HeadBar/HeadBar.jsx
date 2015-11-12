@@ -122,7 +122,6 @@ export default class HeadBar extends Component {
     const valueLength=nextAnd-startPosition
     return url.substr(startPosition, valueLength)
   }
-
 }
 
 global.refreshToken = function (_interval) {
