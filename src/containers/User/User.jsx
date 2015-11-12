@@ -39,7 +39,7 @@ const User = React.createClass({
   componentWillReceiveProps (nextProps) {
     const { tag, post } = nextProps
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
-      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
+      this.props.loadPosts(tag.selectedTags, post.sortBy)
     }
     if (post.sortBy !== this.props.post.sortBy) {
       this.props.post

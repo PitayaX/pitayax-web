@@ -62,7 +62,7 @@ function getSelectedTags (selectedTags, newTag) {
 export function loadTags () {
   return {
     types: [ LOAD_TAGS_REQUEST, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAILURE ],
-    promise:(client) => client.post('/script/post/tags?max=20')
+    promise: (client) => client.post('/script/post/tags?max=20')
   }
 }
 export function isLoaded (tagState) {

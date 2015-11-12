@@ -1,5 +1,5 @@
 import React, { propTypes } from 'react'
-import Loading from '../Utils/Loading'
+import PitayaLoading from '../Utils/Loading'
 import TagList from './TagList'
 
 const TagContainer= React.createClass({
@@ -11,18 +11,10 @@ const TagContainer= React.createClass({
   render () {
     const styles = require('./Tag.scss')
     const { tag, onSelectTag }=this.props
-    let loading=null
-    if (tag.isLoading) {
-      // loading= <Loading className="spinner" />
-      // loading= "loading......"
-      loading =<Loading type="spokes" />
-    }
-    else {
-      loading=  <TagList tags={tag.tags} selectedTags={tag.selectedTags} onSelectTag={onSelectTag} />
-    }
     return (
       <div className={styles['tag-container']}>
-        {loading}
+        <TagList tags={tag.tags} selectedTags={tag.selectedTags} onSelectTag={onSelectTag} />
+        {tag.isLoading && <PitayaLoading type="spokes" />}
       </div>
     )
   }
