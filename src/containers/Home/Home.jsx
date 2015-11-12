@@ -37,10 +37,7 @@ const Home = React.createClass({
   componentWillReceiveProps (nextProps) {
     const { tag, post } = nextProps
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
-      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
-    }
-    if (post.sortBy !== this.props.post.sortBy) {
-      this.props.post
+      this.props.loadPosts(tag.selectedTags, post.sortBy)
     }
   },
 
@@ -50,6 +47,7 @@ const Home = React.createClass({
 
   handleSortPost (sortBy) {
     this.props.sortPost(sortBy)
+    this.props.loadPosts(this.props.tag.selectedTags, sortBy)
   },
 
   render () {
