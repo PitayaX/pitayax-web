@@ -82,11 +82,26 @@ export default class HeadBar extends Component {
   logout_Onclick () {
     localStorage.setItem("loginedUser", "")
     this.setState({ loginModalShow: false, loginedUser: "" })
+    global.refreshToken = arg => {}
 
   }
 
   login_Onclick () {
     this.setState({ loginModalShow: true, loginedUser: "" })
+    global.refreshToken = function (_interval) {
+      setTimeout(
+        function () {
+          request.post("/cb/refresh", {}, {}, {
+            timeout: 20000
+          })
+          .then(function (data) {
+            eval(data.body)
+          })
+          .catch(function (e) {
+            console.log(e)
+          })
+        }, _interval)
+    }
   }
 
   loginClose_Onclick () {
