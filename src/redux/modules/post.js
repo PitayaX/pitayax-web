@@ -42,7 +42,7 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
-      posts: getLoadedPosts(state.posts, action.result)
+      posts: action.result
     }
   case LOAD_POSTS_FAILURE:
     return {
@@ -63,7 +63,7 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
-      post: action.result
+      post: handlePost(action.result)
     }
   case LOAD_POST_FAILURE:
     return {
@@ -98,40 +98,27 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: false,
-      sortBy: action.sortBy,
-      posts: getSortedPosts(state.posts, action.sortBy)
+      sortBy: action.sortBy
     }
   default:
     return state
   }
 }
 
-
-function getLoadedPosts (oldPosts, newPosts) {
-
+function appendLoadedPosts (oldPosts, newPosts) {
   const  posts=[ ...oldPosts, ...newPosts ]
   return posts
 }
 
-
-function getSortedPosts (posts, sortby) {
-  const  newPosts=[ ...posts ]
-  switch (sortby) {
-  case SORTKEYS.NEW:// 最新更新排序
-    newPosts.sort((a, b) => {
-      return Date.parse(a.date) - Date.parse(b.date)
-    })
-  case SORTKEYS.HOT:// 最热门排序
-    newPosts.sort((a, b) => {
-      return a.hotcount>b.hotcount
-    })
-  case SORTKEYS.LIKE:// 根据关注度排序
-    newPosts.sort((a, b) => {
-      return a.watchcount>b.watchcount
-    })
-  default:
-    return newPosts
+function handlePost (post) {
+  post.comments = {
+    "shortName": 'localtest998',
+    "thread": post._id,
+    "title": post.title,
+    "url": 'http://localhost:3000'
   }
+
+  return post
 }
 
 /* action creator */
@@ -154,12 +141,24 @@ export function loadPosts (selectedTags, sortBy) {
   let sort = {}
 
   if (sortBy) {
-    sort = { "sort": { sortBy: 1 } }
+    switch (sortBy) {
+    case SORTKEYS.NEW:
+      sort = { "publishedOn": 1 }
+      break
+    case SORTKEYS.HOT:
+      sort = { "viewCount": 1 }
+      break
+    case SORTKEYS.LIKE:
+      sort =  { "_d": 1 }
+      break
+    default:
+      sort =  { "publishedOn": 1 }
+    }
   }
 
   return {
     types: [ LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE ],
-    promise:(client) => client.post('/api/post/query', { data: { query, sort } })
+    promise: (client) => client.post('/api/post/query', { data: { query, sort } })
   }
 }
 
@@ -167,7 +166,7 @@ export function loadPosts (selectedTags, sortBy) {
 export function loadPost (id) {
   return {
     types: [ LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE ],
-    promise:(client) => client.get(`/api/post/${id}`)
+    promise: (client) => client.get(`/api/post/${id}`)
   }
 }
 
