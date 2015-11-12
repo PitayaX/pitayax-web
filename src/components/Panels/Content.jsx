@@ -17,7 +17,6 @@ export default class Content extends Component {
   }
 
   render () {
-    console.log(this.props)
     const { tagsData, selectedTags, articalesData, sortsData, tagHandler, sortHanlder, ...others } = this.props
     return (
       <RightPanel>
