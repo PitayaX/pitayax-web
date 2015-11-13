@@ -1,4 +1,5 @@
 import React, { Component, PropTypes as T } from 'react'
+import Marked from 'marked'
 
 export  default class Content extends Component {
 
@@ -8,6 +9,20 @@ export  default class Content extends Component {
 
   static propTypes = {
     post: T.object.isRequired
+  }
+
+  rawMarkup () {
+    // Marked.setOptions({
+    //   gfm: true,
+    //   tables: true,
+    //   breaks: false,
+    //   pedantic: false,
+    //   sanitize: true,
+    //   smartLists: true,
+    //   smartypants: true
+    // })
+    const rawMarkup = Marked(this.props.post.content, { sanitize: true })
+    return { __html: rawMarkup }
   }
 
   render () {
@@ -35,9 +50,7 @@ export  default class Content extends Component {
          </div>
         </div>
         <div className={styles.articleBody}>
-          <pre>
-            {post.content}
-          </pre>
+            <div dangerouslySetInnerHTML={this.rawMarkup()}></div>
         </div>
       </div>
     )
