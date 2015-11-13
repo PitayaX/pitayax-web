@@ -2,8 +2,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { GroupLeft, Right } from 'components'
-import { loadTags, isLoaded as isTagsLoaded, selectTag }  from 'redux/modules/tag'
-import { loadPosts, isLoaded as isPostsLoaded, sortPost }  from 'redux/modules/post'
+import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
+import { loadPosts, isLoaded as isPostsLoaded, sortPost, dispose as disposePost }  from 'redux/modules/post'
 
 const Home = React.createClass({
   propTypes: {
@@ -14,7 +14,9 @@ const Home = React.createClass({
     loadTags: React.PropTypes.func.isRequired,
     loadPosts: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
-    isPostsLoaded: React.PropTypes.func.isRequired
+    isPostsLoaded: React.PropTypes.func.isRequired,
+    disposePost: React.PropTypes.func.isRequired,
+    disposeTag: React.PropTypes.func.isRequired,
   },
 
   getDefaultProps () {
@@ -39,6 +41,12 @@ const Home = React.createClass({
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
       this.props.loadPosts(tag.selectedTags, post.sortBy)
     }
+  },
+
+  componentWillUnmount () {
+
+    this.props.disposePost()
+    this.props.disposeTag()
   },
 
   handleSelectTag (tag) {
@@ -78,7 +86,7 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, selectTag, sortPost }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, selectTag, sortPost, disposePost, disposeTag }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

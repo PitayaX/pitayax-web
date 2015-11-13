@@ -17,11 +17,18 @@ export default class PostDetail extends Component {
 
   static propTypes ={
     post: T.object.isRequired,
-    loadPost: T.func.isRequired
+    loadPost: T.func.isRequired,
+    disposePost: T.func.isRequired,
   }
 
   componentDidMount () {
     this.props.loadPost(this.props.params.id)
+  }
+
+  componentWillUnmount () {
+
+    this.props.disposePost()
+
   }
 
   render () {

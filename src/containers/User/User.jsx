@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
-import { loadTags, isLoaded as isTagsLoaded, selectTag }  from 'redux/modules/tag'
-import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost }  from 'redux/modules/post'
+import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
+import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost, dispose as disposePost }  from 'redux/modules/post'
 
 const User = React.createClass({
   propTypes: {
@@ -16,7 +16,9 @@ const User = React.createClass({
     loadPosts: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
     isPostsLoaded: React.PropTypes.func.isRequired,
-    isPostsLoading: React.PropTypes.func.isRequired
+    isPostsLoading: React.PropTypes.func.isRequired,
+    disposePost: React.PropTypes.func.isRequired,
+    disposeTag: React.PropTypes.func.isRequired,
   },
 
   getDefaultProps () {
@@ -44,6 +46,11 @@ const User = React.createClass({
     if (post.sortBy !== this.props.post.sortBy) {
       this.props.post
     }
+  },
+  componentWillUnmount () {
+
+    this.props.disposePost()
+    this.props.disposeTag()
   },
 
   handleSelectTag (tagName) {
@@ -100,7 +107,7 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost, disposePost, disposeTag }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

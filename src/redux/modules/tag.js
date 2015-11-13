@@ -5,6 +5,7 @@ const LOAD_TAGS_FAILURE = 'tag/LOAD_TAGS_FAILURE'
 
 /* select tag  action */
 const SELECT_TAGS = 'tag/SELECT_TAGS'
+const DISPOSE_TAG = 'tag/DISPOSE_TAG'
 
  /* initial state */
 const initialState = {
@@ -43,6 +44,8 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       selectedTags: getSelectedTags(state.selectedTags, action.tag) /* add selected tag to container*/
     }
+  case DISPOSE_TAG:
+    return initialState
   default:
     return state
   }
@@ -73,5 +76,11 @@ export function selectTag (tag) {
   return {
     type: SELECT_TAGS,
     tag
+  }
+}
+/*clean tag reducer data when unmount specific conponent */
+export function dispose () {
+  return {
+    type: DISPOSE_TAG
   }
 }

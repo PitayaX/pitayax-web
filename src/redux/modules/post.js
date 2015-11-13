@@ -13,8 +13,12 @@ const SAVE_POST_REQUEST = 'post/SAVE_POST_REQUEST'
 const SAVE_POST_SUCCESS = 'post/SAVE_POST_SUCCESS'
 const SAVE_POST_FAILURE = 'post/SAVE_POST_FAILURE'
 
+
+
 /* sort  post action */
 const POSTS_SORT = 'post/POSTS_SORT'
+const DISPOSE_POST = 'post/DISPOSE_POST'
+
 const SORTKEYS = { NEW: "NEW", HOT: "HOT", LIKE: "LIKE" }
 const POSTSORTBY=[ { type: SORTKEYS.NEW, name: "最新更新" }, { type: SORTKEYS.HOT, name: "热门排序" }, { type: SORTKEYS.LIKE, name: "关注度排序" } ]
 
@@ -100,6 +104,8 @@ export default function reducer (state = initialState, action = {}) {
       isLoaded: false,
       sortBy: action.sortBy
     }
+  case  DISPOSE_POST:
+    return initialState
   default:
     return state
   }
@@ -191,5 +197,12 @@ export function sortPost (sortBy) {
   return{
     type: POSTS_SORT,
     sortBy
+  }
+}
+
+/*clean post reducer data when unmount specific conponent */
+export function dispose () {
+  return {
+    type: DISPOSE_POST
   }
 }
