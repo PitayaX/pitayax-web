@@ -13,7 +13,7 @@ export default class HeadBar extends Component {
 
   render () {
     const styles = require('./Header.scss')
-    const oAuthSrc = 'http://120.24.58.42:2001/auth?response_type=code&client_id=pitayax-web&state=xyz%20&redirect_uri=http://10.10.73.3:3000/cb/login'
+    const oAuthSrc = 'http://120.24.58.42:2001/auth?response_type=code&client_id=pitayax-web&state=xyz%20&redirect_uri=http://10.10.71.43:3000/cb/login'
     let loginShow = (
       <div className={styles.headRight}>
         <input type="text" placeholder="搜索"/>

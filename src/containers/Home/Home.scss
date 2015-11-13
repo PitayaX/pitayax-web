@@ -19,7 +19,17 @@ $navitemHoverBgColor:#ff8a21;
   }
 
   .right{
-     width: 75%;
-     margin-left: 20%;
+     margin-left: 21%;
+     height: 900px;
   }
+}
+
+.scrollpanel{
+  height: 100%;
+}
+
+html,body{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }

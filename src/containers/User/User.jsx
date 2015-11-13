@@ -60,6 +60,7 @@ const User = React.createClass({
 
   handleSortPost (sortBy) {
     this.props.sortPost(sortBy)
+    this.props.loadPosts(this.props.tag.selectedTags, sortBy)
   },
 
   handleScrollBottom () {

@@ -1,9 +1,10 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { ScrollPanel } from 'pitaya-components'
 import { GroupLeft, Right } from 'components'
 import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
-import { loadPosts, isLoaded as isPostsLoaded, sortPost, dispose as disposePost }  from 'redux/modules/post'
+import { loadPosts, isLoading as isPostsLoading, isLoaded as isPostsLoaded, sortPost, dispose as disposePost }  from 'redux/modules/post'
 
 const Home = React.createClass({
   propTypes: {
@@ -17,6 +18,7 @@ const Home = React.createClass({
     isPostsLoaded: React.PropTypes.func.isRequired,
     disposePost: React.PropTypes.func.isRequired,
     disposeTag: React.PropTypes.func.isRequired,
+    isPostsLoading: React.PropTypes.func.isRequired
   },
 
   getDefaultProps () {
@@ -58,6 +60,21 @@ const Home = React.createClass({
     this.props.loadPosts(this.props.tag.selectedTags, sortBy)
   },
 
+  handleScrollBottom () {
+    /* quary pattern*/
+
+    /* if post is loding data from api when scroll to bottom, it will stop to send data request again*/
+    if (!this.props.isPostsLoading(this.props.post)) {
+      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
+    }
+  },
+
+  handleScrollTop () {
+    console.log("scroll top")
+
+  },
+
+
   render () {
     const styles = require('./Home.scss')
     const { tag, post } = this.props
@@ -71,7 +88,9 @@ const Home = React.createClass({
            </GroupLeft>
         </div>
         <div className={styles.right} id="colright">
-          <Right tag={tag} post={post}  onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
+           <ScrollPanel className={styles.scrollpanel} scrollTopAfterUpdate={false} onScrollBottom={this.handleScrollBottom}  onScrollTop={this.handleScrollTop}>
+            <Right tag={tag} post={post}  onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
+          </ScrollPanel>
         </div>
       </div>
     )
@@ -85,8 +104,7 @@ function mapStateToProps (state) {
   }
 }
 function mapDispatchToProps (dispatch) {
-
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, selectTag, sortPost, disposePost, disposeTag }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost, disposePost, disposeTag }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

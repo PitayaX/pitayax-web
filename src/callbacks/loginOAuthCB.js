@@ -35,8 +35,7 @@ function getOAuthToken (code, SUCC_callback) {
     code,
     grant_type: "authorization_code",
     client_id: "pitayax-web",
-    redirect_uri: "http://10.10.73.3:3000/cb/login"
-
+    redirect_uri: "http://10.10.71.43:3000/cb/login"
   })
   const post_options = {
     protocol: 'http:',
