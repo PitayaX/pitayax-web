@@ -8,7 +8,8 @@ import {
     Detail,
     User,
     UserSettings,
-    WritePost
+    WritePost,
+    Register
   } from 'containers'
 
 export default (store) => {
@@ -17,8 +18,9 @@ export default (store) => {
       <Route path="/" component={Home}/>
       <Route path="/newp" component={WritePost} />
       <Route path="/p/:id" component={Detail} />
-      <Route path="/user" component={User} />
+      <Route path="/user/:id" component={User} />
       <Route path="/user/settings" component={UserSettings} />
+      <Route path="/reg" component={Register}/>
       <Route path="*" component={NotFound} status={404} />
     </Route>
   )

@@ -1,10 +1,15 @@
 @import 'bootstrap';
 
+html{
+  height:100%;
+}
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
+  height:inherit;
 }
 .app {
   width: auto;
+  height:inherit;
 }
 
 $navbarWidth: 45px;
@@ -14,6 +19,7 @@ $hoverColor: #FF8A21;
 
 .appContent {
   margin-left: $navbarWidth;
+  height:inherit;
 }
 
 .navbar {

@@ -6,6 +6,7 @@ import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info'
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth'
 import { InfoBar } from 'components'
 import { pushState } from 'redux-router'
+import LoginModule from '../Login/LoginModule'
 import config from '../../config'
 
 const title = 'PitayaX Web'
@@ -85,6 +86,7 @@ export default class App extends Component {
           <a><i className="fa fa-th"></i></a>
           <Link to={newArticle} className="active"><i className="fa fa-edit"></i></Link>
         </nav>
+        <LoginModule />
         <div className={styles.appContent}>
           {this.props.children}
         </div>

@@ -1,0 +1,10 @@
+
+.loginContent{
+  > span {
+    margin: 0 1em 0 0;
+  }
+  > span:hover {
+    cursor:pointer;
+    text-decoration: underline;
+  }
+}
