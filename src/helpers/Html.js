@@ -37,7 +37,7 @@ export default class Html extends Component {
           )}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
+          <div id="content" style={{ height: 'inherit' }} dangerouslySetInnerHTML={{ __html: content }}/>
           <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())}` }} />
           <script src={assets.javascript.main}/>
         </body>

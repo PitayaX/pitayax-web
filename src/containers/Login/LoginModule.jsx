@@ -22,10 +22,10 @@ class LoginModule extends Component {
     let loginShow = (
       <div className={styles.loginContent}>
         <span onClick={::this.login_Onclick} ><i className="fa fa-sign-in"></i>登录</span>
-        <span><i className="fa fa-user-plus"></i>注册</span>
+        <span><Link to='/reg'><i className="fa fa-user-plus"></i>注册</Link></span>
       </div>
     )
-    if (this.state.nickName !== "" && this.state.userID !== "") {
+    if (this.state.nickName) {
       const userRoute='/user/' + this.state.userID
       loginShow = (
         <div className={styles.loginContent}>
@@ -35,7 +35,7 @@ class LoginModule extends Component {
       )
     }
     return (
-      <div style= {{ float: 'right', margin: '1em 2em 0 0' }}>
+      <div style= {{ zIndex: '1001', position: 'fixed', right: '0em', margin: '1em 2em 0 0' }}>
         {loginShow}
         <Modal isShowed={this.state.loginModalShow} dimmerClassName='modal-dimmer' modalClassName='modal-dialog'>
           <div style={{ height: '13em' }} className='modal-content'>
@@ -57,7 +57,7 @@ class LoginModule extends Component {
   }
 
   componentDidMount () {
-    this.setState({ ...this.state, nickName: localStorage.getItem("nickName") || "", userID: localStorage.getItem("userID") })
+    this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName") || "", userID: sessionStorage.getItem("userID") })
   }
 
   loginModal_Onload () {
@@ -76,8 +76,8 @@ class LoginModule extends Component {
       const userName = this.getUrlValueByKey(oAuthUrl, 'nickname')
       const userID = this.getUrlValueByKey(oAuthUrl, 'userid')
       this.setState({ loginModalShow: false, nickName: userName, userID })
-      localStorage.setItem("nickName", userName)
-      localStorage.setItem("userID", userID)
+      sessionStorage.setItem("nickName", userName)
+      sessionStorage.setItem("userID", userID)
       process.nextTick(() => global.alert("欢迎您， " +userName ))
 
     }
@@ -86,28 +86,27 @@ class LoginModule extends Component {
 
 
   logout_Onclick () {
-    localStorage.setItem("nickName", "")
-    localStorage.setItem("nickName", "")
+    sessionStorage.setItem("nickName", "")
+    sessionStorage.setItem("userID", "")
     this.setState({ loginModalShow: false, nickName: "", userID: "" })
-    global.refreshToken = arg => {}
+    global.refreshTokenProxy = arg => {}
+
+    request.post("/cb/logout", {}, {}, {
+      timeout: 20000
+    })
+    .then(function (data) {
+      console.log(data)
+    })
+    .catch(function (e) {
+      console.log(e)
+    })
 
   }
 
   login_Onclick () {
     this.setState({ loginModalShow: true, nickName: "", userID: "" })
-    global.refreshToken = function (_interval) {
-      setTimeout(
-        function () {
-          request.post("/cb/refresh", {}, {}, {
-            timeout: 20000
-          })
-          .then(function (data) {
-            eval(data.body)
-          })
-          .catch(function (e) {
-            console.log(e)
-          })
-        }, _interval)
+    global.refreshTokenProxy = function (_interval) {
+      setTimeout(global.refreshToken, _interval)
     }
   }
 
@@ -131,20 +130,19 @@ class LoginModule extends Component {
   }
 }
 
+global.refreshToken = function () {
+  request.post("/cb/refresh", {}, {}, {
+    timeout: 20000
+  })
+  .then(function (data) {
+    eval(data.body)
+  })
+  .catch(function (e) {
+    console.log(e)
+  })
+}
 
 
-
-global.refreshToken = function (_interval) {
-  setTimeout(
-    function () {
-      request.post("/cb/refresh", {}, {}, {
-        timeout: 20000
-      })
-      .then(function (data) {
-        eval(data.body)
-      })
-      .catch(function (e) {
-        console.log(e)
-      })
-    }, _interval)
+global.refreshTokenProxy = function (_interval) {
+  setTimeout(_refreshToken, _interval)
 }
