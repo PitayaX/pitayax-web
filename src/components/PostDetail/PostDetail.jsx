@@ -23,6 +23,7 @@ export default class PostDetail extends Component {
 
   componentDidMount () {
     this.props.loadPost(this.props.params.id)
+    global.document.body.style.overflow='auto'
   }
 
   componentWillUnmount () {
