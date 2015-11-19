@@ -16,7 +16,7 @@ class DuoShuo extends Component {
 
   render () {
     return (
-    <div className="ds-thread" data-thread-key= {this.props.thread} data-title= {this.props.title} data-url={this.props.url}>
+    <div id = 'duoshuoComment' className="ds-thread" data-thread-key= {this.props.thread} data-title= {this.props.title} data-url={this.props.url}>
     </div>
   )
   }
@@ -26,12 +26,17 @@ class DuoShuo extends Component {
     currentGlobal.duoshuoQuery={ short_name: this.props.shortName }
     const script=`
         (function() {
-          var ds = document.createElement('script');
-          ds.type = 'text/javascript';ds.async = true;
-          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-          ds.charset = 'UTF-8';
-          (document.getElementsByTagName('head')[0]
-           || document.getElementsByTagName('body')[0]).appendChild(ds);
+          if(document.getElementById('pitayaXduoshuo')){
+            DUOSHUO.EmbedThread(document.getElementById('duoshuoComment'))
+          }else{
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            ds.id ="pitayaXduoshuo";
+            (document.getElementsByTagName('head')[0]
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+         }
         })();
     `
     eval(script)

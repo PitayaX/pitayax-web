@@ -89,7 +89,7 @@ const Home = React.createClass({
         </div>
         <div className={styles.right} id="colright">
            <ScrollPanel className={styles.scrollpanel} scrollTopAfterUpdate={false} onScrollBottom={this.handleScrollBottom}  onScrollTop={this.handleScrollTop}>
-            <Right tag={tag} post={post}  onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
+            <Right tag={tag} post={post} onSelectTag={this.handleSelectTag} onSortPost={this.handleSortPost} />
           </ScrollPanel>
         </div>
       </div>

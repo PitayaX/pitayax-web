@@ -1,5 +1,5 @@
 /** post:{
- "author":{},
+ "author":{'_id', 'nickName':'', 'name', 'email'},
  "_id":"",
  "title": "",
  "abstract": "",

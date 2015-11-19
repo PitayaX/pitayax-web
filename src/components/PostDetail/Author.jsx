@@ -24,7 +24,7 @@ export default class Author extends Component {
           <p>
             <span className={styles.articleAuthorKey}>作者</span>
             &nbsp;&nbsp;&nbsp;
-            <span className={styles.articAuthorValue}>{author.name}</span>
+            <span className={styles.articAuthorValue}>{author.nick}</span>
             &nbsp;&nbsp;&nbsp;
             <span>{author.publishDate}</span>
           </p>
