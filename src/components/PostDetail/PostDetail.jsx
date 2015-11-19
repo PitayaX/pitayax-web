@@ -3,7 +3,6 @@ import DuoShuo from './Duoshuo.jsx'
 import Author from './Author.jsx'
 import Content from './Content.jsx'
 import Bottom from './Bottom.jsx'
-import GoToTop from './GoToTop.jsx'
 import classNames from 'classnames'
 
 
@@ -57,7 +56,6 @@ export default class PostDetail extends Component {
           {currentPost.comments&&<DuoShuo {...currentPost.comments} />}
         </div>
         <Bottom />
-        <GoToTop />
       </div>
       )
     }
