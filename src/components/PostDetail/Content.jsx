@@ -21,7 +21,8 @@ export  default class Content extends Component {
     //   smartLists: true,
     //   smartypants: true
     // })
-    const rawMarkup = Marked(this.props.post.content, { sanitize: true })
+    const content = this.props.post.content?this.props.post.content:""
+    const rawMarkup = Marked(content, { sanitize: true })
     return { __html: rawMarkup }
   }
 
@@ -45,7 +46,7 @@ export  default class Content extends Component {
          </div>
          <div className={styles.articleTitleAuthor}>
            <p>
-               文/{post.author}
+               文/{post.author.nick}
            </p>
          </div>
         </div>

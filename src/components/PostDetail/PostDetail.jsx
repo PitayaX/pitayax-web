@@ -52,7 +52,7 @@ export default class PostDetail extends Component {
       myArticle = (
       <div>
         <div className={containerPost}>
-          {currentPost.author&&<Author author={currentPost.author} />}
+          {/* currentPost.author&&<Author author={currentPost.author} /> */}
           <Content post={currentPost} />
           {currentPost.comments&&<DuoShuo {...currentPost.comments} />}
         </div>

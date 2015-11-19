@@ -172,7 +172,7 @@ export function loadPosts (selectedTags, sortBy) {
 export function loadPost (id) {
   return {
     types: [ LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE ],
-    promise: (client) => client.get(`/api/post/${id}`)
+    promise: (client) => client.post(`/script/post/single?postid=${id}`)
   }
 }
 
