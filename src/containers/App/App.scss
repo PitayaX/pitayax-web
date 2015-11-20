@@ -2,10 +2,14 @@
 
 html{
   height:100%;
+  width: 100%;
+  overflow: hidden;
 }
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   height:inherit;
+  width:inherit;
+  overflow: inherit;
 }
 .app {
   width: auto;
