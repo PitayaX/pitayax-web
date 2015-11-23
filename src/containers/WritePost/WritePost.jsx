@@ -1,28 +1,68 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes as T } from 'react'
+import { reduxForm } from 'redux-form'
 import { json as request } from 'lgutil/common/ajax'
 import { Editor } from 'pitaya-components'
+import LeanInput from '../../components/LeanInput/LeanInput'
+import TagInput from '../../components/TagInput/TagInput'
+import { noop, prop } from '../../utils/writePost'
 
+// @reduxForm({
+//   form: 'editPost',
+//   fields: [ 'title', 'tags', 'content' ],
+//   validate: (values) => {
+//     const errors = {}
+//
+//     if (!values.title) errors.title = 'It is required.'
+//     if (!values.content) errors.content = 'It is required.'
+//
+//     return errors
+//   },
+//   touchOnBlur: false
+// })
 class WritePost extends Component {
+
   static propTypes = {
-    header: PropTypes.string
+    fields: T.object,
+    errors: T.object,
+    invalid: T.bool,
+    dirty: T.bool,
+    isRequesting: T.bool,
+    handleSubmit: T.func.isRequired,
+    onLoad: T.func,
+    onError: T.func
   }
-  _props: {
-    article: {}
+
+  static defaultProps = {
+    isRequesting: false,
+    onSubmit: noop,
+    onLoad: noop,
+    onError: noop
   }
+
+  // TODO: Issue with HOC, can't resolve this property
+  isDirty () {
+    const { dirty } = this.props // only by this dirty property for now
+    return dirty
+  }
+
+  constructor (props, context) {
+    super(props, context)
+  }
+
   render () {
     const styles = require('./WritePost.scss')
+    // const invalidKeys = invalid ? Object.keys(errors).map(key => fields[key]).filter(isInvalid).map(prop('name')) : []
+    // const invalidKeyString = invalidKeys.join(', ')
     return (
       <div className={styles.writePost + ' container'}>
         <div className={styles.title}>
           <h3>编辑文字</h3>
         </div>
-        <div className={styles.editorTitle}>
-          <input ref='title' className={styles.input} name='title' type='text' placeholder='标题' />
-          <div className={styles.strip}></div>
+        <div className="form-group">
+          <LeanInput className="title" placeholder="标题" autoFocus />
         </div>
-        <div className={styles.editorTag}>
-          <input ref='tags' className={styles.input} name='tags' type='text' placeholder='标签...' />
-          <div className={styles.strip}></div>
+        <div className="form-group">
+          <TagInput placeholder="标签请用逗号分隔" />
         </div>
         <Editor ref='content' />
         <button className='btn btn-default' onClick={::this._clickToPostArticle}>递交</button>
@@ -61,6 +101,7 @@ class WritePost extends Component {
 
   _remindRequiredField (fieldName) {
   }
+
 }
 
 export default WritePost
