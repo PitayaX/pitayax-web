@@ -8,6 +8,7 @@ import info from './info'
 import widgets from './widgets'
 import tag from './tag'
 import post from './post'
+import settings from './settings'
 
 
 export default combineReducers({
@@ -15,7 +16,7 @@ export default combineReducers({
   auth,
   form,
   info,
-  widgets,
   tag,
-  post
+  post,
+  settings
 })
