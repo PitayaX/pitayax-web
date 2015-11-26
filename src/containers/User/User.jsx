@@ -3,28 +3,35 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
+import { loadUser, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
 import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
 import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost, dispose as disposePost }  from 'redux/modules/post'
+import { isLogged } from '../../helpers/mixin'
 
 const User = React.createClass({
   propTypes: {
     tag: React.PropTypes.object,
     post: React.PropTypes.object,
+    user: React.PropTypes.object,
+    params: React.PropTypes.object,
     selectTag: React.PropTypes.func.isRequired,
     sortPost: React.PropTypes.func.isRequired,
     loadTags: React.PropTypes.func.isRequired,
     loadPosts: React.PropTypes.func.isRequired,
+    loadUser: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
     isPostsLoaded: React.PropTypes.func.isRequired,
+    isUserLoaded: React.PropTypes.func.isRequired,
     isPostsLoading: React.PropTypes.func.isRequired,
     disposePost: React.PropTypes.func.isRequired,
-    disposeTag: React.PropTypes.func.isRequired,
+    disposeTag: React.PropTypes.func.isRequired
   },
 
   getDefaultProps () {
     return {
       tag: {},
-      post: {}
+      post: {},
+      user: {}
     }
   },
 
@@ -36,15 +43,15 @@ const User = React.createClass({
     if (!this.props.isPostsLoaded(this.props.post)) {
       this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
+    if (!this.props.isUserLoaded(this.props.user)) {
+      this.props.loadUser({ 'userId': this.props.params.id })
+    }
   },
 
   componentWillReceiveProps (nextProps) {
     const { tag, post } = nextProps
     if (tag.selectedTags &&  tag.selectedTags.length !== this.props.tag.selectedTags.length) {
       this.props.loadPosts(tag.selectedTags, post.sortBy)
-    }
-    if (post.sortBy !== this.props.post.sortBy) {
-      this.props.post
     }
   },
   componentWillUnmount () {
@@ -80,14 +87,15 @@ const User = React.createClass({
   render () {
 
     const styles = require('./User.scss')
-    const { tag, post } = this.props
+    const { tag, post, user } = this.props
+    const logged = isLogged()
     // require the logo image both from client and server
     // const logoImage = require('./logo.png')
     return (
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <UserLeft>
-             <Profile />
+             <Profile Logged={logged} author={user} />
            </UserLeft>
         </div>
         <div className={styles.right} id="colright">
@@ -103,12 +111,13 @@ const User = React.createClass({
 function mapStateToProps (state) {
   return {
     tag: state.tag,
-    post: state.post
+    post: state.post,
+    user: state.user
   }
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost, disposePost, disposeTag }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, loadUser, isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

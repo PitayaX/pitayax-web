@@ -8,7 +8,9 @@ import info from './info'
 import widgets from './widgets'
 import tag from './tag'
 import post from './post'
+import user from './user'
 import settings from './settings'
+
 
 
 export default combineReducers({
@@ -18,5 +20,6 @@ export default combineReducers({
   info,
   tag,
   post,
+  user,
   settings
 })
