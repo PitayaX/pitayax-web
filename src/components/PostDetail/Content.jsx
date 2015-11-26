@@ -1,5 +1,6 @@
 import React, { Component, PropTypes as T } from 'react'
 import Marked from 'marked'
+import Highlight from 'highlight.js'
 
 export  default class Content extends Component {
 
@@ -22,7 +23,17 @@ export  default class Content extends Component {
     //   smartypants: true
     // })
     const content = this.props.post.content?this.props.post.content:""
+
+    // hight light the code script
+    Marked.setOptions({
+      highlight (code) {
+        const hlcode = Highlight.highlightAuto(code).value
+        console.log(hlcode)
+        return hlcode
+      }
+    })
     const rawMarkup = Marked(content, { sanitize: true })
+
     return { __html: rawMarkup }
   }
 
@@ -33,6 +44,7 @@ export  default class Content extends Component {
 
     return (
       <div className={styles.myArticle}>
+        <link rel="stylesheet" type="text/css" href="https://highlightjs.org/static/styles/github.css" />
         <div>
          <div>
            <h1 className={styles.articleTitleHeader} >{post.title}</h1>
