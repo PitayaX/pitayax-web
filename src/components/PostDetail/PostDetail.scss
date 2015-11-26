@@ -31,7 +31,7 @@
   padding-top:1.8em;
 }
 .post{
-  width:43.75em !important;
+  width:65% !important;
 }
 .avatar{
   margin:0.8em 0.8em 0 0;
@@ -81,7 +81,6 @@
   height:1em;
   & ul{
     padding:0;
-    position:absolute;
     list-style-type:none;
     font-size:0.9em;
     color:#9C9A9C;
@@ -143,4 +142,8 @@
     background-color: #49be38;
     color: white;
   }
+}
+
+html, body{
+  overflow:auto;
 }

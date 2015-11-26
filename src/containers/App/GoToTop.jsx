@@ -6,13 +6,18 @@ class GoToTop extends Component {
     super(props, context)
   }
   render () {
-    const styles = require('./PostDetail.scss')
+    const styles = require('./GoToTop.scss')
     return (
       <div className={styles.fixedBtn}>
-        <a className={styles.goTop} href="#"> <i className="fa fa-angle-up"></i></a>
+        <a onClick = {::this.goToTop} className={styles.goTop} href="#"> <i className="fa fa-angle-up"></i></a>
         <a className={styles.goTop} href="#"><i className="fa fa-qrcode"></i></a>
         <a className={styles.writer} href="#"><i className="fa fa-pencil"></i></a>
       </div>
     )
+  }
+  goToTop () {
+    console.log("scrollTop: " + global.document.body.scrollTop)
+    console.log("global: "+global)
+    global.top.scrollTo(0, 0)
   }
 }

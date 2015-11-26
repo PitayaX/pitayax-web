@@ -1,4 +1,4 @@
-import loginOAuthCB, { refreshToken } from './loginOAuthCB'
+import loginOAuthCB, { refreshToken, oAuthLogout } from './loginOAuthCB'
 
 
 
@@ -12,6 +12,9 @@ export default function callback (req, res) {
     break
   case '/refresh':
     refreshToken(req, res)
+    break
+  case '/logout':
+    oAuthLogout(req, res)
     break
   default:
   }

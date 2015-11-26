@@ -1,0 +1,26 @@
+.fixedBtn {
+  position: fixed;
+  right: 2%;
+  bottom: 15%;
+  width: 1.5em;
+  border: 1px solid #eeeeee;
+  background-color: white;
+  font-size: 2em;
+  z-index: 1001;
+  -webkit-backface-visibility: hidden;
+  & a{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #555555;
+    text-decoration: none;
+  }
+  .goTop{
+    border-bottom: 1px solid #eeeeee;
+  }
+  .writer{
+    background-color: #49be38;
+    color: white;
+  }
+}

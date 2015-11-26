@@ -10,16 +10,20 @@ $navitemHoverBgColor:#ff8a21;
 .main{
   background-color: $mainBgColor;
   padding: 0;
-
+  height:inherit;
   .middle{
      width: 20%;
      background-color: $middleBgColor;
      position: fixed;
-     height: 100%;
+     height: inherit;
   }
 
   .right{
-     width: 75%;
-     margin-left: 20%;
+     margin-left: 21%;
+     height:inherit;
   }
+}
+
+.scrollpanel{
+  height: inherit;
 }

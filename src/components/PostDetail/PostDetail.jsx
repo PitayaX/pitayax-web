@@ -3,7 +3,6 @@ import DuoShuo from './Duoshuo.jsx'
 import Author from './Author.jsx'
 import Content from './Content.jsx'
 import Bottom from './Bottom.jsx'
-import GoToTop from './GoToTop.jsx'
 import classNames from 'classnames'
 
 
@@ -24,6 +23,7 @@ export default class PostDetail extends Component {
 
   componentDidMount () {
     this.props.loadPost(this.props.params.id)
+    global.document.body.style.overflow='auto'
   }
 
   componentWillUnmount () {
@@ -52,12 +52,11 @@ export default class PostDetail extends Component {
       myArticle = (
       <div>
         <div className={containerPost}>
-          {currentPost.author&&<Author author={currentPost.author} />}
+          {/* currentPost.author&&<Author author={currentPost.author} /> */}
           <Content post={currentPost} />
           {currentPost.comments&&<DuoShuo {...currentPost.comments} />}
         </div>
         <Bottom />
-        <GoToTop />
       </div>
       )
     }
