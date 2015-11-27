@@ -38,7 +38,7 @@ function login (req, res) {
    console.log(e)
 
    const resBody={}
-   resBody.error=e.error || '登录失败！'
+   resBody.error='用户名或密码错误！'
    res.writeHead(200, { 'Content-Type': 'application/json' })
    res.end(JSON.stringify(resBody))
 
@@ -83,7 +83,7 @@ export function refreshToken (req, res) {
 
     const resBody={}
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    resBody.error=e.error || '超时'
+    resBody.error=e.error.description || '超时'
     res.end(JSON.stringify(resBody))
 
   })
@@ -164,7 +164,7 @@ function convertCodeToToken (code, req, res) {
 
     const resBody={}
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    resBody.error=e.error || '登录失败！'
+    resBody.error = '用户名或密码错误！'
     res.end(JSON.stringify(resBody))
 
   })
