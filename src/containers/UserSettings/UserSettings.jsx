@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { loadSettings, loadAvatarByToken, saveSettings, changePassword, isLoaded, isSaving, dispose, closeAlert, switchTabIndex }  from 'redux/modules/settings'
+import { loadSettings, loadAvatarByToken, saveSettings, changePassword, isLoaded, isSaving, dispose, closeAlert, closeUploadAlert, switchTabIndex }  from 'redux/modules/settings'
 import { Tab, Tabs, TabList, TabPanel } from 'pitayax-web-tabs'
 import { Input, Button, Alert, Image }  from 'react-bootstrap'
 import { isLogged } from '../../helpers/mixin'
@@ -16,6 +16,7 @@ class UserSettings extends Component {
     saveSettings: PropTypes.func,
     changePassword: PropTypes.func,
     closeAlert: PropTypes.func,
+    closeUploadAlert: PropTypes.func,
     switchTabIndex: PropTypes.func,
     isLoaded: PropTypes.func,
     isSaving: PropTypes.func,
@@ -36,10 +37,11 @@ class UserSettings extends Component {
     // get data from server
     if (!this.props.isLoaded(this.props.settings)) {
       // const token=this.props.userToken
-      const userId = this._getCustomUserToken()
+      const userId = this.props.params.id
       this.props.loadSettings({ userId })
       .then((result) => {
-        const fileToken=JSON.stringify(result).avatarFileToken
+
+        const fileToken=result.avatarFileToken
         if (fileToken) this.props.loadAvatarByToken(fileToken)
       })
     }
@@ -94,12 +96,10 @@ class UserSettings extends Component {
     const { tabIndex, isExist, entries } = this.props.settings
 
     const avatarFileToken = entries['avatarFileToken'] || '' // 头像
+    const avatarFileUrl = entries['avatarFileUrl'] || ''
     const description = this.refs['user_description'].getValue() // 个人简介
     const homepage = this.refs['user_homepage'].getValue() // 个人主页
-    if (Object.is(avatarFileToken.length, 0)) {
-      // TODO: show message
-      return
-    }
+
     if (Object.is(description.length, 0)) {
       // TODO: show message
       return
@@ -112,7 +112,7 @@ class UserSettings extends Component {
     const userId = this.props.params.id
     // const userId = this._getCustomUserToken()
     // 'tabIndex':当前选中的tab,'userToken':用户唯一标识, 'isExist':用户是否已经存在
-    const dataBody ={ userId, isExist, avatarFileToken, description, homepage }
+    const dataBody ={ userId, isExist, avatarFileToken, avatarFileUrl, description, homepage }
     if (!this.props.isSaving(this.props.settings)) {
       this.props.saveSettings(dataBody)
     }
@@ -151,6 +151,12 @@ class UserSettings extends Component {
   _handleAlertDismiss () {
 
     this.props.closeAlert()
+  }
+
+  _handleUploadAlertDismiss () {
+
+    this.props.closeUploadAlert()
+
   }
 
   // generate user token with date
@@ -228,7 +234,7 @@ class UserSettings extends Component {
   render () {
 
     const styles = require('./UserSettings.scss')
-    const { error, isSaved, alertVisible, tabIndex, entries }=this.props.settings
+    const { error, isSaved, isUploaded, alertVisible, tabIndex, entries }=this.props.settings
     const userAvatar = entries.avatarFileUrl || require('./default_avatar.png')
 
     return (
@@ -239,6 +245,9 @@ class UserSettings extends Component {
           </Alert>}
           {error===null && isSaved && alertVisible&&<Alert bsStyle="success" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
             <p>You have saved data successfully.</p>
+          </Alert>}
+          {error===null && isUploaded&&<Alert bsStyle="success"  onDismiss={::this._handleUploadAlertDismiss} dismissAfter={4000} >
+            <p>上传成功。</p>
           </Alert>}
         </div>
         <div className={styles['settings-title']}>
@@ -267,7 +276,7 @@ class UserSettings extends Component {
               <div className={styles['user-container']}>
                 <div className={styles['user-avatar']} >
                   <div className={styles['avatar']}>
-                    <Image src={userAvatar} circle />
+                    <Image src={userAvatar} className={styles['user-avatar-image']} circle />
                   </div>
                   <div className="btn-group change-avatar">
                     <input type="hidden" ref="user_avatar_fileToken"  name="user_avatar_fileToken" id="user_avatar_fileToken" value="" />
@@ -284,9 +293,9 @@ class UserSettings extends Component {
                 </div>
                 <div className={styles['user-avatar']}>
                   <label className="control-label">简介</label>
-                  <Input type="textarea" value={entries.description} ref="user_description" onChange={::this._handleChange}  placeholder="填写您的个人简介可以帮助其他人更好的了解您" name="user_description" id="user_description" />
+                  <Input type="textarea"  ref="user_description" onChange={::this._handleChange}  placeholder="填写您的个人简介可以帮助其他人更好的了解您" name="user_description" id="user_description" />
                   <label className="control-label">个人主页</label>
-                  <Input type="text" value={entries.homepage}  ref="user_homepage" onChange={::this._handleChange}  placeholder="您的个人主页 http://example.com" name="user_homepage" id="user_homepage" />
+                  <Input type="text"   ref="user_homepage" onChange={::this._handleChange}  placeholder="您的个人主页 http://example.com" name="user_homepage" id="user_homepage" />
                 </div>
                 <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveProfile}>保存</Button>
               </div>
@@ -315,6 +324,6 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadSettings, loadAvatarByToken, saveSettings, changePassword, isLoaded, isSaving, dispose, closeAlert, switchTabIndex }, dispatch)
+  return bindActionCreators ({ loadSettings, loadAvatarByToken, saveSettings, changePassword, isLoaded, isSaving, dispose, closeAlert, closeUploadAlert, switchTabIndex }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)

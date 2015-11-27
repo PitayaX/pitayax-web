@@ -18,7 +18,7 @@ export default
      } catch (e) {
        isdiffDomain = true
      }
-     if (!this.refs.reg||isdiffDomain) {
+     if (!isdiffDomain) {
        return
      }
      global.top.location.href=this.refs.reg.src.split('redirect_uri=')[1]

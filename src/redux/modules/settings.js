@@ -12,6 +12,7 @@ const SAVE_SETTINGS_FAILURE = 'settings/SAVE_SETTINGS_FAILURE'
 const DISPOSE_SETTINGS = 'settings/DISPOSE_SETTINGS'
 const SWITCH_TABINDEX = 'settings/SWITCH_TABINDEX'
 const CLOSE_ALERT = 'settings/CLOSE_ALERT'
+const CLOSE_UPLOAD_ALERT='settings/CLOSE_UPLOAD_ALERT'
 
 /* load  avatar  action */
 const LOAD_AVATAR_REQUEST = 'settings/LOAD_AVATAR_REQUEST'
@@ -24,11 +25,12 @@ const LOAD_AVATAR_FAILURE = 'settings/LOAD_AVATAR_FAILURE'
 const initialState = {
   isLoading: false,
   isLoaded: false,
+  isUploaded: false,
   isSaving: false,
   isSaved: false,
   isExist: false,
   alertVisible: false,
-  entries: { 'avatarFileUrl': '', 'avatarFileToken': '' },
+  entries: { "avatarFileToken": "", "avatarFileUrl": "" },
   tabIndex: 0,
   error: null
 }
@@ -70,6 +72,8 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
+      isUploaded: true,
+      alertVisible: true,
       entries: updateAvatarFileUrl(state.entries, action)
     }
   case LOAD_AVATAR_FAILURE:
@@ -111,6 +115,12 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       alertVisible: false
     }
+  case  CLOSE_UPLOAD_ALERT:
+    return {
+      ...state,
+      isUploaded: false
+    }
+
   case SWITCH_TABINDEX:
     return {
       ...state,
@@ -132,11 +142,11 @@ function getUserSettings (list) {
 function updateAvatarFileUrl (oldEntries, action) {
 
   if (!action.result) {
-    return { ...oldEntries, 'avatarFileToken': action.fileToken }
+    return { ...oldEntries, "avatarFileToken": action.fileToken }
   }
-  const url = JSON.stringify(action.result)['file-url']
-  return { ...oldEntries, 'avatarFileToken': action.fileToken, 'avatarFileUrl': url }
-
+  const url = action.result.body['file-url']
+  console.log("test2:"+url)
+  return { ...oldEntries, "avatarFileToken": action.fileToken, "avatarFileUrl": url }
 }
 
 
@@ -189,6 +199,14 @@ export function closeAlert () {
     type: CLOSE_ALERT
   }
 }
+
+export function closeUploadAlert () {
+  return {
+    type: CLOSE_UPLOAD_ALERT
+  }
+}
+
+
 export function switchTabIndex (tabIndex) {
   return {
     type: SWITCH_TABINDEX,

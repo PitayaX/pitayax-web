@@ -10,6 +10,7 @@ const LOAD_AVATAR_SUCCESS = 'user/LOAD_AVATAR_SUCCESS'
 const LOAD_AVATAR_FAILURE = 'user/LOAD_AVATAR_FAILURE'
 
 const DISPOSE_USER = 'user/DISPOSE_USER'
+const LOGIN_USER = 'user/LOGIN_USER'
 
 
  /* initial state */
@@ -67,6 +68,11 @@ export default function reducer (state = initialState, action = {}) {
     }
   case DISPOSE_USER:
     return initialState
+  case LOGIN_USER:
+    return {
+      ...state,
+      isLogged: action.logged
+    }
 
   default:
     return state
@@ -100,6 +106,13 @@ export function loadUserAvatar (token) {
     fileToken: token,
     types: [ LOAD_AVATAR_REQUEST, LOAD_AVATAR_SUCCESS, LOAD_AVATAR_FAILURE ],
     promise: () => ajax.get(`http://10.10.73.208:8081/fs/${token}`)
+  }
+}
+
+export function loginUser (logged) {
+  return {
+    type: LOGIN_USER,
+    logged
   }
 }
 

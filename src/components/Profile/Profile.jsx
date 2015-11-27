@@ -24,21 +24,22 @@ const Profile =React.createClass({
 
   render () {
     const styles=require('./Avatar.scss')
-    const { Logged, userId, userName, userAvatarUrl } = this.props
-    const avatarUrl= userAvatarUrl ?userAvatarUrl: require('../Images/yemol.png')
+    const { Logged, userId } = this.props
+    const { nick, avatarFileUrl } = this.props.author
+    const avatarUrl= avatarFileUrl ?avatarFileUrl: require('../Images/yemol.png')
 
     return (
       <div className={styles['profile-container']}>
         <div className={styles['profile-row-avatar']}>
-          <Avatar imgUrl={avatarUrl} authorName={userName} />
+          <Avatar imgUrl={avatarUrl} authorName={nick} />
         </div>
         <div className={styles['profile-row-name']}>
           <AuthorName  authorName={userName} />
         </div>
-        {Logged} &&
+        {Logged &&
         <div className={styles['profile-row-edit']}>
           <EditProfile  userId={userId} />
-        </div>
+        </div>}
         <div className={styles['profile-row-link']}>
           <AuthorLink userId={userId} />
         </div>
