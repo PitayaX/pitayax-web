@@ -30,7 +30,7 @@ const proxy = httpProxy.createProxyServer({
   // target: 'http://10.10.73.207:8088'
   // ,
   target: 'http://localhost:' + config.apiPort,
-  ws: false
+  ws: true
 })
 
 // proxy.on('proxyReq', function (proxyReq, req, res, options) {
@@ -47,7 +47,6 @@ app.use(require('serve-static')(path.join(__dirname, '..', 'static')))
 
 // Proxy to API server
 app.use('/api', (req, res) => {
-  console.log('here is api')
   proxy.web(req, res)
 })
 
