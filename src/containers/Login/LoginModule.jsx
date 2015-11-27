@@ -16,7 +16,7 @@ class LoginModule extends Component {
     this.state = {
       loginModalShow: false,
       nickName: "",
-      userID: ""
+      userId: ""
 
     }
   }
@@ -29,7 +29,7 @@ class LoginModule extends Component {
       </div>
     )
     if (this.state.nickName) {
-      const userRoute='/user/' + this.state.userID
+      const userRoute='/user/' + this.state.userId
       loginShow = (
         <div className={styles.loginContent}>
           <span><Link to={userRoute}><i className="fa fa-user"></i>{this.state.nickName}</Link></span>
@@ -94,29 +94,17 @@ class LoginModule extends Component {
   }
 
   componentDidMount () {
-    if (sessionStorage.getItem("nickName") && sessionStorage.getItem("userID") && sessionStorage.getItem("nickName") !== 'undefined' && sessionStorage.getItem("userID") !== 'undefined') {
-      this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName"), userID: sessionStorage.getItem("userID") })
+    if (sessionStorage.getItem("nickName") && sessionStorage.getItem("userId") && sessionStorage.getItem("nickName") !== 'undefined' && sessionStorage.getItem("userId") !== 'undefined') {
+      this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName"), userId: sessionStorage.getItem("userId") })
     }
-    request.post("/api/script/post/list", {}, {}, {
-      timeout: 20000
-    })
-    .then(function (data) {
-      console.log("api:")
-      console.log(data)
-    })
-    .catch(function (e) {
-      console.log("api:")
-      console.log(e)
-    })
-
   }
 
 
 
   logout_Onclick () {
     sessionStorage.setItem("nickName", "")
-    sessionStorage.setItem("userID", "")
-    this.setState({ loginModalShow: false, nickName: "", userID: "" })
+    sessionStorage.setItem("userId", "")
+    this.setState({ loginModalShow: false, nickName: "", userId: "" })
     global.refreshTokenProxy = arg => {}
 
     request.post("/cb/logout", {}, {}, {
@@ -153,9 +141,9 @@ class LoginModule extends Component {
         this.refs.errorMsg.innerText = body.error
       } else {
         // success
-        this.setState({ loginModalShow: false, nickName: body.nickName, userID: body.userID })
+        this.setState({ loginModalShow: false, nickName: body.nickName, userId: body.userId })
         sessionStorage.setItem("nickName", body.nickName)
-        sessionStorage.setItem("userID", body.userID)
+        sessionStorage.setItem("userId", body.userId)
         process.nextTick(() => global.alert("欢迎您， " +body.nickName ))
         global.refreshTokenProxy(Number(body.refreshTokenInterval))
       }
@@ -166,14 +154,14 @@ class LoginModule extends Component {
   }
 
   showLoginModal () {
-    this.setState({ loginModalShow: true, nickName: "", userID: "" })
+    this.setState({ loginModalShow: true, nickName: "", userId: "" })
     global.refreshTokenProxy = function (_interval) {
       setTimeout(global.refreshToken, _interval)
     }
   }
 
   loginClose_Onclick () {
-    this.setState({ loginModalShow: false, nickName: "", userID: "" })
+    this.setState({ loginModalShow: false, nickName: "", userId: "" })
   }
 
   getUrlValueByKey (url, key) {

@@ -27,10 +27,15 @@ function login (req, res) {
   })
   .then(function (data) {
 
+    console.log('here is succ')
+    console.log("data.code: "+data.code)
+
     convertCodeToToken(data.code, req, res)
 
   })
  .catch(function (e) {
+   console.log('here is get code failed')
+   console.log(e)
 
    const resBody={}
    resBody.error=e.error || '登录失败！'
@@ -73,6 +78,9 @@ export function refreshToken (req, res) {
   })
   .catch(e => {
 
+    console.log('here is get refresh token failed')
+    console.log(e)
+
     const resBody={}
     res.writeHead(200, { 'Content-Type': 'application/json' })
     resBody.error=e.error || '超时'
@@ -113,6 +121,9 @@ export function logout (req, res) {
 
 function convertCodeToToken (code, req, res) {
 
+  console.log(code)
+  console.log(grantType)
+  console.log(clientID)
   aq.rest(oAuthTokenUri, "POST", {}, {
     code,
     grant_type: grantType,
@@ -120,6 +131,8 @@ function convertCodeToToken (code, req, res) {
     redirect_uri: ''
   })
   .then(data => {
+
+    console.log('here is convert succ')
 
     const resBody={}
 
@@ -145,6 +158,9 @@ function convertCodeToToken (code, req, res) {
 
   })
   .catch(e => {
+
+    console.log('here is get convert code to token failed')
+    console.log(e)
 
     const resBody={}
     res.writeHead(200, { 'Content-Type': 'application/json' })

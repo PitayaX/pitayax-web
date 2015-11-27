@@ -1,5 +1,7 @@
 import login, { refreshToken, logout } from './login'
 
+import reg from './reg'
+
 
 
 
@@ -14,6 +16,9 @@ export default function callback (req, res) {
     break
   case '/logout':
     logout(req, res)
+    break
+  case '/reg':
+    reg(req, res)
     break
   default:
     returnOK(req, res)
