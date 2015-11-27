@@ -3,8 +3,11 @@ import { Modal } from 'common'
 import { json as request } from 'lgutil/common/ajax'
 import config from '../../config'
 import { Link } from 'react-router'
+import cNames from 'classnames'
 
 const oAuthLoginUri = config.oAuthServer + '/auth?response_type=code&client_id=pitayax-web&state=xyz%20&redirect_uri=' + config.oAuthRedirectUrl
+
+const logo = require('./logo.png')
 
 export default
 class LoginModule extends Component {
@@ -21,7 +24,7 @@ class LoginModule extends Component {
     const styles = require('./LoginModule.scss')
     let loginShow = (
       <div className={styles.loginContent}>
-        <span onClick={::this.login_Onclick} ><i className="fa fa-sign-in"></i>登录</span>
+        <span onClick={::this.showLoginModal} ><i className="fa fa-sign-in"></i>登录</span>
         <span><Link to='/reg'><i className="fa fa-user-plus"></i>注册</Link></span>
       </div>
     )
@@ -35,19 +38,47 @@ class LoginModule extends Component {
       )
     }
     return (
-      <div style= {{ zIndex: '1001', position: 'fixed', right: '0em', margin: '1em 2em 0 0' }}>
+      <div className={styles.loginContainer}>
         {loginShow}
         <Modal isShowed={this.state.loginModalShow} dimmerClassName='modal-dimmer' modalClassName='modal-dialog'>
-          <div style={{ height: '13em' }} className='modal-content'>
-            <div onClick={::this.loginClose_Onclick} style={{ color: 'white', position: 'relative', top: '-0.7em', right: '1.3em', float: 'right', height: '0', width: '0' }}>
-              <div style={{ backgroundColor: 'black', width: '1em', height: '1em', position: 'absolute', top: '0.5em', left: '0.35em' }}>
-              </div>
-              <div style={{ position: 'absolute' }}>
+          <div className='loginModal'>
+            <div className={styles.loginModalCloseColor}></div>
+            <div className={styles.loginModalCloseBackgroundColor} onClick={::this.loginClose_Onclick}>
               <i className = "fa fa-times-circle fa-2x"></i>
-              </div>
             </div>
-            <div style = {{ width: '100%', height: '100%' }}>
-              <iframe style = {{ borderRadius: '0.5em', width: '100%', height: '100%', margin: '0', padding: '0', border: '0' }} onLoad={::this.loginModal_Onload}  ref='oAuth' src={oAuthLoginUri}></iframe>
+            <div style={{ position: 'absolute' }}>
+
+              <div>
+                  <img className={styles.loginModalLogo} src={logo}/>
+                  <hr/>
+              </div>
+
+              <div className={cNames('form-group', styles.loginModalFormGroup)}>
+                <div className="input-group">
+                  <div className='input-group-addon'><i className="fa fa-user"></i></div>
+                  <input ref='loginEmail' className={cNames('form-control', styles.loginModalInputItem)} type="text" id="loginEmail" placeholder=" 邮 箱" />
+                </div>
+              </div>
+
+              <div className={cNames('form-group', styles.loginModalFormGroup)}>
+                <div className="input-group">
+                  <div className='input-group-addon'><i className="fa fa-asterisk"></i></div>
+                  <input ref='loginpwd' onKeyPress={::this.login_OnKeyDown} className={cNames('form-control', styles.loginModalInputItem)} type="password" id="loginpwd" placeholder=" 密 码" />
+                </div>
+              </div>
+
+              <div className={styles.loginModalSubmitContainer}>
+                <button onClick={::this.login_Onclick} className={cNames('btn', 'btn-primary', styles.loginModalSubmit)} type="submit"> 登 录 </button>
+              </div>
+
+              <div className={styles.loginModalErrorMsgContainer}>
+                <label ref='errorMsg' className='sr-only'>用户名密码错误</label>
+              </div>
+
+              <div className={styles.loginModalOthers}>
+                <p><span>忘记密码?</span> <span style={{ float: 'right' }}>注 册</span></p>
+              </div>
+
             </div>
           </div>
        </Modal>
@@ -56,31 +87,28 @@ class LoginModule extends Component {
 
   }
 
-  componentDidMount () {
-    this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName") || "", userID: sessionStorage.getItem("userID") })
+  login_OnKeyDown (e) {
+    if (e.charCode===13) {
+      this.login_Onclick(e)
+    }
   }
 
-  loginModal_Onload () {
-    let isdiffDomain = false
-    try {
-      this.refs.oAuth.contentDocument
-    } catch (e) {
-      isdiffDomain = true
+  componentDidMount () {
+    if (sessionStorage.getItem("nickName") && sessionStorage.getItem("userID") && sessionStorage.getItem("nickName") !== 'undefined' && sessionStorage.getItem("userID") !== 'undefined') {
+      this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName"), userID: sessionStorage.getItem("userID") })
     }
-    if (!this.refs.oAuth||isdiffDomain) {
-      return
-    }
-    const oAuth = this.refs.oAuth.contentDocument
-    const oAuthUrl = oAuth.URL || oAuth.baseURI || oAuth.documentURI
-    if (oAuthUrl && oAuthUrl.indexOf('code') >= 0 && oAuthUrl.indexOf('state') >= 0) {
-      const userName = this.getUrlValueByKey(oAuthUrl, 'nickname')
-      const userID = this.getUrlValueByKey(oAuthUrl, 'userid')
-      this.setState({ loginModalShow: false, nickName: userName, userID })
-      sessionStorage.setItem("nickName", userName)
-      sessionStorage.setItem("userID", userID)
-      process.nextTick(() => global.alert("欢迎您， " +userName ))
+    request.post("/api/script/post/list", {}, {}, {
+      timeout: 20000
+    })
+    .then(function (data) {
+      console.log("api:")
+      console.log(data)
+    })
+    .catch(function (e) {
+      console.log("api:")
+      console.log(e)
+    })
 
-    }
   }
 
 
@@ -104,6 +132,40 @@ class LoginModule extends Component {
   }
 
   login_Onclick () {
+
+    this.refs.errorMsg.innerText =''
+    this.refs.errorMsg.setAttribute('class', 'sr-only')
+
+    const userInfo={
+      userName: this.refs.loginEmail.value,
+      password: this.refs.loginpwd.value
+    }
+
+    request.post("/cb/login", userInfo, {}, {
+      timeout: 20000
+    })
+    .then(function (data) {
+      console.log(data)
+      const body = data.body
+      if (body.error) {
+        this.refs.loginpwd.value=''
+        this.refs.errorMsg.setAttribute('class', '')
+        this.refs.errorMsg.innerText = body.error
+      } else {
+        // success
+        this.setState({ loginModalShow: false, nickName: body.nickName, userID: body.userID })
+        sessionStorage.setItem("nickName", body.nickName)
+        sessionStorage.setItem("userID", body.userID)
+        process.nextTick(() => global.alert("欢迎您， " +body.nickName ))
+        global.refreshTokenProxy(Number(body.refreshTokenInterval))
+      }
+    }.bind(this))
+    .catch(function (e) {
+      console.log(e)
+    })
+  }
+
+  showLoginModal () {
     this.setState({ loginModalShow: true, nickName: "", userID: "" })
     global.refreshTokenProxy = function (_interval) {
       setTimeout(global.refreshToken, _interval)
@@ -135,7 +197,7 @@ global.refreshToken = function () {
     timeout: 20000
   })
   .then(function (data) {
-    eval(data.body)
+    global.refreshTokenProxy(Number(data.body.refreshTokenInterval))
   })
   .catch(function (e) {
     console.log(e)

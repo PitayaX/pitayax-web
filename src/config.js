@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     oAuthServer: 'http://120.24.58.42:2001',
-    oAuthRedirectUrl: 'http://10.10.73.4:3000/cb/login',
+    oAuthRedirectUrl: 'http://10.10.73.16:3000/cb/login',
     isProduction: false,
     port: process.env.PORT,
     apiPort: process.env.APIPORT,
@@ -11,7 +11,7 @@ module.exports = {
   },
   production: {
     oAuthServer: 'http://120.24.58.42:2001',
-    oAuthRedirectUrl: 'http://10.10.73.4:3000/cb/login',
+    oAuthRedirectUrl: 'http://10.10.73.16:3000/cb/login',
     isProduction: true,
     port: process.env.PORT,
     apiPort: process.env.APIPORT,

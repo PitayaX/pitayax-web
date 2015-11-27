@@ -21,13 +21,24 @@ import qs from 'query-string'
 import getRoutes from './routes'
 import getStatusFromRoutes from './helpers/getStatusFromRoutes'
 import callback from './callbacks'
+import cookie from 'cookie'
+
 const pretty = new PrettyError()
 const app = new Express()
 const server = new http.Server(app)
 const proxy = httpProxy.createProxyServer({
+  // target: 'http://10.10.73.207:8088'
+  // ,
   target: 'http://localhost:' + config.apiPort,
-  ws: true
+  ws: false
 })
+
+// proxy.on('proxyReq', function (proxyReq, req, res, options) {
+//   const cookies = cookie.parse(req.headers.cookie)
+//   proxyReq.setHeader('access_token', cookies.access_token)
+//   console.log('proxyReq after:')
+//   console.log(proxyReq.headers)
+// })
 
 app.use(compression())
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')))
@@ -36,11 +47,12 @@ app.use(require('serve-static')(path.join(__dirname, '..', 'static')))
 
 // Proxy to API server
 app.use('/api', (req, res) => {
+  console.log('here is api')
   proxy.web(req, res)
 })
 
 app.use('/cb', require('body-parser').json(), (req, res, next) => {
-  callback(req, res)
+  callback(req, res, next)
 })
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527

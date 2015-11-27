@@ -1,5 +1,4 @@
-import loginOAuthCB, { refreshToken, oAuthLogout } from './loginOAuthCB'
-
+import login, { refreshToken, logout } from './login'
 
 
 
@@ -8,14 +7,20 @@ import loginOAuthCB, { refreshToken, oAuthLogout } from './loginOAuthCB'
 export default function callback (req, res) {
   switch (req.url.split('?')[0]) {
   case '/login':
-    loginOAuthCB(req, res)
+    login(req, res)
     break
   case '/refresh':
     refreshToken(req, res)
     break
   case '/logout':
-    oAuthLogout(req, res)
+    logout(req, res)
     break
   default:
+    returnOK(req, res)
+    break
   }
+}
+function returnOK (req, res) {
+  res.writeHeader(200, { 'Content-Type': 'text/plain' } )
+  res.end()
 }

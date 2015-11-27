@@ -38,7 +38,6 @@ export default class PostDetail extends Component {
     const mySpinner=classNames("fa", "fa-spinner", styles.myFaSpin)
     const post = this.props.post
 
-    // debugger
     let myArticle=(
       <div className={styles.mySpinnerParent}>
         <div className={styles.mySpinner}>
