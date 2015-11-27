@@ -78,7 +78,7 @@ export function selectTag (tag) {
     tag
   }
 }
-/*clean tag reducer data when unmount specific conponent */
+/* clean tag reducer data when unmount specific conponent */
 export function dispose () {
   return {
     type: DISPOSE_TAG

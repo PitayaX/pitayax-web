@@ -18,6 +18,7 @@ export default class PostDetail extends Component {
     post: T.object.isRequired,
     loadPost: T.func.isRequired,
     disposePost: T.func.isRequired,
+    params: T.string 
   }
 
   componentDidMount () {

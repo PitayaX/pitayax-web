@@ -200,7 +200,7 @@ export function sortPost (sortBy) {
   }
 }
 
-/*clean post reducer data when unmount specific conponent */
+/* clean post reducer data when unmount specific conponent */
 export function dispose () {
   return {
     type: DISPOSE_POST
