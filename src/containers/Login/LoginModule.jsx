@@ -97,21 +97,6 @@ class LoginModule extends Component {
     if (sessionStorage.getItem("nickName") && sessionStorage.getItem("userId") && sessionStorage.getItem("nickName") !== 'undefined' && sessionStorage.getItem("userId") !== 'undefined') {
       this.setState({ ...this.state, nickName: sessionStorage.getItem("nickName"), userId: sessionStorage.getItem("userId") })
     }
-<<<<<<< HEAD
-    // request.post("/api/script/post/list", {}, {}, {
-    //   timeout: 20000
-    // })
-    // .then(function (data) {
-    //   console.log("api:")
-    //   console.log(data)
-    // })
-    // .catch(function (e) {
-    //   console.log("api:")
-    //   console.log(e)
-    // })
-
-=======
->>>>>>> 1b51afd4d2aba0ebc858235f2a760701be2872e9
   }
 
 
