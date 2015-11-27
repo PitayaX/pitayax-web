@@ -2,9 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { IndexLink, Link } from 'react-router'
 import { connect } from 'react-redux'
 import DocumentMeta from 'react-document-meta'
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info'
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth'
-import { InfoBar } from 'components'
 import { pushState } from 'redux-router'
 import LoginModule from '../Login/LoginModule'
 import config from '../../config'
@@ -33,8 +30,9 @@ const NavbarLink = ({ to, className, component, children }) => {
 }
 
 @connect(
-    state => ({ user: state.auth.user }),
-    { logout, pushState })
+    state => ({ user: state.user }),
+    { pushState })
+
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -50,7 +48,7 @@ export default class App extends Component {
   componentWillReceiveProps (nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState(null, '/loginSuccess')
+      // this.props.pushState(null, '/loginSuccess')
     } else if (this.props.user && !nextProps.user) {
       // logout
       this.props.pushState(null, '/')
@@ -59,18 +57,18 @@ export default class App extends Component {
 
   static fetchData (getState, dispatch) {
     const promises = []
-    if (!isInfoLoaded(getState())) {
-      promises.push(dispatch(loadInfo()))
-    }
-    if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()))
-    }
+    // if (!isInfoLoaded(getState())) {
+    //   promises.push(dispatch(loadInfo()))
+    // }
+    // if (!isAuthLoaded(getState())) {
+    //   promises.push(dispatch(loadAuth()))
+    // }
     return Promise.all(promises)
   }
 
   handleLogout (event) {
     event.preventDefault()
-    this.props.logout()
+  //  this.props.logout()
   }
 
   render () {

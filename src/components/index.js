@@ -1,7 +1,3 @@
-export CounterButton from './CounterButton/CounterButton'
-export GithubButton from './GithubButton/GithubButton'
-export InfoBar from './InfoBar/InfoBar'
-export MiniInfoBar from './MiniInfoBar/MiniInfoBar'
 export GroupLeft from './Layout/GroupLeft'
 export UserLeft from './Layout/UserLeft'
 export Right from './Layout/Right'

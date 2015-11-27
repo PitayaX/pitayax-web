@@ -23,7 +23,6 @@ class UserSettings extends Component {
   }
   constructor (props) {
     super(props)
-    // userToken=props.params.userToken
   }
 
 
@@ -227,93 +226,84 @@ class UserSettings extends Component {
   }
 
   render () {
-    if (!isLogged()) {
-      return (
-        <div>
-          <h1>你还没有登录，请先登录！</h1>
-        </div>
-      )
-    }
-    else {
 
-      const styles = require('./UserSettings.scss')
-      const { error, isSaved, alertVisible, tabIndex, entries }=this.props.settings
-      const userAvatar = entries.avatarFileUrl || require('./default_avatar.png')
+    const styles = require('./UserSettings.scss')
+    const { error, isSaved, alertVisible, tabIndex, entries }=this.props.settings
+    const userAvatar = entries.avatarFileUrl || require('./default_avatar.png')
 
-      return (
-        <div className={styles['settings-main']}>
-          <div className={styles['settings-alert']}>
-            {error!=null && alertVisible &&<Alert bsStyle="danger" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
-              <p>You happen error.</p>
-            </Alert>}
-            {error===null && isSaved && alertVisible&&<Alert bsStyle="success" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
-              <p>You have saved data successfully.</p>
-            </Alert>}
-          </div>
-          <div className={styles['settings-title']}>
-             <h2><i className="fa fa-cogs"></i>设置</h2>
-          </div>
-          <div className={styles['settings-body']}>
-            <Tabs  onSelect={::this._handleSelected} selectedIndex={tabIndex}>
-              <TabList>
-                <Tab>基础设置</Tab>
-                <Tab>个人资料</Tab>
-                <Tab>修改密码</Tab>
-              </TabList>
-              <TabPanel>
-                <div className={styles['user-container']}>
-                  <h2>昵称和电子邮件</h2>
-                  <label className="control-label">昵称</label>
-                  <Input value={entries.nick} onChange={::this._handleChange} ref="user_nick" placeholder="昵称"   className="input-xlarge" type="text" name="user_nick" id="user_nick"/>
-                  <label className="control-label">电子邮件</label>
-                  <Input value={entries.email} onChange={::this._handleChange} ref="user_email" placeholder="电子邮件"  className="input-xlarge" type="text" name="user_email" id="user_email"/>
-                  <label className="control-label">手机号码</label>
-                  <Input value={entries.phone} onChange={::this._handleChange} ref="user_phone" placeholder="手机号码"  className="input-xlarge" type="text" name="user_phone" id="user_phone"/>
-                  <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveBasicInfo}>保存</Button>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className={styles['user-container']}>
-                  <div className={styles['user-avatar']} >
-                    <div className={styles['avatar']}>
-                      <Image src={userAvatar} circle />
-                    </div>
-                    <div className="btn-group change-avatar">
-                      <input type="hidden" ref="user_avatar_fileToken"  name="user_avatar_fileToken" id="user_avatar_fileToken" value="" />
-                      <form id="user_upload_frm"  encType="multipart/form-data" onSubmit={::this._uploadAvatar}>
-                        <div className={styles['file-box']}>
-  					             <input ref="user_upload_avatar" type="file" help="上传头像" name="user_upload_avatar" id="user_upload_avatar" className={styles['file-input']}  multiple="" onChange={::this._handleChangeFile} />
-  					             <label ref="user_avatar_label" htmlFor="user_upload_avatar"><span>Choose a file…</span></label>
-  				              </div>
-                        <div className={styles['btn-avatar-upload']}>
-                          <Button type="submit" bsClass={"btn "+styles['btn-save']}>上传</Button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div className={styles['user-avatar']}>
-                    <label className="control-label">简介</label>
-                    <Input type="textarea" value={entries.description} ref="user_description" onChange={::this._handleChange}  placeholder="填写您的个人简介可以帮助其他人更好的了解您" name="user_description" id="user_description" />
-                    <label className="control-label">个人主页</label>
-                    <Input type="text" value={entries.homepage}  ref="user_homepage" onChange={::this._handleChange}  placeholder="您的个人主页 http://example.com" name="user_homepage" id="user_homepage" />
-                  </div>
-                  <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveProfile}>保存</Button>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className={styles['user-container']}>
-                  <label className="control-label">旧密码</label>
-                  <Input type="text" ref="user_oldpassword" onChange={::this._handleChange}  placeholder="旧密码" name="user_oldpassword" id="user_oldpassword" />
-                  <label className="control-label">新密码</label>
-                  <Input type="text" ref="user_newpassword" onChange={::this._handleChange}  placeholder="新密码" name="user_newpassword" id="user_newpassword" />
-                  <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleChangePassword}>保存</Button>
-                </div>
-              </TabPanel>
-           </Tabs>
-          </div>
+    return (
+      <div className={styles['settings-main']}>
+        <div className={styles['settings-alert']}>
+          {error!=null && alertVisible &&<Alert bsStyle="danger" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
+            <p>You happen error.</p>
+          </Alert>}
+          {error===null && isSaved && alertVisible&&<Alert bsStyle="success" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
+            <p>You have saved data successfully.</p>
+          </Alert>}
         </div>
-      )
-    }
+        <div className={styles['settings-title']}>
+           <h2><i className="fa fa-cogs"></i>设置</h2>
+        </div>
+        <div className={styles['settings-body']}>
+          <Tabs  onSelect={::this._handleSelected} selectedIndex={tabIndex}>
+            <TabList>
+              <Tab>基础设置</Tab>
+              <Tab>个人资料</Tab>
+              <Tab>修改密码</Tab>
+            </TabList>
+            <TabPanel>
+              <div className={styles['user-container']}>
+                <h2>昵称和电子邮件</h2>
+                <label className="control-label">昵称</label>
+                <Input value={entries.nick} onChange={::this._handleChange} ref="user_nick" placeholder="昵称"   className="input-xlarge" type="text" name="user_nick" id="user_nick"/>
+                <label className="control-label">电子邮件</label>
+                <Input value={entries.email} onChange={::this._handleChange} ref="user_email" placeholder="电子邮件"  className="input-xlarge" type="text" name="user_email" id="user_email"/>
+                <label className="control-label">手机号码</label>
+                <Input value={entries.phone} onChange={::this._handleChange} ref="user_phone" placeholder="手机号码"  className="input-xlarge" type="text" name="user_phone" id="user_phone"/>
+                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveBasicInfo}>保存</Button>
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className={styles['user-container']}>
+                <div className={styles['user-avatar']} >
+                  <div className={styles['avatar']}>
+                    <Image src={userAvatar} circle />
+                  </div>
+                  <div className="btn-group change-avatar">
+                    <input type="hidden" ref="user_avatar_fileToken"  name="user_avatar_fileToken" id="user_avatar_fileToken" value="" />
+                    <form id="user_upload_frm"  encType="multipart/form-data" onSubmit={::this._uploadAvatar}>
+                      <div className={styles['file-box']}>
+					             <input ref="user_upload_avatar" type="file" help="上传头像" name="user_upload_avatar" id="user_upload_avatar" className={styles['file-input']}  multiple="" onChange={::this._handleChangeFile} />
+					             <label ref="user_avatar_label" htmlFor="user_upload_avatar"><span>Choose a file…</span></label>
+				              </div>
+                      <div className={styles['btn-avatar-upload']}>
+                        <Button type="submit" bsClass={"btn "+styles['btn-save']}>上传</Button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div className={styles['user-avatar']}>
+                  <label className="control-label">简介</label>
+                  <Input type="textarea" value={entries.description} ref="user_description" onChange={::this._handleChange}  placeholder="填写您的个人简介可以帮助其他人更好的了解您" name="user_description" id="user_description" />
+                  <label className="control-label">个人主页</label>
+                  <Input type="text" value={entries.homepage}  ref="user_homepage" onChange={::this._handleChange}  placeholder="您的个人主页 http://example.com" name="user_homepage" id="user_homepage" />
+                </div>
+                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveProfile}>保存</Button>
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className={styles['user-container']}>
+                <label className="control-label">旧密码</label>
+                <Input type="text" ref="user_oldpassword" onChange={::this._handleChange}  placeholder="旧密码" name="user_oldpassword" id="user_oldpassword" />
+                <label className="control-label">新密码</label>
+                <Input type="text" ref="user_newpassword" onChange={::this._handleChange}  placeholder="新密码" name="user_newpassword" id="user_newpassword" />
+                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleChangePassword}>保存</Button>
+              </div>
+            </TabPanel>
+         </Tabs>
+        </div>
+      </div>
+    )
   }
 }
 
