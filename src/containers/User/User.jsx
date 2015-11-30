@@ -6,7 +6,7 @@ import { UserLeft, Profile, Right } from 'components'
 import { loadUser, loginUser, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
 import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
 import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost, dispose as disposePost }  from 'redux/modules/post'
-import { isLogged } from '../../helpers/mixin'
+import { isLogged } from '../../utils/mixin'
 
 const User = React.createClass({
   propTypes: {

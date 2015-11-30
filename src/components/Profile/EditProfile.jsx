@@ -7,7 +7,7 @@ const EditProfile = React.createClass({
   },
 
   render () {
-    const styles=require('./Avatar.scss')
+    const styles=require('./Profile.scss')
     const  { userId } = this.props
     return (
       <div className={styles['edit-row']}>

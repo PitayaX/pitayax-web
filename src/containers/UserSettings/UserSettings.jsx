@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { loadSettings, loadAvatarByToken, saveSettings, changePassword, isLoaded, isSaving, dispose, closeAlert, closeUploadAlert, switchTabIndex }  from 'redux/modules/settings'
 import { Tab, Tabs, TabList, TabPanel } from 'pitayax-web-tabs'
 import { Input, Button, Alert, Image }  from 'react-bootstrap'
-import { isLogged } from '../../helpers/mixin'
+import { isLogged } from '../../utils/mixin'
 
 class UserSettings extends Component {
 

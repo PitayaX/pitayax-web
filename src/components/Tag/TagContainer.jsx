@@ -1,5 +1,5 @@
 import React, { propTypes } from 'react'
-import PitayaLoading from '../Utils/Loading'
+import PitayaSpinner from '../Utils/Spinner'
 import TagList from './TagList'
 
 const TagContainer= React.createClass({
@@ -14,7 +14,7 @@ const TagContainer= React.createClass({
     return (
       <div className={styles['tag-container']}>
         <TagList tags={tag.tags} selectedTags={tag.selectedTags} onSelectTag={onSelectTag} />
-        {tag.isLoading && <PitayaLoading type="spokes" />}
+        {tag.isLoading && <PitayaSpinner />}
       </div>
     )
   }

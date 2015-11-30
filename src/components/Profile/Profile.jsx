@@ -1,9 +1,6 @@
 import React, { propTypes } from 'react'
-import Avatar from './Avatar'
-import AuthorName from './Name'
 import EditProfile from './EditProfile'
 import AuthorStatistic from './Statistic'
-import AuthorLink from './Link'
 
 const Profile =React.createClass({
   propTypes: {
@@ -23,7 +20,8 @@ const Profile =React.createClass({
   },
 
   render () {
-    const styles=require('./Avatar.scss')
+    const styles=require('./Profile.scss')
+    const LinkImage = require('../Images/weixin.png')
     const { Logged, userId } = this.props
     const { nick, avatarFileUrl } = this.props.author
     const avatarUrl= avatarFileUrl ?avatarFileUrl: require('../Images/yemol.png')
@@ -31,17 +29,25 @@ const Profile =React.createClass({
     return (
       <div className={styles['profile-container']}>
         <div className={styles['profile-row-avatar']}>
-          <Avatar imgUrl={avatarUrl} authorName={nick} />
+          <div className={styles['avatar-row']}>
+            <a className={styles['avatar-row-a']}>
+              <img src={avatarUrl} title={nick} />
+            </a>
+          </div>
         </div>
         <div className={styles['profile-row-name']}>
-          <AuthorName  authorName={userName} />
+          <div className={styles['name-row']}>
+             <span>{nick}</span>
+          </div>
         </div>
         {Logged &&
         <div className={styles['profile-row-edit']}>
           <EditProfile  userId={userId} />
         </div>}
         <div className={styles['profile-row-link']}>
-          <AuthorLink userId={userId} />
+          <div className={styles['ink-row']}>
+            <img src={LinkImage} alt="weixin" />
+          </div>
         </div>
         <div className={styles['profile-row-statistic']}>
           <AuthorStatistic userId={userId} />

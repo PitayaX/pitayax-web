@@ -1,0 +1,32 @@
+.loading-container
+{
+  width: 100%;
+  margin: 10px auto;
+  text-align:center;
+  position: relative;
+  height: 35px;
+}
+.loading-container .spinner>div
+{
+    background-color: #000;
+    animation: rotate  1s linear 0s infinite normal none;
+    border:4px solid #919191;
+    border-bottom-color: transparent;
+    border-image: none;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin: 10px auto;
+    position: relative;
+    background: transparent !important;
+
+}
+
+@keyframes rotate{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
