@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
-import { loadUser, loginUser, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
+import { loadUser, loginUser, loadAvatarByToken, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
 import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
 import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost, dispose as disposePost }  from 'redux/modules/post'
 import { isLogged } from '../../utils/mixin'
+import { getUser } from '../../datastore/query'
 
 const User = React.createClass({
   propTypes: {
@@ -20,6 +21,7 @@ const User = React.createClass({
     loadPosts: React.PropTypes.func.isRequired,
     loadUser: React.PropTypes.func.isRequired,
     loginUser: React.PropTypes.func.isRequired,
+    loadAvatarByToken: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
     isPostsLoaded: React.PropTypes.func.isRequired,
     isUserLoaded: React.PropTypes.func.isRequired,
@@ -45,7 +47,10 @@ const User = React.createClass({
       this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
     }
     if (!this.props.isUserLoaded(this.props.user)) {
-      this.props.loadUser({ 'userId': this.props.params.id })
+      this.props.loadUser(getUser(this.props.params.id)).then((rt) => {
+        const fileToken=rt.result[0].avatarFileToken
+        if (fileToken) this.props.loadAvatarByToken(fileToken)
+      })
     }
     if (!this.props.user.isLogged) {
       this.props.loginUser(isLogged())
@@ -98,7 +103,7 @@ const User = React.createClass({
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <UserLeft>
-             <Profile Logged={user.isLogged} author={user} userId={this.props.params.id} />
+             <Profile Logged={user.isLogged} author={user.author} userId={this.props.params.id} />
            </UserLeft>
         </div>
         <div className={styles.right} id="colright">
@@ -120,7 +125,7 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, loadUser, loginUser,  isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, loadUser, loginUser, loadAvatarByToken, isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

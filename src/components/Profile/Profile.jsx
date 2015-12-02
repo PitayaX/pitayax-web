@@ -6,16 +6,13 @@ const Profile =React.createClass({
   propTypes: {
     Logged: React.PropTypes.bool,
     author: React.PropTypes.object,
-    userId: React.PropTypes.string,
-    userAvatarUrl: React.PropTypes.string,
-    userName: React.PropTypes.string
+    userId: React.PropTypes.string
   },
   getDefaultProps () {
     return {
       Logged: false,
-      author: {},
-      userId: "20151124184210138",
-      userName: "yemol"
+      author: { "nick": "none", "email": "none" },
+      userId: "20151124184210138"
     }
   },
 
@@ -24,14 +21,14 @@ const Profile =React.createClass({
     const LinkImage = require('../Images/weixin.png')
     const { Logged, userId } = this.props
     const { nick, avatarFileUrl } = this.props.author
-    const avatarUrl= avatarFileUrl ?avatarFileUrl: require('../Images/yemol.png')
+    const avatarUrl= avatarFileUrl ?avatarFileUrl: require('../Images/default_avatar.png')
 
     return (
       <div className={styles['profile-container']}>
         <div className={styles['profile-row-avatar']}>
           <div className={styles['avatar-row']}>
             <a className={styles['avatar-row-a']}>
-              <img src={avatarUrl} title={nick} />
+              <img src={avatarUrl} title={nick} style={{ width: "7.5em", height: "7.5em" }} />
             </a>
           </div>
         </div>

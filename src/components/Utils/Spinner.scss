@@ -9,7 +9,7 @@
 .loading-container .spinner>div
 {
     background-color: #000;
-    animation: rotate  1s linear 0s infinite normal none;
+    animation: rotate  1.75s linear 0s infinite normal none;
     border:4px solid #919191;
     border-bottom-color: transparent;
     border-image: none;
@@ -19,6 +19,7 @@
     margin: 10px auto;
     position: relative;
     background: transparent !important;
+
 
 }
 
