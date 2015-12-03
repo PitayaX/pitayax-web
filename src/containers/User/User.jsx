@@ -40,21 +40,22 @@ const User = React.createClass({
 
   componentDidMount () {
     // get data from server
-    if (!this.props.isTagsLoaded(this.props.tag)) {
-      this.props.loadTags()
-    }
-    if (!this.props.isPostsLoaded(this.props.post)) {
-      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
-    }
-    if (!this.props.isUserLoaded(this.props.user)) {
-      this.props.loadUser(getUser(this.props.params.id)).then((rt) => {
+    const { tag, post, user, isTagsLoaded, isPostsLoaded, isUserLoaded,
+      loadTags, loadPosts, loadUser, loadAvatarByToken, loginUser
+    } = this.props
+
+    if (!isTagsLoaded(tag)) loadTags()
+
+    if (!isPostsLoaded(post))  loadPosts(tag.selectedTags, post.sortBy)
+
+    if (!isUserLoaded(user)) {
+      loadUser(getUser(this.props.params.id)).then((rt) => {
         const fileToken=rt.result[0].avatarFileToken
-        if (fileToken) this.props.loadAvatarByToken(fileToken)
+        console.log(fileToken)
+        if (fileToken) loadAvatarByToken(fileToken)
       })
     }
-    if (!this.props.user.isLogged) {
-      this.props.loginUser(isLogged())
-    }
+    if (!user.isLogged) loginUser(isLogged())
   },
 
   componentWillReceiveProps (nextProps) {

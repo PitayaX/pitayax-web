@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { loadSettings, saveSettings, updateSettings, stashSettings, changePassword, isLoaded as isSettingsLoaded, isSaving as isSettingsSaving, dispose, closeAlert, closeUploadAlert, switchTabIndex }  from 'redux/modules/settings'
+import { loadSettings, saveSettings, updateSettings, stashSettings, startUploadAvatar, endUploadAvatar, changePassword, isLoaded as isSettingsLoaded, isSaving as isSettingsSaving, dispose, closeAlert, closeUploadAlert, switchTabIndex }  from 'redux/modules/settings'
 import { loadUser, isLoaded as isUserLoaded, loadAvatarByToken }  from 'redux/modules/user'
 import { Tab, Tabs, TabList, TabPanel } from 'pitayax-web-tabs'
 import { Input, Button, Alert, Image }  from 'react-bootstrap'
@@ -21,6 +21,8 @@ class UserSettings extends Component {
     loadSettings: PropTypes.func,
     loadUser: PropTypes.func,
     loadAvatarByToken: PropTypes.func,
+    startUploadAvatar: PropTypes.func,
+    endUploadAvatar: PropTypes.func,
     saveSettings: PropTypes.func,
     updateSettings: PropTypes.func,
     stashSettings: PropTypes.func,
@@ -229,14 +231,14 @@ class UserSettings extends Component {
     }
   }
 
-  _getButtonContent () {
+  _getButtonContent (title="保存") {
     const { isSaving } = this.props.settings
     if (isSaving) {
       return (
-        <span>保存中<i className='fa fa-spinner rotate infinite'></i></span>
+        <span>{title}中...<i className='fa fa-spinner rotate infinite'></i></span>
       )
     }
-    else return <span>保存</span>
+    else return <span>{title}</span>
   }
 
   _handleFileChange () {
@@ -259,6 +261,9 @@ class UserSettings extends Component {
     const  { loadAvatarByToken } =  this.props
     const hidUserToken=this.refs['user_avatar_fileToken'] // 隐藏域，用来保存userToken
     if (!file ||  file.files.length === 0) { return }
+
+    this.props.startUploadAvatar()
+
     const data = new FormData()
     data.append('user_avatar', file.files[0])
 
@@ -267,7 +272,9 @@ class UserSettings extends Component {
     xhr.onload = function (e) { // onload： 成功完成
       try {
         const resp = JSON.parse(xhr.response) //  const json = eval(xhr.response)
-        this.props.loadAvatarByToken(resp['file-token'])
+        this.props.loadAvatarByToken(resp['file-token']).then(() => {
+          this.props.endUploadAvatar()
+        })
       }
       catch (ex) { throw ex  }
     }.bind(this)
@@ -290,9 +297,10 @@ class UserSettings extends Component {
   render () {
 
     const styles = require('./UserSettings.scss')
-    const { error, isSaved, isUploaded, alertVisible, tabIndex, entries }=this.props.settings
+    const { error, isSaved, isAvatarUploading, alertVisible, tabIndex, entries }=this.props.settings
     const { author } = this.props.user
     const userAvatar = author.avatarFileUrl || require('./default_avatar.png')
+    const uploadBtnContent = isAvatarUploading ?<span>上传中...<i className='fa fa-spinner rotate infinite'></i></span>:<span>上传</span>
 
     return (
       <div className={styles['settings-main']}>
@@ -303,7 +311,7 @@ class UserSettings extends Component {
           {error===null && isSaved && alertVisible&&<Alert bsStyle="success" onDismiss={::this._handleAlertDismiss} dismissAfter={4000} >
             <p>You have saved data successfully.</p>
           </Alert>}
-          {error===null && isUploaded&&<Alert bsStyle="success"  onDismiss={::this._handleUploadAlertDismiss} dismissAfter={4000} >
+          {error===null && isAvatarUploading&&<Alert bsStyle="success"  onDismiss={::this._handleUploadAlertDismiss} dismissAfter={4000} >
             <p>上传成功。</p>
           </Alert>}
         </div>
@@ -327,10 +335,7 @@ class UserSettings extends Component {
                 <label className="control-label">手机号码</label>
                 <Input value={entries.phone}   onChange={::this._handlePhoneChange}  ref="user_phone" placeholder="手机号码"  className="input-xlarge" type="text" name="user_phone" id="user_phone"/>
                 <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveBasicInfo}>
-                  保存
-                </Button>
-                <Button bsClass={"btn "+styles['btn-save'] +" "+ styles['save-button'] + " "+ styles['sending']} onClick={::this._handleSaveBasicInfo}>
-                  保存
+                  {this._getButtonContent("保存")}
                 </Button>
               </div>
             </TabPanel>
@@ -348,7 +353,9 @@ class UserSettings extends Component {
 					             <label ref="user_avatar_label" htmlFor="user_upload_avatar"><span>Choose a file…</span></label>
 				              </div>
                       <div className={styles['btn-avatar-upload']}>
-                        <Button type="submit" bsClass={"btn "+styles['btn-save']}>上传</Button>
+                        <Button type="submit" bsClass={"btn "+styles['btn-save']}>
+                          {uploadBtnContent}
+                        </Button>
                       </div>
                     </form>
                   </div>
@@ -359,7 +366,9 @@ class UserSettings extends Component {
                   <label className="control-label">个人主页</label>
                   <Input type="text" value={entries.homepage}   ref="user_homepage" onChange={::this._handleHomePageChange}  placeholder="您的个人主页 http://example.com" name="user_homepage" id="user_homepage" />
                 </div>
-                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveProfile}>保存</Button>
+                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleSaveProfile}>
+                  {this._getButtonContent("保存")}
+                </Button>
               </div>
             </TabPanel>
             <TabPanel>
@@ -368,7 +377,9 @@ class UserSettings extends Component {
                 <Input type="text" ref="user_oldpassword" onChange={::this._handlePasswordChange}  placeholder="旧密码" name="user_oldpassword" id="user_oldpassword" />
                 <label className="control-label">新密码</label>
                 <Input type="text" ref="user_newpassword" onChange={::this._handlePasswordChange}  placeholder="新密码" name="user_newpassword" id="user_newpassword" />
-                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleChangePassword}>保存</Button>
+                <Button bsClass={"btn "+styles['btn-save']} onClick={::this._handleChangePassword}>
+                  {this._getButtonContent("保存")}
+                </Button>
               </div>
             </TabPanel>
          </Tabs>
@@ -387,6 +398,6 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadSettings, loadUser, loadAvatarByToken, saveSettings, updateSettings, stashSettings, changePassword, isSettingsLoaded, isSettingsSaving, isUserLoaded, dispose, closeAlert, closeUploadAlert, switchTabIndex }, dispatch)
+  return bindActionCreators ({ loadSettings, loadUser, loadAvatarByToken, startUploadAvatar, endUploadAvatar, saveSettings, updateSettings, stashSettings, changePassword, isSettingsLoaded, isSettingsSaving, isUserLoaded, dispose, closeAlert, closeUploadAlert, switchTabIndex }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)

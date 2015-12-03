@@ -14,19 +14,19 @@ const UPDATE_SETTINGS_SUCCESS = 'settings/UPDATE_SETTINGS_SUCCESS'
 const UPDATE_SETTINGS_FAILURE = 'settings/UPDATE_SETTINGS_FAILURE'
 
 const DISPOSE_SETTINGS = 'settings/DISPOSE_SETTINGS'
+const STASH_SETTINGS='settings/STASH_SETTINGS'
 const SWITCH_TABINDEX = 'settings/SWITCH_TABINDEX'
 const CLOSE_ALERT = 'settings/CLOSE_ALERT'
 const CLOSE_UPLOAD_ALERT='settings/CLOSE_UPLOAD_ALERT'
-const STASH_SETTINGS='settings/STASH_SETTINGS'
-
-
+const START_UPLOAD='settings/START_UPLOAD'
+const END_UPLOAD='settings/END_UPLOAD'
 
 
  /* initial state */
 const initialState = {
   isLoading: false,
   isLoaded: false,
-  isUploaded: false,
+  isAvatarUploading: false,
   isSaving: false,
   isSaved: false,
   isExist: false,
@@ -130,6 +130,16 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       entries: { ...state.entries, ...action.values }
     }
+  case  START_UPLOAD:
+    return {
+      ...state,
+      isAvatarUploading: true
+    }
+  case  END_UPLOAD:
+    return {
+      ...state,
+      isAvatarUploading: false
+    }
   default:
     return state
   }
@@ -168,6 +178,18 @@ export function stashSettings (values) {
   return {
     type: STASH_SETTINGS,
     values
+  }
+}
+
+export function startUploadAvatar () {
+  return {
+    type: START_UPLOAD
+  }
+}
+
+export function endUploadAvatar () {
+  return {
+    type: END_UPLOAD
   }
 }
 
