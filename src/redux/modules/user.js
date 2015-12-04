@@ -109,7 +109,7 @@ export function loadUser (queryData) {
   return {
     userId: queryData.userId,
     types: [ LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE ],
-    promise: (client) => client.post('/api/user/query', { data: queryData })
+    promise: (client) => client.post('/api/api/user/query', { data: queryData })
   }
 }
 
@@ -117,7 +117,7 @@ export function loadAvatarByToken (token) {
   return {
     fileToken: token,
     types: [ LOAD_AVATAR_REQUEST, LOAD_AVATAR_SUCCESS, LOAD_AVATAR_FAILURE ],
-    promise: () => ajax.get(`http://10.10.73.208:8081/fs/${token}`)
+    promise: () => ajax.get(`/fs/fs/${token}`)
   }
 }
 

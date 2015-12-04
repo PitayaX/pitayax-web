@@ -155,7 +155,7 @@ function getUserSettings (list) {
 export function loadSettings (queryData) {
   return {
     types: [ LOAD_SETTINGS_REQUEST, LOAD_SETTINGS_SUCCESS, LOAD_SETTINGS_FAILURE ],
-    promise: (client) => client.post('/api/user/query', { data: queryData })
+    promise: (client) => client.post('/api/api/user/query', { data: queryData })
   }
 }
 
@@ -163,14 +163,14 @@ export function loadSettings (queryData) {
 export function saveSettings (entries) {
   return {
     types: [ SAVE_SETTINGS_REQUEST, SAVE_SETTINGS_SUCCESS, SAVE_SETTINGS_FAILURE ],
-    promise: (client) => client.post(`/api/user/create`, { data: entries })
+    promise: (client) => client.post(`/api/api/user/create`, { data: entries })
   }
 }
 
 export function updateSettings (entries) {
   return {
     types: [ UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_SUCCESS, UPDATE_SETTINGS_FAILURE ],
-    promise: (client) => client.put(`/api/user/`, { data: entries })
+    promise: (client) => client.put(`/api/api/user/`, { data: entries })
   }
 }
 
@@ -197,7 +197,7 @@ export function changePassword (entries) {
 
   return {
     types: [ SAVE_SETTINGS_REQUEST, SAVE_SETTINGS_SUCCESS, SAVE_SETTINGS_FAILURE ],
-    promise: (client) => client.post('/api/user/changepassword', { data: entries })
+    promise: (client) => client.post('/api/api/user/changepassword', { data: entries })
   }
 }
 

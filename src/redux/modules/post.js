@@ -164,7 +164,7 @@ export function loadPosts (selectedTags, sortBy) {
 
   return {
     types: [ LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE ],
-    promise: (client) => client.post('/api/post/query', { data: { query, sort } })
+    promise: (client) => client.post('/api/api/post/query', { data: { query, sort } })
   }
 }
 
@@ -172,7 +172,7 @@ export function loadPosts (selectedTags, sortBy) {
 export function loadPost (id) {
   return {
     types: [ LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE ],
-    promise: (client) => client.post(`/script/post/single?postid=${id}`)
+    promise: (client) => client.post(`/api/script/post/single?postid=${id}`)
   }
 }
 

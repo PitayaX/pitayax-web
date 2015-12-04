@@ -26,10 +26,15 @@ import cookie from 'cookie'
 const pretty = new PrettyError()
 const app = new Express()
 const server = new http.Server(app)
-const proxy = httpProxy.createProxyServer({
-  // target: 'http://10.10.73.207:8088'
-  // ,
-  target: 'http://localhost:' + config.apiPort,
+const apiProxy = httpProxy.createProxyServer({
+  target: 'http://10.10.73.207:8088',
+  // target: 'http://localhost:' + config.apiPort,
+  ws: true
+})
+
+const fileProxy = httpProxy.createProxyServer({
+  target: 'http://10.10.73.208:8081',
+  // target: 'http://localhost:' + config.apiPort,
   ws: true
 })
 
@@ -47,7 +52,10 @@ app.use(require('serve-static')(path.join(__dirname, '..', 'static')))
 
 // Proxy to API server
 app.use('/api', (req, res) => {
-  proxy.web(req, res)
+  apiProxy.web(req, res)
+})
+app.use('/fs', (req, res) => {
+  fileProxy.web(req, res)
 })
 
 app.use('/cb', require('body-parser').json(), (req, res, next) => {
@@ -55,7 +63,7 @@ app.use('/cb', require('body-parser').json(), (req, res, next) => {
 })
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
-proxy.on('error', (error, req, res) => {
+apiProxy.on('error', (error, req, res) => {
   let json
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error)
