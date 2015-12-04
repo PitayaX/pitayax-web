@@ -23,17 +23,19 @@ import getStatusFromRoutes from './helpers/getStatusFromRoutes'
 import callback from './callbacks'
 import cookie from 'cookie'
 
+
+
 const pretty = new PrettyError()
 const app = new Express()
 const server = new http.Server(app)
 const apiProxy = httpProxy.createProxyServer({
-  target: 'http://10.10.73.207:8088',
+  target: config.apiProxy,
   // target: 'http://localhost:' + config.apiPort,
   ws: true
 })
 
 const fileProxy = httpProxy.createProxyServer({
-  target: 'http://10.10.73.208:8081',
+  target: config.fileProxy,
   // target: 'http://localhost:' + config.apiPort,
   ws: true
 })
@@ -137,10 +139,10 @@ app.use((req, res) => {
 })
 
 if (config.port) {
-  if (config.isProduction) {
-    const io = new SocketIo(server)
-    io.path('/api/ws')
-  }
+  // if (config.isProduction) {
+  //   const io = new SocketIo(server)
+  //   io.path('/api/ws')
+  // }
 
   server.listen(config.port, (err) => {
     if (err) {

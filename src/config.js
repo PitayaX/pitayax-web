@@ -1,5 +1,7 @@
 module.exports = {
   development: {
+    apiProxy: 'http://10.10.73.207:8088',
+    fileProxy: 'http://10.10.73.208:8081',
     host: 'http://10.10.73.16',
     oAuthServer: 'http://120.24.58.42:2001',
     oAuthRedirectUrl: 'http://10.10.73.16:3000/cb/login',
@@ -12,6 +14,8 @@ module.exports = {
     }
   },
   production: {
+    apiProxy: 'http://10.10.73.207:8088',
+    fileProxy: 'http://10.10.73.208:8081',
     host: 'http://10.10.73.16',
     oAuthServer: 'http://120.24.58.42:2001',
     oAuthRedirectUrl: 'http://10.10.73.16:3000/cb/login',
