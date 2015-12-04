@@ -5,7 +5,6 @@ import config from '../config'
 
 let COOKIES = []
 
-let REFRESH_TOKEN_TIME = 0
 
 const oAuthLoginUri = config.oAuthServer + '/remote/auth'
 const oAuthTokenUri = config.oAuthServer + '/token'
@@ -15,6 +14,8 @@ const grantType = 'authorization_code'
 
 export default
 function login (req, res) {
+
+  console.log('here is login callback')
 
   COOKIES = []
 
@@ -47,9 +48,16 @@ function login (req, res) {
 
 export function refreshToken (req, res) {
 
-  REFRESH_TOKEN_TIME++
+  console.log('here is refreshToken')
 
   const cookies = cookie.parse(req.headers.cookie)
+
+  if (!req.headers.cookie) {
+    res.writeHead(200, { 'Content-Type': 'application/json' })
+    res()
+  }
+
+  console.log('refresh before: '+ cookies.access_token)
 
   aq.rest(oAuthTokenUri, "POST", {}, {
     refresh_token: cookies.access_token,
@@ -68,7 +76,10 @@ export function refreshToken (req, res) {
 
       const tokenInfo = data.data
 
+      console.log('refresh after: '+ tokenInfo.access_token)
+
       const expiresMSeconds = Number(tokenInfo.expires_in) * 1000
+      // const expiresMSeconds = 5000
       resBody.refreshTokenInterval=expiresMSeconds
       writeHeaderInfo(res, tokenInfo)
 
@@ -147,8 +158,9 @@ function convertCodeToToken (code, req, res) {
       const tokenInfo = data.data
 
       const expiresMSeconds = Number(tokenInfo.expires_in) * 1000
+      // const expiresMSeconds = 5000
       resBody.nickName=tokenInfo.nickname
-      resBody.userID=tokenInfo.userid
+      resBody.userId=tokenInfo.userid
       resBody.refreshTokenInterval=expiresMSeconds
       writeHeaderInfo(res, tokenInfo)
 

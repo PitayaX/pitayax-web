@@ -3,7 +3,8 @@ import { IndexLink, Link } from 'react-router'
 import { connect } from 'react-redux'
 import DocumentMeta from 'react-document-meta'
 import { pushState } from 'redux-router'
-import LoginModule from '../Login/LoginModule'
+import LoginModule from '../LoginRebuild/Login'
+// import LoginModule from '../Login/LoginModule'
 import config from '../../config'
 
 const title = 'PitayaX Web'
@@ -37,7 +38,7 @@ export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
-    logout: PropTypes.func.isRequired,
+    // logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   }
 

@@ -6,6 +6,7 @@ import tag from './tag'
 import post from './post'
 import user from './user'
 import settings from './settings'
+import loginInfo, { loginModalInfo } from './login'
 
 
 
@@ -15,5 +16,7 @@ export default combineReducers({
   tag,
   post,
   user,
-  settings
+  settings,
+  loginInfo,
+  loginModalInfo
 })
