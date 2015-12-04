@@ -10,6 +10,7 @@ const LOAD_AVATAR_SUCCESS = 'user/LOAD_AVATAR_SUCCESS'
 const LOAD_AVATAR_FAILURE = 'user/LOAD_AVATAR_FAILURE'
 
 const DISPOSE_USER = 'user/DISPOSE_USER'
+const LOGIN_USER = 'user/LOGIN_USER'
 
 
  /* initial state */
@@ -17,7 +18,8 @@ const initialState = {
   isLoading: false,
   isLoaded: false,
   isLogged: false, // 是否登录
-  author: { 'authorAvatarUrl': '' },
+  userId: '',
+  author: { "_id": "", "nick": "", "email": "", "avatarFileToken": "", "avatarFileUrl": "" },
   error: null
 }
 
@@ -36,13 +38,15 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
-      author: action.result
+      userId: action.userId,
+      author: getAuthorInfor(state.author, action)
     }
   case LOAD_USER_FAILURE:
     return {
       ...state,
       isLoading: false,
       isLoaded: false,
+      userId: action.userId,
       error: action.error
     }
   case LOAD_AVATAR_REQUEST:
@@ -56,7 +60,7 @@ export default function reducer (state = initialState, action = {}) {
       ...state,
       isLoading: false,
       isLoaded: true,
-      author: getUserAvatareUrl(state.author, action.result)
+      author: updateAvatarFileUrl(state.author, action)
     }
   case LOAD_AVATAR_FAILURE:
     return {
@@ -67,20 +71,33 @@ export default function reducer (state = initialState, action = {}) {
     }
   case DISPOSE_USER:
     return initialState
+  case LOGIN_USER:
+    return {
+      ...state,
+      isLogged: action.logged
+    }
 
   default:
     return state
   }
 }
 
-// get user avatar url
-function getUserAvatareUrl (oldEntries, result) {
+// update user avatar url
+function updateAvatarFileUrl (oldEntries, action) {
 
-  if (!result) {
-    return oldEntries
+  if (!action.result) {
+    return { ...oldEntries, "avatarFileToken": action.fileToken }
   }
-  const url = JSON.stringify(result)['file-url']
-  return { ...oldEntries, 'authorAvatarUrl': url }
+  const url = action.result.body['file-url']
+  return { ...oldEntries, "avatarFileToken": action.fileToken, "avatarFileUrl": url }
+}
+
+function getAuthorInfor (oldEntries, action) {
+
+  if (!action.result || action.result.length<=0) {
+    return { ...oldEntries }
+  }
+  return  { ...oldEntries, ...action.result[0] }
 
 }
 
@@ -90,16 +107,24 @@ function getUserAvatareUrl (oldEntries, result) {
 // get many posts with  query conditions
 export function loadUser (queryData) {
   return {
+    userId: queryData.userId,
     types: [ LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE ],
     promise: (client) => client.post('/api/user/query', { data: queryData })
   }
 }
 
-export function loadUserAvatar (token) {
+export function loadAvatarByToken (token) {
   return {
     fileToken: token,
     types: [ LOAD_AVATAR_REQUEST, LOAD_AVATAR_SUCCESS, LOAD_AVATAR_FAILURE ],
     promise: () => ajax.get(`http://10.10.73.208:8081/fs/${token}`)
+  }
+}
+
+export function loginUser (logged) {
+  return {
+    type: LOGIN_USER,
+    logged
   }
 }
 

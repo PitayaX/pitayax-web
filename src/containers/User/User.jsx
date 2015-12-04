@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ScrollPanel } from 'pitaya-components'
 import { UserLeft, Profile, Right } from 'components'
-import { loadUser, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
+import { loadUser, loginUser, loadAvatarByToken, isLoaded as isUserLoaded, dispose as disposeUser }  from 'redux/modules/user'
 import { loadTags, isLoaded as isTagsLoaded, selectTag, dispose as disposeTag }  from 'redux/modules/tag'
 import { loadPosts, isLoaded as isPostsLoaded, isLoading as isPostsLoading, sortPost, dispose as disposePost }  from 'redux/modules/post'
-import { isLogged } from '../../helpers/mixin'
+import { isLogged } from '../../utils/mixin'
+import { getUser } from '../../datastore/query'
 
 const User = React.createClass({
   propTypes: {
@@ -19,6 +20,8 @@ const User = React.createClass({
     loadTags: React.PropTypes.func.isRequired,
     loadPosts: React.PropTypes.func.isRequired,
     loadUser: React.PropTypes.func.isRequired,
+    loginUser: React.PropTypes.func.isRequired,
+    loadAvatarByToken: React.PropTypes.func.isRequired,
     isTagsLoaded: React.PropTypes.func.isRequired,
     isPostsLoaded: React.PropTypes.func.isRequired,
     isUserLoaded: React.PropTypes.func.isRequired,
@@ -37,15 +40,22 @@ const User = React.createClass({
 
   componentDidMount () {
     // get data from server
-    if (!this.props.isTagsLoaded(this.props.tag)) {
-      this.props.loadTags()
+    const { tag, post, user, isTagsLoaded, isPostsLoaded, isUserLoaded,
+      loadTags, loadPosts, loadUser, loadAvatarByToken, loginUser
+    } = this.props
+
+    if (!isTagsLoaded(tag)) loadTags()
+
+    if (!isPostsLoaded(post))  loadPosts(tag.selectedTags, post.sortBy)
+
+    if (!isUserLoaded(user)) {
+      loadUser(getUser(this.props.params.id)).then((rt) => {
+        const fileToken=rt.result[0].avatarFileToken
+        console.log(fileToken)
+        if (fileToken) loadAvatarByToken(fileToken)
+      })
     }
-    if (!this.props.isPostsLoaded(this.props.post)) {
-      this.props.loadPosts(this.props.tag.selectedTags, this.props.post.sortBy)
-    }
-    if (!this.props.isUserLoaded(this.props.user)) {
-      this.props.loadUser({ 'userId': this.props.params.id })
-    }
+    if (!user.isLogged) loginUser(isLogged())
   },
 
   componentWillReceiveProps (nextProps) {
@@ -88,14 +98,13 @@ const User = React.createClass({
 
     const styles = require('./User.scss')
     const { tag, post, user } = this.props
-    const logged = isLogged()
     // require the logo image both from client and server
     // const logoImage = require('./logo.png')
     return (
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <UserLeft>
-             <Profile Logged={logged} author={user} />
+             <Profile Logged={user.isLogged} author={user.author} userId={this.props.params.id} />
            </UserLeft>
         </div>
         <div className={styles.right} id="colright">
@@ -117,7 +126,7 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, loadUser, isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
+  return bindActionCreators ({ loadTags, loadPosts, loadUser, loginUser, loadAvatarByToken, isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

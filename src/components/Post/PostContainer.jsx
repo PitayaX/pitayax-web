@@ -1,5 +1,5 @@
 import React, { propTypes } from 'react'
-import PitayaLoading from '../Utils/Loading'
+import PitayaSpinner from '../Utils/Spinner'
 import PostList from './PostList'
 import PostSort from './PostSort'
 
@@ -16,7 +16,7 @@ const PostContainer = React.createClass({
       <div className={styles['post-container']}>
         <PostSort  onSort={onSortPost} sortTypes={post.sortTypes} selectedSort={post.sortBy} />
         <PostList posts={post.posts} />
-        {post.isLoading && <PitayaLoading type="spokes" />}
+        {post.isLoading && <PitayaSpinner />}
       </div>
     )
   }

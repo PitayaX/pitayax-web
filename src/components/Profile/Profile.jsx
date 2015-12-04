@@ -1,46 +1,50 @@
 import React, { propTypes } from 'react'
-import Avatar from './Avatar'
-import AuthorName from './Name'
 import EditProfile from './EditProfile'
 import AuthorStatistic from './Statistic'
-import AuthorLink from './Link'
 
 const Profile =React.createClass({
   propTypes: {
     Logged: React.PropTypes.bool,
     author: React.PropTypes.object,
-    userId: React.PropTypes.string,
-    userAvatarUrl: React.PropTypes.string,
-    userName: React.PropTypes.string
+    userId: React.PropTypes.string
   },
   getDefaultProps () {
     return {
       Logged: false,
-      author: {},
-      userId: "20151124184210138",
-      userName: "yemol"
+      author: { "nick": "none", "email": "none" },
+      userId: "20151124184210138"
     }
   },
 
   render () {
-    const styles=require('./Avatar.scss')
-    const { Logged, userId, userName, userAvatarUrl } = this.props
-    const avatarUrl= userAvatarUrl ?userAvatarUrl: require('../Images/yemol.png')
+    const styles=require('./Profile.scss')
+    const LinkImage = require('../Images/weixin.png')
+    const { Logged, userId } = this.props
+    const { nick, avatarFileUrl } = this.props.author
+    const avatarUrl= avatarFileUrl ?avatarFileUrl: require('../Images/default_avatar.png')
 
     return (
       <div className={styles['profile-container']}>
         <div className={styles['profile-row-avatar']}>
-          <Avatar imgUrl={avatarUrl} authorName={userName} />
+          <div className={styles['avatar-row']}>
+            <a className={styles['avatar-row-a']}>
+              <img src={avatarUrl} title={nick} style={{ width: "7.5em", height: "7.5em" }} />
+            </a>
+          </div>
         </div>
         <div className={styles['profile-row-name']}>
-          <AuthorName  authorName={userName} />
+          <div className={styles['name-row']}>
+             <span>{nick}</span>
+          </div>
         </div>
-        {Logged} &&
+        {Logged &&
         <div className={styles['profile-row-edit']}>
           <EditProfile  userId={userId} />
-        </div>
+        </div>}
         <div className={styles['profile-row-link']}>
-          <AuthorLink userId={userId} />
+          <div className={styles['ink-row']}>
+            <img src={LinkImage} alt="weixin" />
+          </div>
         </div>
         <div className={styles['profile-row-statistic']}>
           <AuthorStatistic userId={userId} />
