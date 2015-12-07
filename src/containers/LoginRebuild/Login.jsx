@@ -1,13 +1,16 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-
 import React, { Component, PropTypes as T } from 'react'
 
-
-
 import { LoginBar, LoginModal } from 'components'
-import { loginInit, openLoginModal, closeLoginModal, loginClick, logoutClick, refreshToken }  from 'redux/modules/login'
+import {
+  loginInit,
+  openLoginModal,
+  closeLoginModal,
+  loginClick,
+  logoutClick,
+  refreshToken
+}  from 'redux/modules/login'
 
 
 export default
@@ -24,16 +27,29 @@ class LoginModule extends Component {
 
   render () {
 
-    const { loginStates, loginModalStates, openLoginModal, closeLoginModal, loginClick, logoutClick, refreshToken } = this.props
+    const {
+      loginStates,
+      loginModalStates,
+      openLoginModal,
+      closeLoginModal,
+      loginClick,
+      logoutClick,
+      refreshToken } = this.props
 
     const LoginBarProps = Object.assign({}, loginStates, { openLoginModal, logoutClick })
 
 
     const LoginModalProps = Object.assign({}, loginModalStates, { closeLoginModal, loginClick, refreshToken })
 
-    const styles = require('./LoginModule.scss')
+    const styles = {
+      zIndex: '2',
+      position: 'absolute',
+      right: '0px',
+      margin: '1em 2em 0 0'
+    }
+
     return (
-      <div className={styles.loginContainer}>
+      <div style={styles}>
         <LoginBar {...LoginBarProps}/>
         <LoginModal {...LoginModalProps}/>
       </div>

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes as T } from 'react'
-import { Modal } from 'common'
+// import { Modal } from 'common'
+import { Modal } from 'pitaya-components'
 import cNames from 'classnames'
+import { Link } from 'react-router'
 
 const logo = require('./logo.png')
 
@@ -35,6 +37,10 @@ class LoginModal extends Component {
     }
   }
 
+  gotoReg (e) {
+    this.props.closeLoginModal(e)
+  }
+
   render () {
 
     const { closeLoginModal, showModal, showError, error } = this.props
@@ -44,8 +50,8 @@ class LoginModal extends Component {
     const errorMsg = error ? error : '用户名密码错误'
 
     return (
-      <Modal isShowed={showModal} dimmerClassName='modal-dimmer' modalClassName='modal-dialog'>
-        <div className='loginModal'>
+      <Modal isShowed={showModal} dimmerClassName={styles.modalDimmer} modalClassName={styles.modalDialog}>
+        <div className={styles.loginModal}>
           <div className={styles.loginModalCloseColor}></div>
           <div className={styles.loginModalCloseBackgroundColor} onClick={(e) => closeLoginModal(e)}>
             <i className = "fa fa-times-circle fa-2x"></i>
@@ -86,7 +92,14 @@ class LoginModal extends Component {
             </div>
 
             <div className={styles.loginModalOthers}>
-              <p><span>忘记密码?</span> <span style={{ float: 'right' }}>注 册</span></p>
+              <p>
+                <span>
+                  忘记密码?
+                </span>
+                <span onClick ={::this.gotoReg} style={{ float: 'right', cursor: 'pointer' }}>
+                  <Link to='/reg'>注 册</Link>
+                </span>
+              </p>
             </div>
 
           </div>

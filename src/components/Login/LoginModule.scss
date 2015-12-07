@@ -7,12 +7,6 @@
     text-decoration: underline;
   }
 }
-.loginContainer{
-  z-index: 2;
-  position:absolute;
-  right:0px;
-  margin:1em 2em 0 0;
-}
 .loginModalCloseColor{
   width:1em;
   height:1.35em;
@@ -80,13 +74,13 @@
   color:red;
   font-size:0.9em;
 }
-:global(.loginModal){
+.loginModal{
   position: absolute;
   width:100%;
   height: inherit;
 }
 
-:global(.modal-dimmer) {
+.modalDimmer {
   background-color:rgba(0,0,0,0.5);
   display: block;
   position: fixed;
@@ -97,7 +91,7 @@
   z-index: 1001;
   transition: all .3s;
 }
-:global(.modal-dialog) {
+.modalDialog {
   background-color:rgba(255,255,255,1);
   border-radius:0.3em;
   z-index: 1001;

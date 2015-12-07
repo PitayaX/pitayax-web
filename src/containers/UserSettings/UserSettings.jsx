@@ -398,6 +398,9 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadSettings, loadUser, loadAvatarByToken, startUploadAvatar, endUploadAvatar, saveSettings, updateSettings, stashSettings, changePassword, isSettingsLoaded, isSettingsSaving, isUserLoaded, dispose, closeAlert, closeUploadAlert, switchTabIndex }, dispatch)
+  return {
+    isSettingsLoaded, isSettingsSaving, isUserLoaded,
+    ...bindActionCreators ({ loadSettings, loadUser, loadAvatarByToken, startUploadAvatar, endUploadAvatar, saveSettings, updateSettings, stashSettings, changePassword,  dispose, closeAlert, closeUploadAlert, switchTabIndex }, dispatch)
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)
