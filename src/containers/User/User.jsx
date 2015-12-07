@@ -126,7 +126,10 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
 
-  return bindActionCreators ({ loadTags, loadPosts, loadUser, loginUser, loadAvatarByToken, isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded, selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
+  return {
+    isTagsLoaded, isPostsLoaded, isPostsLoading, isUserLoaded,
+    ...bindActionCreators ({ loadTags, loadPosts, loadUser, loginUser, loadAvatarByToken,  selectTag, sortPost, disposePost, disposeTag, disposeUser }, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

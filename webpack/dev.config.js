@@ -1,10 +1,11 @@
 require('babel-core/polyfill')
+var config = require('../src/config')
 var fs = require('fs')
 var path = require('path')
 var webpack = require('webpack')
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools')
 var assetsPath = path.resolve(__dirname, '../static/dist')
-var host = 'localhost'
+var host = config.host
 var port = parseInt(process.env.PORT) + 1 || 3001
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools

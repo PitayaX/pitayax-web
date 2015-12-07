@@ -84,7 +84,7 @@ const Home = React.createClass({
       <div className={styles.main} id="container">
         <div className={styles.middle} id="colmiddle">
            <GroupLeft>
-            &nbsp
+            <span/>
            </GroupLeft>
         </div>
         <div className={styles.right} id="colright">
@@ -104,7 +104,10 @@ function mapStateToProps (state) {
   }
 }
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators ({ loadTags, loadPosts, isTagsLoaded, isPostsLoaded, isPostsLoading, selectTag, sortPost, disposePost, disposeTag }, dispatch)
+  return {
+    isTagsLoaded, isPostsLoaded, isPostsLoading,
+    ...bindActionCreators({ loadTags, loadPosts,  selectTag, sortPost, disposePost, disposeTag }, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
