@@ -1,7 +1,9 @@
 @import 'bootstrap';
 .myFaSpin {
-  -webkit-animation: myFaSpin 2s infinite linear;
-  animation: myFaSpin 2s infinite linear;
+  -webkit-animation: myFaSpin 1.5s infinite linear;
+     -moz-animation: myFaSpin 1.5s infinite linear;
+       -o-animation: myFaSpin 1.5s infinite linear;
+          animation: myFaSpin 1.5s infinite linear;
 }
 @-webkit-keyframes myFaSpin {
   0% {
@@ -15,16 +17,18 @@
 }
 .mySpinnerParent{
   position: fixed;
+  z-index: 2;
   left: 3.214258em;
   width: 100%;
   height: 100%;
-  background-color: #EFEFEF
+  background-color: rgba(0,0,0,0.5);
 }
 .mySpinner{
   position: relative;
+  color: rgba(255,255,255,0.8);
   left: 45%;
   top: 42%;
-  font-size:6em;
+  font-size:2em;
 }
 .authorInfo{
   line-height: 0.8;
