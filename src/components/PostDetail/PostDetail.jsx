@@ -18,7 +18,7 @@ export default class PostDetail extends Component {
     post: T.object.isRequired,
     loadPost: T.func.isRequired,
     disposePost: T.func.isRequired,
-    params: T.string 
+    params: T.string
   }
 
   componentDidMount () {
@@ -36,7 +36,7 @@ export default class PostDetail extends Component {
 
     const styles = require('./PostDetail.scss')
     const containerPost=classNames(styles.container, styles.post)
-    const mySpinner=classNames("fa", "fa-spinner", styles.myFaSpin)
+    const mySpinner=classNames("fa", "fa-circle-o-notch", styles.myFaSpin)
     const post = this.props.post
 
     let myArticle=(
