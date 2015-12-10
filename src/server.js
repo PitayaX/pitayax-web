@@ -40,6 +40,15 @@ const fileProxy = httpProxy.createProxyServer({
   ws: true
 })
 
+apiProxy.on('error',proxyErr)
+
+fileProxy.on('error',proxyErr)
+
+function proxyErr(error) {
+  console.log('Proxy Error:')
+  console.log(error)
+}
+
 // proxy.on('proxyReq', function (proxyReq, req, res, options) {
 //   const cookies = cookie.parse(req.headers.cookie)
 //   proxyReq.setHeader('access_token', cookies.access_token)
@@ -154,3 +163,8 @@ if (config.port) {
 } else {
   console.error('==>     ERROR: No PORT environment variable has been specified')
 }
+
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ');
+  console.log(err);
+})

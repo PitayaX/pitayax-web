@@ -108,7 +108,7 @@
     "marked": "^0.3.5",
     "multireducer": "1.0.2",
     "piping": "0.3.0",
-    "pitaya-components": "^0.1.8",
+    "pitaya-components": "^0.2.0",
     "pitayax-service-core": "^1.1.5",
     "pitayax-web-tabs": "0.0.2",
     "pretty-error": "1.2.0",
