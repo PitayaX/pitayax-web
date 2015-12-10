@@ -24,7 +24,7 @@
   ],
   "main": "bin/server.js",
   "scripts": {
-    "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\" \"npm run del-source-map\"",
+    "start": "concurrent --kill-others \"npm run start-prod\" \"npm run del-source-map\"",
     "start-prod": "node ./node_modules/better-npm-run start-prod",
     "start-prod-api": "node ./node_modules/better-npm-run start-prod-api",
     "build": "\"webpack --verbose --colors --display-error-details --config webpack/prod.config.js\"",
